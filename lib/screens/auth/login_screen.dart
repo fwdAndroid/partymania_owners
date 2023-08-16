@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/auth/signup_account.dart';
+import 'package:partymania_owners/screens/main_dashboard.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
@@ -116,7 +117,15 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(
               height: 30,
             ),
-            Center(child: SaveButton(title: 'Login', onTap: () {})),
+            Center(
+                child: SaveButton(
+                    title: 'Login',
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (builder) => MainScreen()));
+                    })),
             const SizedBox(
               height: 15,
             ),
