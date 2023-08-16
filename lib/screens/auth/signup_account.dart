@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/auth/login_screen.dart';
+import 'package:partymania_owners/screens/profile/create_profile.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
@@ -16,7 +17,7 @@ class _SignUpAccountsState extends State<SignUpAccounts> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff0F816),
+      backgroundColor: backgroundColor,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -223,7 +224,15 @@ class _SignUpAccountsState extends State<SignUpAccounts> {
               const SizedBox(
                 height: 15,
               ),
-              Center(child: SaveButton(title: 'SignUp', onTap: () {})),
+              Center(
+                  child: SaveButton(
+                      title: 'Signup',
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (builder) => CreateProfile()));
+                      })),
               const SizedBox(
                 height: 15,
               ),
