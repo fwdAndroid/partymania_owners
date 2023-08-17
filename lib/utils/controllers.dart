@@ -42,3 +42,8 @@ final editclubStateController = TextEditingController();
 final editamenitiesController = TextEditingController();
 final editclubZipCodeController = TextEditingController();
 final editclubdescriptionController = TextEditingController();
+
+//Forot Pasword
+final currentPass = TextEditingController();
+final newPassword = TextEditingController();
+final newConfrimPassword = TextEditingController();

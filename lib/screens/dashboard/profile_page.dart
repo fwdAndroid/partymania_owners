@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/user_profie/edit_user_club_profile.dart';
 import 'package:partymania_owners/screens/user_profie/edit_user_profile.dart';
+import 'package:partymania_owners/screens/user_profie/settings.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -142,6 +143,10 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           ListTile(
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (builder) => Settings()));
+            },
             leading: Icon(
               Icons.settings,
               size: 30,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:partymania_owners/screens/profile/create_profile_widget.dart';
 import 'package:partymania_owners/screens/user_profie/widgets/edit_club_profile_text_widget.dart';
 import 'package:partymania_owners/utils/colors.dart';
 
