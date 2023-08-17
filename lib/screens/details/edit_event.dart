@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:partymania_owners/utils/colors.dart';
+import 'package:partymania_owners/utils/controllers.dart';
+import 'package:partymania_owners/utils/textformfield.dart';
 
 class EditEvent extends StatefulWidget {
   const EditEvent({super.key});
@@ -13,104 +15,56 @@ class _EditEventState extends State<EditEvent> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          iconTheme: IconThemeData(color: textColor),
           backgroundColor: backgroundColor,
           title: Text(
-            "Payment",
+            "Create New Event",
             style: TextStyle(color: textColor),
           ),
-          automaticallyImplyLeading: false,
         ),
         backgroundColor: backgroundColor,
         body: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
                 height: 20,
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Ticket classique x1",
-                      style: TextStyle(
-                          color: textColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400),
+              Center(
+                child: TextFormInputField(
+                    preIcon: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(Icons.search),
                     ),
-                    Text(
-                      "\$ 20.00",
-                      style: TextStyle(
-                          color: textColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 8, right: 8),
-                child: Divider(
-                  color: Color(0xff94999E),
-                ),
+                    controller: searchController,
+                    hintText: "Search User",
+                    textInputType: TextInputType.emailAddress),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "GST/QST",
-                      style: TextStyle(
-                          color: textColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400),
-                    ),
-                    Text(
-                      "\$ 2.60",
-                      style: TextStyle(
-                          color: textColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400),
-                    )
-                  ],
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: ListView.builder(
+                      itemCount: 4,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: ListTile(
+                              leading: Padding(
+                                padding: const EdgeInsets.all(3.0),
+                                child: Image.asset("assets/profilepic.png"),
+                              ),
+                              title: Text(
+                                "Kathryn Murphy",
+                                style: TextStyle(
+                                    color: textColor,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ));
+                      }),
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 8, right: 8),
-                child: Divider(
-                  color: Color(0xff94999E),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Total",
-                      style: TextStyle(
-                          color: textColor,
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700),
-                    ),
-                    Text(
-                      "\$ 22.60",
-                      style: TextStyle(
-                          color: textColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 8, right: 8),
-                child: Divider(
-                  color: Color(0xff94999E),
-                ),
-              ),
+              )
             ],
           ),
         ));

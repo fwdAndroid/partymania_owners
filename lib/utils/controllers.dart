@@ -22,3 +22,6 @@ final clubStateController = TextEditingController();
 final clubZipCodeController = TextEditingController();
 final amenitiesController = TextEditingController();
 final descriptionController = TextEditingController();
+
+//Event Edit
+final searchController = TextEditingController();
