@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:partymania_owners/screens/details/create_new_event.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
 import 'package:partymania_owners/utils/textformfield.dart';
@@ -50,6 +51,13 @@ class _EditEventState extends State<EditEvent> {
                         return Padding(
                             padding: const EdgeInsets.all(4.0),
                             child: ListTile(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (builder) =>
+                                            CreateNewEvent()));
+                              },
                               leading: Padding(
                                 padding: const EdgeInsets.all(3.0),
                                 child: Image.asset("assets/profilepic.png"),

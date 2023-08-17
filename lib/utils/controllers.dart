@@ -47,3 +47,13 @@ final editclubdescriptionController = TextEditingController();
 final currentPass = TextEditingController();
 final newPassword = TextEditingController();
 final newConfrimPassword = TextEditingController();
+
+//Create New Event
+final eventNameController = TextEditingController();
+final eventTypeController = TextEditingController();
+final selectDate = TextEditingController();
+final fromDateController = TextEditingController();
+final toDateController = TextEditingController();
+final eventLocationController = TextEditingController();
+final eventdescriptionController = TextEditingController();
+final eventamenitiesController = TextEditingController();

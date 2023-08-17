@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:partymania_owners/screens/dashboard/widgets/home_grid_widget.dart';
 import 'package:partymania_owners/screens/dashboard/widgets/home_list_view_widget.dart';
+import 'package:partymania_owners/screens/details/create_new_event.dart';
 
 import 'package:partymania_owners/utils/colors.dart';
 
@@ -30,7 +31,8 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Colors.transparent,
             foregroundColor: Colors.white,
             onPressed: () {
-              // Respond to button press
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (builder) => CreateNewEvent()));
             },
             icon: Icon(Icons.event),
             label: Text('Create Event'),
