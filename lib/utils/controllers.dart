@@ -30,3 +30,15 @@ final searchController = TextEditingController();
 final editProfileFullNameController = TextEditingController();
 final editProfileEmailController = TextEditingController();
 final editPhoneController = TextEditingController();
+
+//Edit Club
+final editclubimageController = TextEditingController();
+final editclubNameController = TextEditingController();
+final editclubTypeController = TextEditingController();
+final editclubphoneNumberClubController = TextEditingController();
+final editclubLocationController = TextEditingController();
+final editclubCityController = TextEditingController();
+final editclubStateController = TextEditingController();
+final editamenitiesController = TextEditingController();
+final editclubZipCodeController = TextEditingController();
+final editclubdescriptionController = TextEditingController();
