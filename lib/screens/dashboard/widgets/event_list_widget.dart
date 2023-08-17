@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:partymania_owners/screens/details/event_details.dart';
 import 'package:partymania_owners/utils/colors.dart';
 
 class EventListViewWidget extends StatefulWidget {
@@ -30,10 +31,10 @@ class _EventListViewWidgetState extends State<EventListViewWidget> {
                       children: [
                         InkWell(
                           onTap: () {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (builder) => EventDetails()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (builder) => EventDetails()));
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
