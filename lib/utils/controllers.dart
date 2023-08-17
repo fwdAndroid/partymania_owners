@@ -25,3 +25,8 @@ final descriptionController = TextEditingController();
 
 //Event Edit
 final searchController = TextEditingController();
+
+//Edit Profile
+final editProfileFullNameController = TextEditingController();
+final editProfileEmailController = TextEditingController();
+final editPhoneController = TextEditingController();
