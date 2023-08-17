@@ -412,6 +412,208 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              "Table and Blueprint",
+              style: TextStyle(
+                  color: textColor, fontWeight: FontWeight.w500, fontSize: 20),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Image.asset(
+              "assets/add.png",
+              width: 100,
+              height: 100,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Ticket Purchase Deadline",
+                style: TextStyle(
+                    color: textColor,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormInputField(
+                suIcon: Padding(
+                    padding: const EdgeInsets.all(13.0),
+                    child: Icon(
+                      Icons.calendar_month,
+                      color: textColor,
+                    )),
+                textInputType: TextInputType.text,
+                hintText: "Choose a Ticket Purchase Deadline",
+                controller: ticketPurchaseDeadlineController,
+              )
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              "Table and Blueprint",
+              style: TextStyle(
+                  color: textColor, fontWeight: FontWeight.w500, fontSize: 20),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Upload Tables Blueprint",
+                style: TextStyle(
+                    color: textColor,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormInputField(
+                suIcon: Padding(
+                    padding: const EdgeInsets.all(13.0),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0)),
+                            backgroundColor: otpColor),
+                        onPressed: () {},
+                        child: Text(
+                          "Upload",
+                          style: TextStyle(color: textColor),
+                        ))),
+                textInputType: TextInputType.text,
+                hintText: "12.jpg",
+                controller: ticketPurchaseUploadController,
+              )
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Image.asset(
+              "assets/add.png",
+              width: 100,
+              height: 100,
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              "Create Offer",
+              style: TextStyle(
+                  color: textColor, fontWeight: FontWeight.w500, fontSize: 20),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Offer Name",
+                style: TextStyle(
+                    color: textColor,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormInputField(
+                textInputType: TextInputType.text,
+                hintText: "12255",
+                controller: offerNameController,
+              )
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Offer Code",
+                style: TextStyle(
+                    color: textColor,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormInputField(
+                textInputType: TextInputType.text,
+                hintText: "12255",
+                controller: offerCodeController,
+              )
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              "Terms & Condition",
+              style: TextStyle(
+                  color: textColor, fontWeight: FontWeight.w500, fontSize: 20),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextFormInputField(
+            suIcon: Padding(
+                padding: const EdgeInsets.all(13.0),
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0)),
+                        backgroundColor: otpColor),
+                    onPressed: () {},
+                    child: Text(
+                      "Upload",
+                      style: TextStyle(color: textColor),
+                    ))),
+            textInputType: TextInputType.text,
+            hintText: "Type Terms & Condition",
+            controller: termsController,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -419,7 +621,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                 height: 15,
               ),
               SaveButton(
-                  title: "Save",
+                  title: "Publish Event",
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (builder) => MainScreen()));
