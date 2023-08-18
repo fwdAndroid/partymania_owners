@@ -62,3 +62,15 @@ final ticketPurchaseUploadController = TextEditingController();
 final offerNameController = TextEditingController();
 final offerCodeController = TextEditingController();
 final termsController = TextEditingController();
+
+//Help
+final emailController = TextEditingController();
+final subjectController = TextEditingController();
+final dse = TextEditingController();
+
+//Handler
+final handlerFullName = TextEditingController();
+final handlerEmail = TextEditingController();
+final handlerPhone = TextEditingController();
+final handlerP = TextEditingController();
+final handlerCP = TextEditingController();
