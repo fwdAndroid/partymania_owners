@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/auth/login_screen.dart';
-import 'package:partymania_owners/screens/profile/create_profile.dart';
+import 'package:partymania_owners/services/auth_methods.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
 import 'package:partymania_owners/utils/textformfield.dart';
+import 'package:partymania_owners/utils/utils.dart';
 
 class SignUpAccounts extends StatefulWidget {
   const SignUpAccounts({super.key});
@@ -14,6 +15,8 @@ class SignUpAccounts extends StatefulWidget {
 }
 
 class _SignUpAccountsState extends State<SignUpAccounts> {
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -224,15 +227,11 @@ class _SignUpAccountsState extends State<SignUpAccounts> {
               const SizedBox(
                 height: 15,
               ),
-              Center(
-                  child: SaveButton(
-                      title: 'Signup',
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (builder) => CreateProfile()));
-                      })),
+              _isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : SaveButton(title: "SignUp", onTap: onTap),
               const SizedBox(
                 height: 15,
               ),
@@ -274,5 +273,28 @@ class _SignUpAccountsState extends State<SignUpAccounts> {
         ),
       ),
     );
+  }
+
+  void onTap() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String rse = await AuthMethods().signUpUser(
+        email: emailController.text,
+        phone_Number: phoneNumberController.text,
+        confrimPassword: confrimPassword.text,
+        createPassword: createPassword.text,
+        fullName: signUpFullNameController.text);
+
+    print(rse);
+    setState(() {
+      _isLoading = false;
+    });
+    if (rse != 'sucess') {
+      showSnakBar(rse, context);
+    } else {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (builder) => LoginScreen()));
+    }
   }
 }
