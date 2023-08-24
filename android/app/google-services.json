@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "810974021735",
+    "project_id": "partymania-773c6",
+    "storage_bucket": "partymania-773c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810974021735:android:8cabbdf7e71d968c3becc2",
+        "android_client_info": {
+          "package_name": "com.example.partymania_owners"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810974021735-1fot9ala7e443uv7nnrl2ovt7g2lcoki.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYmVqL_qHMtCq3eZtVUAYl6aIPCO65H0I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810974021735-1fot9ala7e443uv7nnrl2ovt7g2lcoki.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
