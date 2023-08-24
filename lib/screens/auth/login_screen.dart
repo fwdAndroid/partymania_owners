@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/auth/getotp.dart';
 import 'package:partymania_owners/screens/auth/signup_account.dart';
 import 'package:partymania_owners/screens/main_dashboard.dart';
+import 'package:partymania_owners/services/auth_methods.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
 import 'package:partymania_owners/utils/textformfield.dart';
+import 'package:partymania_owners/utils/utils.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,6 +17,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,15 +127,16 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(
               height: 30,
             ),
-            Center(
-                child: SaveButton(
-                    title: 'Login',
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (builder) => MainScreen()));
-                    })),
+            _isLoading
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Center(
+                    child: SaveButton(
+                      title: 'Login',
+                      onTap: loginUser,
+                    ),
+                  ),
             const SizedBox(
               height: 15,
             ),
@@ -172,5 +177,26 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  void loginUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String rse = await AuthMethods().loginUpUser(
+      email: loginEmailController.text,
+      pass: passwordController.text,
+    );
+
+    print(rse);
+    setState(() {
+      _isLoading = false;
+    });
+    if (rse == 'sucess') {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (builder) => MainScreen()));
+    } else {
+      showSnakBar(rse, context);
+    }
   }
 }

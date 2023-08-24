@@ -231,7 +231,7 @@ class _SignUpAccountsState extends State<SignUpAccounts> {
                   ? Center(
                       child: CircularProgressIndicator(),
                     )
-                  : SaveButton(title: "SignUp", onTap: onTap),
+                  : Center(child: SaveButton(title: "SignUp", onTap: onTap)),
               const SizedBox(
                 height: 15,
               ),
@@ -280,7 +280,7 @@ class _SignUpAccountsState extends State<SignUpAccounts> {
       _isLoading = true;
     });
     String rse = await AuthMethods().signUpUser(
-        email: emailController.text,
+        email: signUpEmailController.text,
         phone_Number: phoneNumberController.text,
         confrimPassword: confrimPassword.text,
         createPassword: createPassword.text,
