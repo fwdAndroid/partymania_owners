@@ -367,12 +367,13 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
               const SizedBox(
                 height: 15,
               ),
-              SaveButton(
-                  title: "Create Club",
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (builder) => LoginScreen()));
-                  })
+              _isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Center(
+                      child:
+                          SaveButton(title: "Create Club", onTap: createClub))
             ],
           ),
         ),
@@ -395,7 +396,7 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
     });
   }
 
-  signUpUsers() async {
+  createClub() async {
     setState(() {
       _isLoading = true;
     });
