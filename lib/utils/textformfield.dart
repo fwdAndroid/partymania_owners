@@ -12,6 +12,7 @@ class TextFormInputField extends StatelessWidget {
 
   final void Function()? onTap;
   final void Function(String)? onChanged;
+  final void Function(String)? onFieldSubmitted;
 
   final AutovalidateMode? autovalidateMode;
   final FormFieldValidator? validat;
@@ -25,6 +26,7 @@ class TextFormInputField extends StatelessWidget {
       this.isPass = false,
       this.preIcon,
       this.suIcon,
+      this.onFieldSubmitted,
       this.onChanged,
       this.error,
       this.maxLines,
@@ -40,8 +42,9 @@ class TextFormInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 335,
-      height: 60,
+      height: 65,
       child: TextFormField(
+        onFieldSubmitted: onFieldSubmitted,
         maxLines: maxLines,
         style: TextStyle(color: textColor),
         onTap: onTap,

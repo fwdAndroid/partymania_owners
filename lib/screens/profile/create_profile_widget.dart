@@ -1,9 +1,15 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:partymania_owners/screens/auth/login_screen.dart';
+import 'package:partymania_owners/screens/main_dashboard.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
+import 'package:partymania_owners/utils/image.dart';
 import 'package:partymania_owners/utils/textformfield.dart';
+import 'package:partymania_owners/utils/utils.dart';
 
 class CreateProfileWidget extends StatefulWidget {
   const CreateProfileWidget({super.key});
@@ -13,10 +19,25 @@ class CreateProfileWidget extends StatefulWidget {
 }
 
 class _CreateProfileWidgetState extends State<CreateProfileWidget> {
+  Uint8List? _coverPhoto;
+  Uint8List? _ticketBluePrint;
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: _coverPhoto != null
+              ? Image.memory(
+                  _coverPhoto!,
+                  width: 335,
+                  height: 160,
+                  fit: BoxFit.fill,
+                )
+              : InkWell(
+                  onTap: selectImage, child: Image.asset("assets/img.png")),
+        ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -32,23 +53,38 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
               SizedBox(
                 height: 10,
               ),
-              TextFormInputField(
-                suIcon: Padding(
-                    padding: const EdgeInsets.all(13.0),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0)),
-                            backgroundColor: otpColor),
-                        onPressed: () {},
-                        child: Text(
-                          "Upload",
-                          style: TextStyle(color: textColor),
-                        ))),
-                textInputType: TextInputType.text,
-                hintText: "img.jpg",
-                controller: imageController,
-              )
+              _ticketBluePrint != null
+                  ? Center(
+                      child: InkWell(
+                        onTap: selectTicket,
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image.memory(
+                              _ticketBluePrint!,
+                              width: 167,
+                              height: 90,
+                              fit: BoxFit.cover,
+                            )),
+                      ),
+                    )
+                  : TextFormInputField(
+                      suIcon: Padding(
+                          padding: const EdgeInsets.all(13.0),
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                  backgroundColor: otpColor),
+                              onPressed: selectTicket,
+                              child: Text(
+                                "Upload",
+                                style: TextStyle(color: textColor),
+                              ))),
+                      textInputType: TextInputType.text,
+                      hintText: "img.jpg",
+                      controller: imageController,
+                    )
             ],
           ),
         ),
@@ -340,5 +376,43 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
         ),
       ],
     );
+  }
+
+  //Functions
+  selectImage() async {
+    Uint8List ui = await pickImage(ImageSource.gallery);
+    setState(() {
+      _coverPhoto = ui;
+    });
+  }
+
+  void selectTicket() async {
+    Uint8List ui = await pickImage(ImageSource.gallery);
+    setState(() {
+      _ticketBluePrint = ui;
+    });
+  }
+
+  signUpUsers() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String rse = await AuthMethods().signUpUser(
+        email: emailController.text,
+        pass: passController.text,
+        bio: bioController.text,
+        username: userNameController.text,
+        file: _image!);
+
+    print(rse);
+    setState(() {
+      _isLoading = false;
+    });
+    if (rse != 'sucess') {
+      showSnakBar(rse, context);
+    } else {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (builder) => MainScreen()));
+    }
   }
 }

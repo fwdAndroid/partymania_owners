@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/auth/login_screen.dart';
+import 'package:partymania_owners/screens/profile/create_profile.dart';
 import 'package:partymania_owners/services/auth_methods.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
@@ -294,7 +295,7 @@ class _SignUpAccountsState extends State<SignUpAccounts> {
       showSnakBar(rse, context);
     } else {
       Navigator.push(
-          context, MaterialPageRoute(builder: (builder) => LoginScreen()));
+          context, MaterialPageRoute(builder: (builder) => CreateProfile()));
     }
   }
 }

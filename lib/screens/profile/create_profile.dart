@@ -43,10 +43,6 @@ class _CreateProfileState extends State<CreateProfile> {
                       fontWeight: FontWeight.w400),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset("assets/img.png"),
-              ),
               CreateProfileWidget()
             ],
           ),
