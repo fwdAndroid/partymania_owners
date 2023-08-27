@@ -1,9 +1,11 @@
 import 'dart:typed_data';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:partymania_owners/screens/auth/login_screen.dart';
 import 'package:partymania_owners/screens/main_dashboard.dart';
+import 'package:partymania_owners/services/database_methods.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
@@ -397,12 +399,19 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
     setState(() {
       _isLoading = true;
     });
-    String rse = await AuthMethods().signUpUser(
-        email: emailController.text,
-        pass: passController.text,
-        bio: bioController.text,
-        username: userNameController.text,
-        file: _image!);
+    String rse = await FirebaseMethods().createClub(
+        _coverPhoto!,
+        _ticketBluePrint!,
+        descriptionController.text,
+        FirebaseAuth.instance.currentUser!.uid,
+        clubLocationController.text,
+        phoneNumberClubController.text,
+        clubNameController.text,
+        clubTypeController.text,
+        clubStateController.text,
+        clubCityController.text,
+        clubZipCodeController.text,
+        amenitiesController.text);
 
     print(rse);
     setState(() {

@@ -11,7 +11,7 @@ final phoneNumberController = TextEditingController();
 final createPassword = TextEditingController();
 final confrimPassword = TextEditingController();
 
-//Create Profile
+//Create Club
 final imageController = TextEditingController();
 final clubNameController = TextEditingController();
 final clubTypeController = TextEditingController();
