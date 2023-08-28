@@ -1,14 +1,17 @@
 import 'dart:typed_data';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:partymania_owners/screens/main_dashboard.dart';
+import 'package:partymania_owners/services/database_methods.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
 import 'package:partymania_owners/utils/image.dart';
 import 'package:partymania_owners/utils/textformfield.dart';
+import 'package:partymania_owners/utils/utils.dart';
 
 enum Fruit { day, night, both }
 
@@ -34,6 +37,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
   Artist? _artist = Artist.Guestlist;
   TimeOfDay _selectedTime = TimeOfDay.now();
   String dropdownvalue = 'Before';
+  bool _isLoading = false;
 
   // List of items in our dropdown menu
   var items = [
@@ -626,12 +630,16 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
               const SizedBox(
                 height: 15,
               ),
-              SaveButton(
-                  title: "Publish Event",
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (builder) => MainScreen()));
-                  }),
+              _isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Center(
+                      child: SaveButton(
+                        title: "Publish Event",
+                        onTap: () => createEvent(),
+                      ),
+                    ),
               const SizedBox(
                 height: 15,
               ),
@@ -1082,5 +1090,39 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
     setState(() {
       eventPhoto = ui;
     });
+  }
+
+  createEvent() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String rse = await FirebaseMethods().createEvent(
+        eventNameController.text,
+        selectDate.text,
+        fromDateController.text,
+        "createOffer",
+        eventTypeController.text,
+        eventCoverPhoto!,
+        eventPhoto!,
+        eventdescriptionController.text,
+        FirebaseAuth.instance.currentUser!.uid,
+        eventLocationController.text,
+        ticketPurchaseDeadlineController.text,
+        toDateController.text,
+        offerNameController.text,
+        _fruit.toString(),
+        offerCodeController.text,
+        eventamenitiesController.text);
+
+    print(rse);
+    setState(() {
+      _isLoading = false;
+    });
+    if (rse != 'sucess') {
+      showSnakBar(rse, context);
+    } else {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (builder) => MainScreen()));
+    }
   }
 }

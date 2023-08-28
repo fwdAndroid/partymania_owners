@@ -14,7 +14,7 @@ class EventModel {
   String timeDeadlineTicket;
   String eventAmenities;
   String eventDescription;
-  String coupleValue;
+  final coupleValue;
   String createOffer;
   String offerCode;
 

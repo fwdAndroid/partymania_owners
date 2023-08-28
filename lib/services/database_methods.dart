@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:partymania_owners/model/club_create_model.dart';
 import 'package:partymania_owners/model/event_model.dart';
 import 'package:partymania_owners/services/storage_methods.dart';
@@ -70,10 +69,9 @@ class FirebaseMethods {
       String uid,
       String eventLocation,
       String timeDeadlineTicket,
-      String uuid,
       String toDate,
       String nameOffer,
-      String coupleValue,
+      final coupleValue,
       String offerCode,
       String eventAmenities) async {
     String res = "Some Information Regarding Event is Missing";
@@ -82,6 +80,7 @@ class FirebaseMethods {
           .uploadImageToStorage("eventCoverPhoto", eventCoverPhoto, true);
       String eventTicketPhoto = await StorageMethods()
           .uploadImageToStorage("eventTicketPhoto", eventPhoto, true);
+      var uuid = Uuid().v4();
       EventModel postModel = EventModel(
           coupleValue: coupleValue,
           createOffer: createOffer,
