@@ -1,11 +1,13 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:partymania_owners/screens/main_dashboard.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
+import 'package:partymania_owners/utils/image.dart';
 import 'package:partymania_owners/utils/textformfield.dart';
 
 enum Fruit { day, night, both }
@@ -48,11 +50,31 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(
-                "assets/add.png",
-                width: 80,
-                height: 80,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: eventCoverPhoto != null
+                    ? Image.memory(
+                        eventCoverPhoto!,
+                        width: 335,
+                        height: 160,
+                        fit: BoxFit.fill,
+                      )
+                    : InkWell(
+                        onTap: () => selectEventImage(),
+                        child: Image.asset("assets/img.png")),
               ),
+              eventPhoto != null
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.memory(eventPhoto!))
+                  : InkWell(
+                      onTap: () => eventPhotos(),
+                      child: Image.asset(
+                        "assets/add.png",
+                        width: 80,
+                        height: 80,
+                      ),
+                    ),
               const SizedBox(
                 height: 10,
               ),
@@ -182,7 +204,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                       width: 10,
                     )),
                 textInputType: TextInputType.text,
-                hintText: "Event Name",
+                hintText: "Event Type",
                 controller: eventTypeController,
               )
             ],
@@ -1046,5 +1068,19 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
         timeBeforeController.text = _selectedTime.format(context);
       });
     }
+  }
+
+  selectEventImage() async {
+    Uint8List ui = await pickImage(ImageSource.gallery);
+    setState(() {
+      eventCoverPhoto = ui;
+    });
+  }
+
+  eventPhotos() async {
+    Uint8List ui = await pickImage(ImageSource.gallery);
+    setState(() {
+      eventPhoto = ui;
+    });
   }
 }

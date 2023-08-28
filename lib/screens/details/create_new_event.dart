@@ -32,10 +32,6 @@ class _CreateNewEventState extends State<CreateNewEvent> {
               const SizedBox(
                 height: 20,
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset("assets/img.png"),
-              ),
               CreateNewEventWidget()
             ],
           ),

@@ -371,9 +371,7 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
                   ? Center(
                       child: CircularProgressIndicator(),
                     )
-                  : Center(
-                      child:
-                          SaveButton(title: "Create Club", onTap: createClub))
+                  : SaveButton(title: "Create Club", onTap: createClub)
             ],
           ),
         ),
