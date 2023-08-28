@@ -5,14 +5,14 @@ import 'package:partymania_owners/screens/user_profie/edit_user_club_profile.dar
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 
-class Settings extends StatefulWidget {
-  const Settings({super.key});
+class MySetting extends StatefulWidget {
+  const MySetting({super.key});
 
   @override
-  State<Settings> createState() => _SettingsState();
+  State<MySetting> createState() => _MySettingState();
 }
 
-class _SettingsState extends State<Settings> {
+class _MySettingState extends State<MySetting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +21,7 @@ class _SettingsState extends State<Settings> {
         iconTheme: IconThemeData(color: textColor),
         centerTitle: true,
         title: Text(
-          "Settings",
+          "MySetting",
           style: TextStyle(
               color: textColor, fontWeight: FontWeight.w500, fontSize: 16),
         ),
