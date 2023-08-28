@@ -1,9 +1,20 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:partymania_owners/screens/main_dashboard.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
 import 'package:partymania_owners/utils/textformfield.dart';
+
+enum Fruit { day, night, both }
+
+enum Couples { Couple, Male, Female }
+
+enum Artist { Guestlist, FullCover, NoCover }
+
+enum TableNo { TableCharge, FullCover }
 
 class CreateNewEventWidget extends StatefulWidget {
   const CreateNewEventWidget({super.key});
@@ -13,6 +24,21 @@ class CreateNewEventWidget extends StatefulWidget {
 }
 
 class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
+  Uint8List? eventCoverPhoto;
+  Uint8List? eventPhoto;
+  Fruit? _fruit = Fruit.day;
+  Couples? _couples = Couples.Couple;
+  TableNo? _tableNo = TableNo.TableCharge;
+  Artist? _artist = Artist.Guestlist;
+  TimeOfDay _selectedTime = TimeOfDay.now();
+  String dropdownvalue = 'Before';
+
+  // List of items in our dropdown menu
+  var items = [
+    'Before',
+    'After',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,80 +48,10 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Image.asset(
-                        "assets/add.png",
-                        width: 80,
-                        height: 80,
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Image.asset(
-                        "assets/add.png",
-                        width: 80,
-                        height: 80,
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Image.asset(
-                        "assets/add.png",
-                        width: 80,
-                        height: 80,
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Image.asset(
-                        "assets/add.png",
-                        width: 80,
-                        height: 80,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Image.asset(
-                        "assets/add.png",
-                        width: 80,
-                        height: 80,
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Image.asset(
-                        "assets/add.png",
-                        width: 80,
-                        height: 80,
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Image.asset(
-                        "assets/add.png",
-                        width: 80,
-                        height: 80,
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Image.asset(
-                        "assets/add.png",
-                        width: 80,
-                        height: 80,
-                      ),
-                    ],
-                  ),
-                ],
+              Image.asset(
+                "assets/add.png",
+                width: 80,
+                height: 80,
               ),
               const SizedBox(
                 height: 10,
@@ -114,9 +70,13 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                     child: Row(
                       children: [
                         Radio(
-                            value: 1,
-                            groupValue: 'null',
-                            onChanged: (index) {}),
+                            value: Fruit.day,
+                            groupValue: _fruit,
+                            onChanged: (Fruit? value) {
+                              setState(() {
+                                _fruit = value;
+                              });
+                            }),
                         Expanded(
                           child: Text(
                             'Day',
@@ -131,9 +91,13 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                     child: Row(
                       children: [
                         Radio(
-                            value: 1,
-                            groupValue: 'null',
-                            onChanged: (index) {}),
+                            value: Fruit.night,
+                            groupValue: _fruit,
+                            onChanged: (Fruit? value) {
+                              setState(() {
+                                _fruit = value;
+                              });
+                            }),
                         Expanded(
                             child: Text(
                           'Night',
@@ -147,9 +111,13 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                     child: Row(
                       children: [
                         Radio(
-                            value: 1,
-                            groupValue: 'null',
-                            onChanged: (index) {}),
+                            value: Fruit.both,
+                            groupValue: _fruit,
+                            onChanged: (Fruit? value) {
+                              setState(() {
+                                _fruit = value;
+                              });
+                            }),
                         Expanded(
                             child: Text(
                           'Both',
@@ -236,6 +204,9 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                 height: 10,
               ),
               TextFormInputField(
+                onTap: () {
+                  _selectDate();
+                },
                 suIcon: Icon(
                   Icons.calendar_month,
                   color: textColor,
@@ -266,6 +237,9 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                       height: 7,
                     ),
                     TextFormInputField(
+                      onTap: () {
+                        _selectFromTime();
+                      },
                       suIcon: Padding(
                         padding: const EdgeInsets.all(13.0),
                         child: Image.asset(
@@ -299,6 +273,9 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                       height: 7,
                     ),
                     TextFormInputField(
+                      onTap: () {
+                        _selectToTime();
+                      },
                       suIcon: Padding(
                         padding: const EdgeInsets.all(13.0),
                         child: Image.asset(
@@ -415,7 +392,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
           child: Align(
             alignment: AlignmentDirectional.centerStart,
             child: Text(
-              "Table and Blueprint",
+              "Tickets and Payments",
               style: TextStyle(
                   color: textColor, fontWeight: FontWeight.w500, fontSize: 20),
             ),
@@ -425,10 +402,13 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
           padding: const EdgeInsets.all(8.0),
           child: Align(
             alignment: AlignmentDirectional.centerStart,
-            child: Image.asset(
-              "assets/add.png",
-              width: 100,
-              height: 100,
+            child: InkWell(
+              onTap: () => showAlertDialog(),
+              child: Image.asset(
+                "assets/add.png",
+                width: 100,
+                height: 100,
+              ),
             ),
           ),
         ),
@@ -448,6 +428,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                 height: 10,
               ),
               TextFormInputField(
+                onTap: _selectDate2,
                 suIcon: Padding(
                     padding: const EdgeInsets.all(13.0),
                     child: Icon(
@@ -514,10 +495,13 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
           padding: const EdgeInsets.all(8.0),
           child: Align(
             alignment: AlignmentDirectional.centerStart,
-            child: Image.asset(
-              "assets/add.png",
-              width: 100,
-              height: 100,
+            child: InkWell(
+              onTap: showAlertDialog2,
+              child: Image.asset(
+                "assets/add.png",
+                width: 100,
+                height: 100,
+              ),
             ),
           ),
         ),
@@ -634,5 +618,433 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
         ),
       ],
     );
+  }
+
+  //Functions
+  void _selectDate() async {
+    await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2015),
+      lastDate: DateTime(2025),
+    ).then((selectedDate) {
+      if (selectedDate != null) {
+        selectDate.text = DateFormat('yyyy-MM-dd').format(selectedDate);
+      }
+    });
+  }
+
+  void _selectDate2() async {
+    await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2015),
+      lastDate: DateTime(2025),
+    ).then((selectedDate) {
+      if (selectedDate != null) {
+        ticketPurchaseDeadlineController.text =
+            DateFormat('yyyy-MM-dd').format(selectedDate);
+      }
+    });
+  }
+
+  void _selectFromTime() async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: _selectedTime,
+    );
+
+    if (picked != null && picked != _selectedTime) {
+      setState(() {
+        _selectedTime = picked;
+        fromDateController.text = _selectedTime.format(context);
+      });
+    }
+  }
+
+  void _selectToTime() async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: _selectedTime,
+    );
+
+    if (picked != null && picked != _selectedTime) {
+      setState(() {
+        _selectedTime = picked;
+        toDateController.text = _selectedTime.format(context);
+      });
+    }
+  }
+
+  showAlertDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          insetPadding: EdgeInsets.all(8),
+          contentPadding: EdgeInsets.all(8),
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          title: Text(
+            'Add Ticket',
+            style: TextStyle(color: colorBlack),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Radio(
+                              value: Couples.Couple,
+                              groupValue: _couples,
+                              onChanged: (Couples? value) {
+                                setState(() {
+                                  _couples = value;
+                                });
+                              }),
+                          Expanded(
+                              child: Text(
+                            'Couples',
+                            style: TextStyle(color: colorBlack),
+                          ))
+                        ],
+                      ),
+                      flex: 1,
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Radio(
+                              value: Couples.Male,
+                              groupValue: _couples,
+                              onChanged: (Couples? value) {
+                                setState(() {
+                                  _couples = value;
+                                });
+                              }),
+                          Expanded(
+                            child: Text(
+                              'Male',
+                              style: TextStyle(color: colorBlack),
+                            ),
+                          )
+                        ],
+                      ),
+                      flex: 1,
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Radio(
+                              value: Couples.Female,
+                              groupValue: _couples,
+                              onChanged: (Couples? value) {
+                                setState(() {
+                                  _couples = value;
+                                });
+                              }),
+                          Expanded(
+                              child: Text(
+                            'Female',
+                            style: TextStyle(color: colorBlack),
+                          ))
+                        ],
+                      ),
+                      flex: 1,
+                    ),
+                  ],
+                ),
+                //Artist
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Radio(
+                              value: Artist.Guestlist,
+                              groupValue: _artist,
+                              onChanged: (Artist? value) {
+                                setState(() {
+                                  _artist = value;
+                                });
+                              }),
+                          Expanded(
+                              child: Text(
+                            'Guestlist',
+                            style: TextStyle(color: colorBlack),
+                          ))
+                        ],
+                      ),
+                      flex: 1,
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Radio(
+                              value: Artist.FullCover,
+                              groupValue: _artist,
+                              onChanged: (Artist? value) {
+                                setState(() {
+                                  _artist = value;
+                                });
+                              }),
+                          Expanded(
+                            child: Text(
+                              'Full Cover',
+                              style: TextStyle(color: colorBlack),
+                            ),
+                          )
+                        ],
+                      ),
+                      flex: 1,
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Radio(
+                              value: Artist.NoCover,
+                              groupValue: _artist,
+                              onChanged: (Artist? value) {
+                                setState(() {
+                                  _artist = value;
+                                });
+                              }),
+                          Expanded(
+                              child: Text(
+                            'No Cover',
+                            style: TextStyle(color: colorBlack),
+                          ))
+                        ],
+                      ),
+                      flex: 1,
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: DropdownButton(
+                        // Initial Value
+                        value: dropdownvalue,
+
+                        // Down Arrow Icon
+                        icon: const Icon(Icons.keyboard_arrow_down),
+
+                        // Array list of items
+                        items: items.map((String items) {
+                          return DropdownMenuItem(
+                            value: items,
+                            child: Text(items),
+                          );
+                        }).toList(),
+                        // After selecting the desired option,it will
+                        // change button value to selected value
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownvalue = newValue!;
+                          });
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 7,
+                    ),
+                    Expanded(
+                      child: TextFormInputField(
+                        onTap: () {
+                          _selectFromTimeAlert();
+                        },
+                        suIcon: Padding(
+                          padding: const EdgeInsets.all(13.0),
+                          child: Image.asset(
+                            "assets/clock.png",
+                            width: 10,
+                            height: 10,
+                          ),
+                        ),
+                        textInputType: TextInputType.text,
+                        hintText: "9:30 AM",
+                        controller: timeBeforeController,
+                      ),
+                    ),
+                  ],
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextFormInputField(
+                          textInputType: TextInputType.number,
+                          hintText: "Total Tickets",
+                          controller: totalTicketsController,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 7,
+                      ),
+                      Expanded(
+                        child: TextFormInputField(
+                          textInputType: TextInputType.number,
+                          hintText: "Price",
+                          controller: priceController,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SaveButton(title: "Add", onTap: () {})
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  showAlertDialog2() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          insetPadding: EdgeInsets.all(8),
+          contentPadding: EdgeInsets.all(8),
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          title: Text(
+            'Add Table',
+            style: TextStyle(color: colorBlack),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                TextFormInputField(
+                  textInputType: TextInputType.number,
+                  hintText: "Enter Table Number",
+                  controller: tableNumberController,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Radio(
+                              value: TableNo.TableCharge,
+                              groupValue: _tableNo,
+                              onChanged: (TableNo? value) {
+                                setState(() {
+                                  _tableNo = value;
+                                });
+                              }),
+                          Expanded(
+                              child: Text(
+                            'Table Charge',
+                            style: TextStyle(color: colorBlack),
+                          ))
+                        ],
+                      ),
+                      flex: 1,
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Radio(
+                              value: TableNo.FullCover,
+                              groupValue: _tableNo,
+                              onChanged: (TableNo? value) {
+                                setState(() {
+                                  _tableNo = value;
+                                });
+                              }),
+                          Expanded(
+                            child: Text(
+                              'Full Cover',
+                              style: TextStyle(color: colorBlack),
+                            ),
+                          )
+                        ],
+                      ),
+                      flex: 1,
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextFormInputField(
+                          textInputType: TextInputType.number,
+                          hintText: "Number of People",
+                          controller: peopleController,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 7,
+                      ),
+                      Expanded(
+                        child: TextFormInputField(
+                          textInputType: TextInputType.number,
+                          hintText: "Type of Table",
+                          controller: tableType,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextFormInputField(
+                          textInputType: TextInputType.number,
+                          hintText: "Number of People",
+                          controller: peopleController,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 7,
+                      ),
+                      Expanded(
+                        child: TextFormInputField(
+                          textInputType: TextInputType.number,
+                          hintText: "Type of Table",
+                          controller: tableType,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SaveButton(title: "Add", onTap: () {})
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _selectFromTimeAlert() async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: _selectedTime,
+    );
+
+    if (picked != null && picked != _selectedTime) {
+      setState(() {
+        _selectedTime = picked;
+        timeBeforeController.text = _selectedTime.format(context);
+      });
+    }
   }
 }

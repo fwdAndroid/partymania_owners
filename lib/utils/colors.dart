@@ -5,3 +5,4 @@ final textColor = Colors.white;
 final borderColor = Color(0xffFFFFFF);
 final textFieldColor = Color(0xff4E4E4E);
 final otpColor = Color(0xffE94057);
+final colorBlack = Colors.black;

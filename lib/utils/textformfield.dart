@@ -6,6 +6,7 @@ class TextFormInputField extends StatelessWidget {
   final TextEditingController controller;
   final bool isPass;
   final String hintText;
+  final TextStyle? hintStyle;
   final TextInputType textInputType;
   final Widget? preIcon;
   final Widget? suIcon;
@@ -27,6 +28,7 @@ class TextFormInputField extends StatelessWidget {
       this.preIcon,
       this.suIcon,
       this.onFieldSubmitted,
+      this.hintStyle,
       this.onChanged,
       this.error,
       this.maxLines,

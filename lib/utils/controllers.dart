@@ -74,3 +74,13 @@ final handlerEmail = TextEditingController();
 final handlerPhone = TextEditingController();
 final handlerP = TextEditingController();
 final handlerCP = TextEditingController();
+
+//Event
+final beforeController = TextEditingController();
+final timeController = TextEditingController();
+final totalTicketsController = TextEditingController();
+final priceController = TextEditingController();
+final timeBeforeController = TextEditingController();
+final tableNumberController = TextEditingController();
+final peopleController = TextEditingController();
+final tableType = TextEditingController();
