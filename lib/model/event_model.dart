@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class eventModel {
+class EventModel {
   String uid;
   String uuid;
   String eventDate;
@@ -20,7 +20,7 @@ class eventModel {
 
   String nameOffer;
 
-  eventModel(
+  EventModel(
       {required this.uid,
       required this.eventDate,
       required this.fromTime,
@@ -61,10 +61,10 @@ class eventModel {
       };
 
   ///
-  static eventModel fromSnap(DocumentSnapshot snaps) {
+  static EventModel fromSnap(DocumentSnapshot snaps) {
     var snapshot = snaps.data() as Map<String, dynamic>;
 
-    return eventModel(
+    return EventModel(
         eventName: snapshot['eventName'],
         uid: snapshot['uid'],
         eventDate: snapshot['eventDate'],
