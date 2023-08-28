@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:partymania_owners/screens/auth/login_screen.dart';
 import 'package:partymania_owners/screens/main_dashboard.dart';
+import 'package:partymania_owners/services/auth_methods.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
@@ -13,6 +16,7 @@ class CreateHandler extends StatefulWidget {
 }
 
 class _CreateHandlerState extends State<CreateHandler> {
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -197,15 +201,13 @@ class _CreateHandlerState extends State<CreateHandler> {
               const SizedBox(
                 height: 15,
               ),
-              Center(
-                  child: SaveButton(
-                      title: 'Add Handler',
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (builder) => MainScreen()));
-                      })),
+              _isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Center(
+                      child: SaveButton(title: 'Add Handler', onTap: onCreate),
+                    ),
               const SizedBox(
                 height: 15,
               ),
@@ -214,5 +216,46 @@ class _CreateHandlerState extends State<CreateHandler> {
         ),
       ),
     );
+  }
+
+  void onCreate() async {
+    //Area
+
+    if (handlerP.text.isEmpty &&
+        handlerEmail.text.isEmpty &&
+        handlerFullName.text.isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("All Fields are required")));
+    } else if (handlerEmail.text.isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("email address is required")));
+    } else if (handlerFullName.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("name of the user is required")));
+    } else if (handlerP.text.isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("password is required")));
+    } else {
+      setState(() {
+        _isLoading = true;
+      });
+      String rse = await AuthMethods().handlerSignUp(
+          currentUid: FirebaseAuth.instance.currentUser!.uid,
+          email: handlerEmail.text,
+          fullName: handlerFullName.text,
+          phone_Number: handlerPhone.text,
+          createPassword: handlerP.text,
+          confrimPassword: handlerCP.text);
+
+      print(rse);
+      setState(() {
+        _isLoading = false;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Conguration Handler is Created")));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (builder) => LoginScreen()));
+    }
   }
 }
