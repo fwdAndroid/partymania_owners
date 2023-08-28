@@ -70,7 +70,11 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
               eventPhoto != null
                   ? ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: Image.memory(eventPhoto!))
+                      child: Image.memory(
+                        eventPhoto!,
+                        width: 80,
+                        height: 80,
+                      ))
                   : InkWell(
                       onTap: () => eventPhotos(),
                       child: Image.asset(
@@ -706,6 +710,20 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
     }
   }
 
+  void _selectFromTimeAlert() async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: _selectedTime,
+    );
+
+    if (picked != null && picked != _selectedTime) {
+      setState(() {
+        _selectedTime = picked;
+        timeBeforeController.text = _selectedTime.format(context);
+      });
+    }
+  }
+
   showAlertDialog() async {
     return showDialog<void>(
       context: context,
@@ -930,7 +948,11 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                     ],
                   ),
                 ),
-                SaveButton(title: "Add", onTap: () {})
+                SaveButton(
+                    title: "Add",
+                    onTap: () {
+                      Navigator.pop(context);
+                    })
               ],
             ),
           ),
@@ -1064,20 +1086,6 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
     );
   }
 
-  void _selectFromTimeAlert() async {
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: _selectedTime,
-    );
-
-    if (picked != null && picked != _selectedTime) {
-      setState(() {
-        _selectedTime = picked;
-        timeBeforeController.text = _selectedTime.format(context);
-      });
-    }
-  }
-
   selectEventImage() async {
     Uint8List ui = await pickImage(ImageSource.gallery);
     setState(() {
@@ -1118,9 +1126,11 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
     setState(() {
       _isLoading = false;
     });
-    if (rse != 'sucess') {
-      showSnakBar(rse, context);
+    if (rse == 'sucess') {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (builder) => MainScreen()));
     } else {
+      showSnakBar(rse, context);
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (builder) => MainScreen()));
     }
