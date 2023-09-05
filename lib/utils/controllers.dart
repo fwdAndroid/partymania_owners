@@ -84,3 +84,6 @@ final timeBeforeController = TextEditingController();
 final tableNumberController = TextEditingController();
 final peopleController = TextEditingController();
 final tableType = TextEditingController();
+
+//Ticket Alert
+final birdController = TextEditingController();
