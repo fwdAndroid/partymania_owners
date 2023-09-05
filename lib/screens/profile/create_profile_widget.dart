@@ -418,6 +418,8 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
     });
     if (rse != 'sucess') {
       showSnakBar(rse, context);
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (builder) => MainScreen()));
     } else {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (builder) => MainScreen()));

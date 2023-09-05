@@ -109,17 +109,17 @@ class _MySettingState extends State<MySetting> {
                           SaveButton(
                             title: ("Delete"),
                             onTap: () async {
-                              FirebaseAuth.instance.currentUser!.delete();
-                              await FirebaseFirestore.instance
-                                  .collection("users")
-                                  .doc(FirebaseAuth.instance.currentUser!.uid)
-                                  .delete();
                               showSnakBar(
                                   "Account Deleted Successfully", context);
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (builder) => LoginScreen()));
+                              FirebaseAuth.instance.currentUser!.delete();
+                              await FirebaseFirestore.instance
+                                  .collection("users")
+                                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                                  .delete();
                             },
                           ),
                           TextButton(

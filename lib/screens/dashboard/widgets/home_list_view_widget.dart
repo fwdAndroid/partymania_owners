@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:partymania_owners/utils/colors.dart';
 
@@ -33,6 +34,8 @@ class _HomeListViewWidgetState extends State<HomeListViewWidget> {
                   return StreamBuilder<Object>(
                       stream: FirebaseFirestore.instance
                           .collection("events")
+                          .where("uid",
+                              isEqualTo: FirebaseAuth.instance.currentUser!.uid)
                           .snapshots(),
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
                         if (!snapshot.hasData) {
