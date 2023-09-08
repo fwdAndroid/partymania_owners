@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:partymania_owners/screens/details/event_details.dart';
 import 'package:partymania_owners/utils/colors.dart';
 
 class HomeGridWidget extends StatefulWidget {
@@ -68,73 +69,110 @@ class _HomeGridWidgetState extends State<HomeGridWidget> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  height: 150,
-                                  child: Stack(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20)),
-                                        child: Image.network(
-                                          data['eventCoverPhoto'],
-                                          fit: BoxFit.cover,
-                                          height: 150,
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment:
-                                            AlignmentDirectional.bottomCenter,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            16),
-                                                    border: Border.all(
-                                                        width: 1,
-                                                        color: textColor
-                                                            .withOpacity(.80))),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                    data['eventDate'],
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                ),
-                                              ),
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            16),
-                                                    border: Border.all(
-                                                        width: 1,
-                                                        color: textColor
-                                                            .withOpacity(.80))),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                    "4.9",
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (builder) => EventDetails(
+                                                  eventAmenities:
+                                                      data['eventAmenities'],
+                                                  eventDate: data['eventDate'],
+                                                  eventCoverPhoto:
+                                                      data['eventCoverPhoto'],
+                                                  eventDescription:
+                                                      data['eventDescription'],
+                                                  eventLocation:
+                                                      data['eventLocation'],
+                                                  fromTime: data['fromTime'],
+                                                  coupleValue:
+                                                      data['coupleValue'],
+                                                  eventName: data['eventName'],
+                                                  uuid: data['uuid'],
+                                                  eventPhoto:
+                                                      data['eventPhoto'],
+                                                  eventType: data['eventType'],
+                                                  nameOffer: data['nameOffer'],
+                                                  table: data['tables'],
+                                                  tickets: data['tickets'],
+                                                  timeDeadlineTicket: data[
+                                                      'timeDeadlineTicket'],
+                                                )));
+                                  },
+                                  child: Container(
+                                    height: 150,
+                                    child: Stack(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20)),
+                                          child: Image.network(
+                                            data['eventCoverPhoto'],
+                                            fit: BoxFit.cover,
+                                            height: 150,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
                                           ),
                                         ),
-                                      )
-                                    ],
+                                        Align(
+                                          alignment:
+                                              AlignmentDirectional.bottomCenter,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              16),
+                                                      border: Border.all(
+                                                          width: 1,
+                                                          color: textColor
+                                                              .withOpacity(
+                                                                  .80))),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Text(
+                                                      data['eventDate'],
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              16),
+                                                      border: Border.all(
+                                                          width: 1,
+                                                          color: textColor
+                                                              .withOpacity(
+                                                                  .80))),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Text(
+                                                      "4.9",
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 Padding(

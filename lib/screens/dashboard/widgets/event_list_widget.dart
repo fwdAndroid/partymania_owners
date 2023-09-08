@@ -31,10 +31,10 @@ class _EventListViewWidgetState extends State<EventListViewWidget> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (builder) => EventDetails()));
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (builder) => EventDetails()));
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
