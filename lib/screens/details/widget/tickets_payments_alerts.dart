@@ -3,7 +3,6 @@ import 'package:partymania_owners/screens/details/widget/radio_widget.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
-import 'package:partymania_owners/utils/textformfield.dart';
 
 enum Couples { Couple, Male, Female }
 

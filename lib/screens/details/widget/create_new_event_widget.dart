@@ -11,6 +11,7 @@ import 'package:partymania_owners/services/database_methods.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
+import 'package:partymania_owners/utils/droplist.dart';
 import 'package:partymania_owners/utils/image.dart';
 import 'package:partymania_owners/utils/textformfield.dart';
 import 'package:partymania_owners/utils/utils.dart';
@@ -191,18 +192,47 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
               SizedBox(
                 height: 10,
               ),
-              TextFormInputField(
-                suIcon: Padding(
-                    padding: const EdgeInsets.all(13.0),
-                    child: Image.asset(
-                      "assets/Vector.png",
-                      height: 10,
-                      width: 10,
-                    )),
-                textInputType: TextInputType.text,
-                hintText: "Event Type",
-                controller: eventTypeController,
-              )
+              Container(
+                height: 65,
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        color: borderColor.withOpacity(.4), width: 1),
+                    borderRadius: BorderRadius.circular(12)),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: DropdownButton(
+                      // Initial Value
+                      value: eventTypeList,
+                      underline: SizedBox(),
+                      isDense: true,
+                      dropdownColor: Colors.black,
+                      isExpanded: true,
+                      // Down Arrow Icon
+                      icon: const Icon(Icons.keyboard_arrow_down),
+
+                      // Array list of items
+                      items: eventItems.map((String eventItems) {
+                        return DropdownMenuItem(
+                          value: eventItems,
+                          child: Text(
+                            eventItems,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: textColor),
+                          ),
+                        );
+                      }).toList(),
+                      // After selecting the desired option,it will
+                      // change button value to selected value
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          eventTypeList = newValue!;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -695,7 +725,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
         selectDate.text,
         fromDateController.text,
         "createOffer",
-        eventTypeController.text,
+        eventTypeList,
         eventCoverPhoto!,
         eventPhoto!,
         eventdescriptionController.text,
