@@ -16,7 +16,10 @@ class _HomeListViewWidgetState extends State<HomeListViewWidget> {
     return SizedBox(
       height: 250,
       child: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection("events").snapshots(),
+          stream: FirebaseFirestore.instance
+              .collection("events")
+              .where("uid", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+              .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const Center(
@@ -25,7 +28,10 @@ class _HomeListViewWidgetState extends State<HomeListViewWidget> {
             }
             if (snapshot.data!.docs.isEmpty) {
               return const Center(
-                child: Text("No Events Found yet"),
+                child: Text(
+                  "No Events Found yet",
+                  style: TextStyle(color: Colors.white),
+                ),
               );
             }
             return ListView.builder(

@@ -24,6 +24,14 @@ class _HomeGridWidgetState extends State<HomeGridWidget> {
               child: CircularProgressIndicator(),
             );
           }
+          if (snapshot.data!.docs.isEmpty) {
+            return const Center(
+              child: Text(
+                "No Events Found yet",
+                style: TextStyle(color: Colors.white),
+              ),
+            );
+          }
           return Container(
             height: 290,
             child: GridView.builder(
