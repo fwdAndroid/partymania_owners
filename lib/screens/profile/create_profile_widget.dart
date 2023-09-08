@@ -3,12 +3,12 @@ import 'dart:typed_data';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:partymania_owners/screens/auth/login_screen.dart';
 import 'package:partymania_owners/screens/main_dashboard.dart';
 import 'package:partymania_owners/services/database_methods.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
+import 'package:partymania_owners/utils/droplist.dart';
 import 'package:partymania_owners/utils/image.dart';
 import 'package:partymania_owners/utils/textformfield.dart';
 import 'package:partymania_owners/utils/utils.dart';
@@ -135,18 +135,47 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
               SizedBox(
                 height: 10,
               ),
-              TextFormInputField(
-                suIcon: Padding(
-                    padding: const EdgeInsets.all(13.0),
-                    child: Image.asset(
-                      "assets/Vector.png",
-                      height: 10,
-                      width: 10,
-                    )),
-                textInputType: TextInputType.text,
-                hintText: "Select Type",
-                controller: clubTypeController,
-              )
+              Container(
+                height: 65,
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        color: borderColor.withOpacity(.4), width: 1),
+                    borderRadius: BorderRadius.circular(12)),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: DropdownButton(
+                      // Initial Value
+                      value: club,
+                      underline: SizedBox(),
+                      isDense: true,
+                      dropdownColor: Colors.black,
+                      isExpanded: true,
+                      // Down Arrow Icon
+                      icon: const Icon(Icons.keyboard_arrow_down),
+
+                      // Array list of items
+                      items: clubType.map((String clubType) {
+                        return DropdownMenuItem(
+                          value: clubType,
+                          child: Text(
+                            clubType,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: textColor),
+                          ),
+                        );
+                      }).toList(),
+                      // After selecting the desired option,it will
+                      // change button value to selected value
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          club = newValue!;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -406,7 +435,7 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
         clubLocationController.text,
         phoneNumberClubController.text,
         clubNameController.text,
-        clubTypeController.text,
+        club,
         clubStateController.text,
         clubCityController.text,
         clubZipCodeController.text,

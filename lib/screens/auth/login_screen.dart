@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/auth/getotp.dart';
 import 'package:partymania_owners/screens/auth/signup_account.dart';
 import 'package:partymania_owners/screens/main_dashboard.dart';
+import 'package:partymania_owners/screens/status/checkstatus.dart';
 import 'package:partymania_owners/services/auth_methods.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
@@ -194,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
     if (rse == 'sucess') {
       Navigator.push(
-          context, MaterialPageRoute(builder: (builder) => MainScreen()));
+          context, MaterialPageRoute(builder: (builder) => CheckStatus()));
     } else {
       showSnakBar(rse, context);
     }
