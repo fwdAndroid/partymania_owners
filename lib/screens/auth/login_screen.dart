@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/auth/getotp.dart';
 import 'package:partymania_owners/screens/auth/signup_account.dart';
-import 'package:partymania_owners/screens/main_dashboard.dart';
 import 'package:partymania_owners/screens/status/checkstatus.dart';
 import 'package:partymania_owners/services/auth_methods.dart';
 import 'package:partymania_owners/utils/button.dart';
