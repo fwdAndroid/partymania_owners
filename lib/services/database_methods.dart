@@ -72,6 +72,8 @@ class FirebaseMethods {
       String toDate,
       String nameOffer,
       final coupleValue,
+      final tickets,
+      final tables,
       String offerCode,
       String eventAmenities) async {
     String res = "Some Information Regarding Event is Missing";
@@ -84,6 +86,8 @@ class FirebaseMethods {
       EventModel postModel = EventModel(
           coupleValue: coupleValue,
           createOffer: createOffer,
+          tables: tables,
+          tickets: tickets,
           eventDescription: eventDescription,
           eventLocation: eventLocation,
           eventName: eventName,

@@ -28,11 +28,14 @@ class CreateNewEventWidget extends StatefulWidget {
 class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
   Uint8List? eventCoverPhoto;
   Uint8List? eventPhoto;
-  Fruit? _fruit = Fruit.day;
   TimeOfDay _selectedTime = TimeOfDay.now();
   bool _isLoading = false;
 
+  List emptytickets = [];
+  List emptytables = [];
   // List of items in our dropdown menu
+
+  Fruit? _fruit = Fruit.day;
 
   @override
   Widget build(BuildContext context) {
@@ -720,35 +723,46 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
     setState(() {
       _isLoading = true;
     });
-    String rse = await FirebaseMethods().createEvent(
-        eventNameController.text,
-        selectDate.text,
-        fromDateController.text,
-        "createOffer",
-        eventTypeList,
-        eventCoverPhoto!,
-        eventPhoto!,
-        eventdescriptionController.text,
-        FirebaseAuth.instance.currentUser!.uid,
-        eventLocationController.text,
-        ticketPurchaseDeadlineController.text,
-        toDateController.text,
-        offerNameController.text,
-        _fruit.toString(),
-        offerCodeController.text,
-        eventamenitiesController.text);
-
-    print(rse);
-    setState(() {
-      _isLoading = false;
-    });
-    if (rse == 'sucess') {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (builder) => MainScreen()));
+    if (eventNameController.text.isEmpty ||
+        eventLocationController.text.isEmpty ||
+        fromDateController.text.isEmpty ||
+        selectDate.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("No Event Create Fields are Required")));
+      Navigator.pop(context);
     } else {
-      showSnakBar(rse, context);
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (builder) => MainScreen()));
+      String rse = await FirebaseMethods().createEvent(
+          eventNameController.text,
+          selectDate.text,
+          fromDateController.text,
+          "createOffer",
+          eventTypeList,
+          eventCoverPhoto!,
+          eventPhoto!,
+          eventdescriptionController.text,
+          FirebaseAuth.instance.currentUser!.uid,
+          eventLocationController.text,
+          ticketPurchaseDeadlineController.text,
+          toDateController.text,
+          offerNameController.text,
+          _fruit.toString(),
+          [],
+          [],
+          offerCodeController.text,
+          eventamenitiesController.text);
+
+      print(rse);
+      setState(() {
+        _isLoading = false;
+      });
+      if (rse == 'sucess') {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (builder) => MainScreen()));
+      } else {
+        showSnakBar(rse, context);
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (builder) => MainScreen()));
+      }
     }
   }
 }

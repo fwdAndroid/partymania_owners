@@ -17,6 +17,8 @@ class EventModel {
   final coupleValue;
   String createOffer;
   String offerCode;
+  final tickets;
+  final tables;
 
   String nameOffer;
 
@@ -26,6 +28,8 @@ class EventModel {
       required this.fromTime,
       required this.offerCode,
       required this.nameOffer,
+      required this.tables,
+      required this.tickets,
       required this.eventCoverPhoto,
       required this.uuid,
       required this.createOffer,
@@ -43,6 +47,7 @@ class EventModel {
   Map<String, dynamic> toJson() => {
         'eventName': eventName,
         'uid': uid,
+        "tickets": tickets,
         "uuid": "uuid",
         'eventDate': eventDate,
         'fromTime': fromTime,
@@ -58,6 +63,7 @@ class EventModel {
         "timeDeadlineTicket": timeDeadlineTicket,
         'eventAmenities': eventAmenities,
         "offerCode": offerCode,
+        "tables": tables
       };
 
   ///
@@ -66,6 +72,8 @@ class EventModel {
 
     return EventModel(
         eventName: snapshot['eventName'],
+        tables: snapshot['tables'],
+        tickets: snapshot['tickets'],
         uid: snapshot['uid'],
         eventDate: snapshot['eventDate'],
         eventCoverPhoto: snapshot['eventCoverPhoto'],
