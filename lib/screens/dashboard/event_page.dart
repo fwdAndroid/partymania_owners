@@ -27,10 +27,24 @@ class _EventsPageState extends State<EventsPage> {
       ),
       body: Column(
         children: [
-          TableCalendar(
-            firstDay: DateTime.utc(2010, 10, 16),
-            lastDay: DateTime.utc(2030, 3, 14),
-            focusedDay: DateTime.now(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: colorBlack,
+                  border: Border.all(color: Color(0xff7B7F91).withOpacity(.4))),
+              margin: const EdgeInsets.only(left: 5, right: 5),
+              child: TableCalendar(
+                calendarStyle: CalendarStyle(
+                    todayDecoration:
+                        BoxDecoration(color: otpColor, shape: BoxShape.circle),
+                    markerDecoration: BoxDecoration(color: Colors.white)),
+                firstDay: DateTime.utc(2010, 10, 16),
+                lastDay: DateTime.utc(2030, 3, 14),
+                focusedDay: DateTime.now(),
+              ),
+            ),
           ),
           Container(
             margin: EdgeInsets.only(left: 10),
