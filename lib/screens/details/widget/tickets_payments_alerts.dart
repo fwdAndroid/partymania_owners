@@ -181,6 +181,7 @@ class _TicketsAndPaymentsAlertsState extends State<TicketsAndPaymentsAlerts> {
                   children: [
                     Expanded(
                       child: Container(
+                        margin: EdgeInsets.only(left: 10),
                         decoration: BoxDecoration(
                             border: Border.all(
                                 color: Color.fromARGB(255, 60, 89, 126),
@@ -191,7 +192,9 @@ class _TicketsAndPaymentsAlertsState extends State<TicketsAndPaymentsAlerts> {
                           child: DropdownButton(
                             // Initial Value
                             value: dropdownvalue,
-
+                            underline: SizedBox(),
+                            isDense: true,
+                            isExpanded: true,
                             // Down Arrow Icon
                             icon: const Icon(Icons.keyboard_arrow_down),
 

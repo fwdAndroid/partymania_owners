@@ -107,20 +107,40 @@ class _UploadTablesAlertsState extends State<UploadTablesAlerts> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: TextFormInputField(
-                          textInputType: TextInputType.number,
-                          hintText: "Number of People",
-                          controller: peopleController,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Color.fromARGB(255, 60, 89, 126),
+                                  width: 1),
+                              borderRadius: BorderRadius.circular(12)),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                border: InputBorder.none,
+                                hintText: "Number of people",
+                                hintStyle: TextStyle(color: Colors.black)),
+                            controller: peopleController,
+                          ),
                         ),
                       ),
                       const SizedBox(
                         width: 7,
                       ),
                       Expanded(
-                        child: TextFormInputField(
-                          textInputType: TextInputType.number,
-                          hintText: "Type of Table",
-                          controller: tableType,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Color.fromARGB(255, 60, 89, 126),
+                                  width: 1),
+                              borderRadius: BorderRadius.circular(12)),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                border: InputBorder.none,
+                                hintText: "Type of Table",
+                                hintStyle: TextStyle(color: Colors.black)),
+                            controller: tableType,
+                          ),
                         ),
                       ),
                     ],
@@ -131,26 +151,53 @@ class _UploadTablesAlertsState extends State<UploadTablesAlerts> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: TextFormInputField(
-                          textInputType: TextInputType.number,
-                          hintText: "Number of People",
-                          controller: peopleController,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Color.fromARGB(255, 60, 89, 126),
+                                  width: 1),
+                              borderRadius: BorderRadius.circular(12)),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                border: InputBorder.none,
+                                hintText: "Total Tickets",
+                                hintStyle: TextStyle(color: Colors.black)),
+                            controller: totalTicketsController,
+                          ),
                         ),
                       ),
                       const SizedBox(
                         width: 7,
                       ),
                       Expanded(
-                        child: TextFormInputField(
-                          textInputType: TextInputType.number,
-                          hintText: "Type of Table",
-                          controller: tableType,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Color.fromARGB(255, 60, 89, 126),
+                                  width: 1),
+                              borderRadius: BorderRadius.circular(12)),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                border: InputBorder.none,
+                                hintText: "Total Tickets",
+                                hintStyle: TextStyle(color: Colors.black)),
+                            controller: totalTicketsController,
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                SaveButton(title: "Add", onTap: () {})
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SaveButton(
+                      title: "Add",
+                      onTap: () {
+                        Navigator.pop(context);
+                      }),
+                )
               ],
             ),
           ),
