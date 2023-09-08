@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
-import 'package:partymania_owners/utils/textformfield.dart';
 
 enum TableNo { TableCharge, FullCover }
 
@@ -46,15 +45,26 @@ class _UploadTablesAlertsState extends State<UploadTablesAlerts> {
           clipBehavior: Clip.antiAliasWithSaveLayer,
           title: Text(
             'Add Table',
-            style: TextStyle(color: colorBlack),
+            style: TextStyle(
+                color: colorBlack, fontSize: 18, fontWeight: FontWeight.w600),
           ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                TextFormInputField(
-                  textInputType: TextInputType.number,
-                  hintText: "Enter Table Number",
-                  controller: tableNumberController,
+                Container(
+                  margin: EdgeInsets.only(left: 10, right: 10, top: 10),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Color.fromARGB(255, 60, 89, 126), width: 1),
+                      borderRadius: BorderRadius.circular(12)),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(12),
+                        border: InputBorder.none,
+                        hintStyle: TextStyle(color: Colors.black),
+                        hintText: "Enter Table Number"),
+                    controller: tableNumberController,
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
