@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:partymania_owners/screens/main_dashboard.dart';
-import 'package:partymania_owners/services/database_methods.dart';
+import 'package:partymania_owners/services/storage_methods.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
@@ -40,7 +40,7 @@ class _EditClubProfileTextWidgetState extends State<EditClubProfileTextWidget> {
           }
           var document = snapshot.data;
           editclubNameController.text = document['clubName'];
-          club = document['clubType'];
+          // club = document['clubType'];
           editclubphoneNumberClubController.text = document['clubPhoneNumber'];
           editclubLocationController.text = document['clubLocation'];
           editclubStateController.text = document['clubState'];
@@ -443,32 +443,29 @@ class _EditClubProfileTextWidgetState extends State<EditClubProfileTextWidget> {
     setState(() {
       _isLoading = true;
     });
-    String rse = await FirebaseMethods().updateClub(
-        _coverEditPhoto!,
-        _ticketBluePrint!,
-        editclubdescriptionController.text,
-        FirebaseAuth.instance.currentUser!.uid,
-        editclubLocationController.text,
-        editclubphoneNumberClubController.text,
-        editclubNameController.text,
-        club,
-        editclubStateController.text,
-        editclubCityController.text,
-        editclubZipCodeController.text,
-        editamenitiesController.text);
 
-    print(rse);
+    await FirebaseFirestore.instance
+        .collection("clubs")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update({
+      "clubName": editclubNameController.text,
+      "clubPhoneNumber": editclubphoneNumberClubController.text,
+      "clubType": club,
+      "uid": FirebaseAuth.instance.currentUser!.uid,
+      "clubLocation": editclubLocationController.text,
+      "clubState": editclubStateController.text,
+      "clubCity": editclubCityController.text,
+      "clubZipCode": editclubZipCodeController.text,
+      "clubAmentities": editamenitiesController.text,
+      "clubDescription": editclubdescriptionController.text
+    });
     setState(() {
       _isLoading = false;
     });
-    if (rse != 'sucess') {
-      showSnakBar(rse, context);
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (builder) => MainScreen()));
-    } else {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (builder) => MainScreen()));
-    }
+
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (builder) => MainScreen()));
+    showSnakBar("Club Updated Successfully", context);
   }
 
   void selectImage() async {
