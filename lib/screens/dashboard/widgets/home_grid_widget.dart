@@ -139,10 +139,25 @@ class _HomeGridWidgetState extends State<HomeGridWidget> {
                                                     padding:
                                                         const EdgeInsets.all(
                                                             8.0),
-                                                    child: Text(
-                                                      data['eventDescription'],
-                                                      style: TextStyle(
-                                                          color: Colors.white),
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                          data[
+                                                              'eventStartDate'],
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        Text(
+                                                          data['fromEventDate'],
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ),
                                                 ),
@@ -199,9 +214,10 @@ class _HomeGridWidgetState extends State<HomeGridWidget> {
                                           width: 50,
                                           child: Center(
                                             child: Text(
-                                              "Music",
+                                              data['eventType'],
                                               style: TextStyle(color: otpColor),
                                               textAlign: TextAlign.center,
+                                              overflow: TextOverflow.ellipsis,
                                             ),
                                           )),
                                       const SizedBox(
