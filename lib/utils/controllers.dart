@@ -87,3 +87,5 @@ final tableType = TextEditingController();
 
 //Ticket Alert
 final birdController = TextEditingController();
+final totaltablesController = TextEditingController();
+final totalTablesPriceController = TextEditingController();

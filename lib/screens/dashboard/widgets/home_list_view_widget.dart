@@ -203,7 +203,7 @@ class _HomeListViewWidgetState extends State<HomeListViewWidget> {
                                                         color: textColor
                                                             .withOpacity(.80))),
                                                 child: Text(
-                                                  data['eventDate'],
+                                                  data['eventDescription'],
                                                   style: TextStyle(
                                                       color: textColor
                                                           .withOpacity(.6)),

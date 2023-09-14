@@ -32,3 +32,6 @@ var eventItems = [
 
 var club = "Club";
 var clubType = ['Club', 'lounge', 'Bar', 'Hall', 'Stadium', 'Other'];
+
+var itemsCouples = ['Male', 'Female', 'Couple'];
+String couplesDropDown = "Male";

@@ -1,22 +1,25 @@
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:partymania_owners/screens/details/widget/tickets_payments_alerts.dart';
-import 'package:partymania_owners/screens/details/widget/upload_tables_widget_alert.dart';
 import 'package:partymania_owners/screens/main_dashboard.dart';
-import 'package:partymania_owners/services/database_methods.dart';
+import 'package:partymania_owners/services/storage_methods.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
 import 'package:partymania_owners/utils/droplist.dart';
 import 'package:partymania_owners/utils/image.dart';
 import 'package:partymania_owners/utils/textformfield.dart';
-import 'package:partymania_owners/utils/utils.dart';
+import 'package:uuid/uuid.dart';
 
 enum Fruit { day, night, both }
+
+enum Artist { Guestlist, FullCover, NoCover }
+
+enum TableNo { TableCharge, FullCover }
 
 class CreateNewEventWidget extends StatefulWidget {
   const CreateNewEventWidget({super.key});
@@ -30,12 +33,18 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
   Uint8List? eventPhoto;
   TimeOfDay _selectedTime = TimeOfDay.now();
   bool _isLoading = false;
-
-  List emptytickets = [];
-  List emptytables = [];
   // List of items in our dropdown menu
 
   Fruit? _fruit = Fruit.day;
+  Artist? _artist = Artist.Guestlist;
+
+  var items = [
+    'Before',
+    'After',
+  ];
+  TableNo? _tableNo = TableNo.TableCharge;
+
+  String dropdownvalue = 'Before';
 
   @override
   Widget build(BuildContext context) {
@@ -449,7 +458,20 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
             ),
           ),
         ),
-        TicketsAndPaymentsAlerts(),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: InkWell(
+              onTap: () => showAlertDialog(),
+              child: Image.asset(
+                "assets/add.png",
+                width: 100,
+                height: 100,
+              ),
+            ),
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -529,7 +551,20 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
         SizedBox(
           height: 10,
         ),
-        UploadTablesAlerts(),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: InkWell(
+              onTap: showAlertDialog2,
+              child: Image.asset(
+                "assets/add.png",
+                width: 100,
+                height: 100,
+              ),
+            ),
+          ),
+        ),
         const SizedBox(
           height: 10,
         ),
@@ -636,7 +671,67 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                   : Center(
                       child: SaveButton(
                         title: "Publish Event",
-                        onTap: () => createEvent(),
+                        onTap: () async {
+                          setState(() {
+                            _isLoading = true;
+                          });
+                          var uuid = Uuid().v4();
+                          String eventcPhoto = await StorageMethods()
+                              .uploadImageToStorage(
+                                  "eventCoverPhoto", eventCoverPhoto!, true);
+                          String eventTicketPhoto = await StorageMethods()
+                              .uploadImageToStorage(
+                                  "eventTicketPhoto", eventPhoto!, true);
+                          await FirebaseFirestore.instance
+                              .collection("events")
+                              .doc(uuid)
+                              .set({
+                            "eventName": eventNameController.text,
+                            "eventType": eventTypeList,
+                            "eventStartDate": selectDate.text,
+                            "fromEventDate": fromDateController.text,
+                            "toEventDate": toDateController.text,
+                            "eventLocation": eventLocationController.text,
+                            "uuid": uuid,
+                            "eventDescription": eventdescriptionController.text,
+                            "eventAmenities": eventamenitiesController.text,
+                            "participantType": couplesDropDown,
+                            "bird": birdController.text,
+                            "artistType": _artist.toString(),
+                            "eventTicketSession": dropdownvalue,
+                            "eventTicketTimeBefore": timeBeforeController.text,
+                            "eventTotalTickets": totalTicketsController.text,
+                            "eventTicketPrice": int.parse(priceController.text),
+                            "timeDeadlineTicket":
+                                ticketPurchaseDeadlineController.text,
+                            "ticketPurchase":
+                                ticketPurchaseUploadController.text,
+                            "offerName": offerNameController.text,
+                            "offerCode": offerCodeController.text,
+                            "uid": FirebaseAuth.instance.currentUser!.uid,
+                            "eventCoverPhoto": eventcPhoto,
+                            "eventPhoto": eventTicketPhoto,
+                            "dayNight": _fruit.toString(),
+                            "tableNumber": tableNumberController.text,
+                            "tableType": _tableNo.toString(),
+                            "numofPeople": peopleController.text,
+                            "totaltables": totaltablesController.text,
+                            "tablePrice":
+                                int.parse(totalTablesPriceController.text)
+                          }).then((value) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (builder) => MainScreen()));
+                          });
+                          setState(() {
+                            _isLoading = false;
+                          });
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (builder) => MainScreen()));
+                        },
                       ),
                     ),
               const SizedBox(
@@ -719,50 +814,471 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
     });
   }
 
-  createEvent() async {
-    setState(() {
-      _isLoading = true;
-    });
-    if (eventNameController.text.isEmpty ||
-        eventLocationController.text.isEmpty ||
-        fromDateController.text.isEmpty ||
-        selectDate.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("No Event Create Fields are Required")));
-      Navigator.pop(context);
-    } else {
-      String rse = await FirebaseMethods().createEvent(
-          eventNameController.text,
-          selectDate.text,
-          fromDateController.text,
-          "createOffer",
-          eventTypeList,
-          eventCoverPhoto!,
-          eventPhoto!,
-          eventdescriptionController.text,
-          FirebaseAuth.instance.currentUser!.uid,
-          eventLocationController.text,
-          ticketPurchaseDeadlineController.text,
-          toDateController.text,
-          offerNameController.text,
-          _fruit.toString(),
-          [],
-          [],
-          offerCodeController.text,
-          eventamenitiesController.text);
+  //Ticket Alert
+  showAlertDialog() async {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12.0))),
+              contentPadding: EdgeInsets.only(top: 10.0),
+              backgroundColor: Colors.white,
+              insetPadding: EdgeInsets.all(8),
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              title: Text(
+                "Add Ticket",
+                style: TextStyle(
+                    color: colorBlack,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600),
+              ),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 11, right: 11),
+                      height: 45,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Colors.black.withOpacity(.4), width: 1),
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: DropdownButton(
+                            // Initial Value
+                            value: couplesDropDown,
+                            underline: SizedBox(),
+                            isDense: true,
+                            dropdownColor: Colors.black,
+                            isExpanded: true,
+                            // Down Arrow Icon
+                            icon: const Icon(Icons.keyboard_arrow_down),
 
-      print(rse);
+                            // Array list of items
+                            items: itemsCouples.map((String itemsCouples) {
+                              return DropdownMenuItem(
+                                value: itemsCouples,
+                                child: Text(
+                                  itemsCouples,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              );
+                            }).toList(),
+                            // After selecting the desired option,it will
+                            // change button value to selected value
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                couplesDropDown = newValue!;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 10, right: 10, top: 10),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Color.fromARGB(255, 60, 89, 126),
+                              width: 1),
+                          borderRadius: BorderRadius.circular(12)),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                            contentPadding: EdgeInsets.all(12),
+                            border: InputBorder.none,
+                            hintStyle: TextStyle(color: Colors.black),
+                            hintText: "Early Bird"),
+                        controller: birdController,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Radio(
+                                  value: Artist.Guestlist,
+                                  groupValue: _artist,
+                                  onChanged: (Artist? value) {
+                                    setState(() {
+                                      _artist = value;
+                                    });
+                                  }),
+                              Expanded(
+                                  child: Text(
+                                'Guestlist',
+                                style: TextStyle(color: colorBlack),
+                              ))
+                            ],
+                          ),
+                          flex: 1,
+                        ),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Radio(
+                                  value: Artist.FullCover,
+                                  groupValue: _artist,
+                                  onChanged: (Artist? value) {
+                                    setState(() {
+                                      _artist = value;
+                                    });
+                                  }),
+                              Expanded(
+                                child: Text(
+                                  'Full Cover',
+                                  style: TextStyle(color: colorBlack),
+                                ),
+                              )
+                            ],
+                          ),
+                          flex: 1,
+                        ),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Radio(
+                                  value: Artist.NoCover,
+                                  groupValue: _artist,
+                                  onChanged: (Artist? value) {
+                                    setState(() {
+                                      _artist = value;
+                                    });
+                                  }),
+                              Expanded(
+                                  child: Text(
+                                'No Cover',
+                                style: TextStyle(color: colorBlack),
+                              ))
+                            ],
+                          ),
+                          flex: 1,
+                        ),
+                      ],
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 10, right: 10),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Color.fromARGB(255, 60, 89, 126),
+                                      width: 1),
+                                  borderRadius: BorderRadius.circular(12)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: DropdownButton(
+                                  // Initial Value
+                                  value: dropdownvalue,
+                                  underline: SizedBox(),
+                                  isDense: true,
+                                  isExpanded: true,
+                                  // Down Arrow Icon
+                                  icon: const Icon(Icons.keyboard_arrow_down),
+
+                                  // Array list of items
+                                  items: items.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(items),
+                                    );
+                                  }).toList(),
+                                  // After selecting the desired option,it will
+                                  // change button value to selected value
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      dropdownvalue = newValue!;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 7,
+                          ),
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Color.fromARGB(255, 60, 89, 126),
+                                      width: 1),
+                                  borderRadius: BorderRadius.circular(12)),
+                              child: TextFormField(
+                                onTap: () {
+                                  _selectFromTicketTimeAlert();
+                                },
+                                decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.all(12),
+                                    suffixIcon: Padding(
+                                      padding: const EdgeInsets.all(13.0),
+                                      child: Icon(
+                                        Icons.timer,
+                                        color: colorBlack,
+                                      ),
+                                    ),
+                                    border: InputBorder.none,
+                                    hintStyle: TextStyle(color: Colors.black),
+                                    hintText: "9:30 AM"),
+                                controller: timeBeforeController,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 12, right: 12, top: 10),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Color.fromARGB(255, 60, 89, 126),
+                                      width: 1),
+                                  borderRadius: BorderRadius.circular(12)),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.all(8),
+                                    border: InputBorder.none,
+                                    hintText: "Total Tickets",
+                                    hintStyle: TextStyle(color: Colors.black)),
+                                controller: totalTicketsController,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 7,
+                          ),
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Color.fromARGB(255, 60, 89, 126),
+                                      width: 1),
+                                  borderRadius: BorderRadius.circular(12)),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.all(8),
+                                    border: InputBorder.none,
+                                    hintText: "Price",
+                                    hintStyle: TextStyle(color: Colors.black)),
+                                controller: priceController,
+                                keyboardType: TextInputType.number,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          left: 10, right: 10, top: 10, bottom: 10),
+                      child: SaveButton(
+                          title: "Add",
+                          onTap: () {
+                            Navigator.pop(
+                              context,
+                            );
+                          }),
+                    )
+                  ],
+                ),
+              ),
+            );
+          });
+        });
+  }
+
+  void _selectFromTicketTimeAlert() async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: _selectedTime,
+    );
+
+    if (picked != null && picked != _selectedTime) {
       setState(() {
-        _isLoading = false;
+        _selectedTime = picked;
+        timeBeforeController.text = _selectedTime.format(context);
       });
-      if (rse == 'sucess') {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (builder) => MainScreen()));
-      } else {
-        showSnakBar(rse, context);
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (builder) => MainScreen()));
-      }
     }
+  }
+
+//Table
+  void showAlertDialog2() async {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return AlertDialog(
+                backgroundColor: Colors.white,
+                insetPadding: EdgeInsets.all(8),
+                contentPadding: EdgeInsets.all(8),
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                title: Text(
+                  'Add Table',
+                  style: TextStyle(
+                      color: colorBlack,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600),
+                ),
+                content: SingleChildScrollView(
+                  child: ListBody(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(left: 10, right: 10, top: 10),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Color.fromARGB(255, 60, 89, 126),
+                                width: 1),
+                            borderRadius: BorderRadius.circular(12)),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(12),
+                              border: InputBorder.none,
+                              hintStyle: TextStyle(color: Colors.black),
+                              hintText: "Enter Table Number"),
+                          controller: tableNumberController,
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Radio(
+                                    value: TableNo.TableCharge,
+                                    groupValue: _tableNo,
+                                    onChanged: (TableNo? value) {
+                                      setState(() {
+                                        _tableNo = value;
+                                      });
+                                    }),
+                                Expanded(
+                                    child: Text(
+                                  'Table Charge',
+                                  style: TextStyle(color: colorBlack),
+                                ))
+                              ],
+                            ),
+                            flex: 1,
+                          ),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Radio(
+                                    value: TableNo.FullCover,
+                                    groupValue: _tableNo,
+                                    onChanged: (TableNo? value) {
+                                      setState(() {
+                                        _tableNo = value;
+                                      });
+                                    }),
+                                Expanded(
+                                  child: Text(
+                                    'Full Cover',
+                                    style: TextStyle(color: colorBlack),
+                                  ),
+                                )
+                              ],
+                            ),
+                            flex: 1,
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Color.fromARGB(255, 60, 89, 126),
+                                  width: 1),
+                              borderRadius: BorderRadius.circular(12)),
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                border: InputBorder.none,
+                                hintText: "Number of people",
+                                hintStyle: TextStyle(color: Colors.black)),
+                            controller: peopleController,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Color.fromARGB(255, 60, 89, 126),
+                                        width: 1),
+                                    borderRadius: BorderRadius.circular(12)),
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.all(8),
+                                      border: InputBorder.none,
+                                      hintText: "Total Tables",
+                                      hintStyle:
+                                          TextStyle(color: Colors.black)),
+                                  controller: totaltablesController,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 7,
+                            ),
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Color.fromARGB(255, 60, 89, 126),
+                                        width: 1),
+                                    borderRadius: BorderRadius.circular(12)),
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.all(8),
+                                      border: InputBorder.none,
+                                      hintText: "Price",
+                                      hintStyle:
+                                          TextStyle(color: Colors.black)),
+                                  controller: totalTablesPriceController,
+                                  keyboardType: TextInputType.number,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SaveButton(
+                            title: "Add",
+                            onTap: () {
+                              Navigator.pop(context);
+                            }),
+                      )
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        });
   }
 }

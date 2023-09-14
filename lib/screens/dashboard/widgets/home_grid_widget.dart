@@ -140,7 +140,7 @@ class _HomeGridWidgetState extends State<HomeGridWidget> {
                                                         const EdgeInsets.all(
                                                             8.0),
                                                     child: Text(
-                                                      data['eventDate'],
+                                                      data['eventDescription'],
                                                       style: TextStyle(
                                                           color: Colors.white),
                                                     ),
