@@ -32,10 +32,6 @@ class _EditUserClubProfileState extends State<EditUserClubProfile> {
               const SizedBox(
                 height: 20,
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset("assets/blue.png"),
-              ),
               EditClubProfileTextWidget()
             ],
           ),
