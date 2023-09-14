@@ -30,6 +30,7 @@ class FirebaseMethods {
       String clubTicketPhoto = await StorageMethods()
           .uploadImageToStorage("clubTablePhoto", ticketPhoto, true);
       ClubModel postModel = ClubModel(
+          followers: [],
           coverPhoto: clubPhoto,
           clubState: clubState,
           clubType: clubType,
@@ -76,6 +77,7 @@ class FirebaseMethods {
       String clubTicketPhoto = await StorageMethods()
           .uploadImageToStorage("clubTablePhoto", ticketPhoto, true);
       ClubModel postModel = ClubModel(
+          followers: [],
           coverPhoto: clubPhoto,
           clubState: clubState,
           clubType: clubType,

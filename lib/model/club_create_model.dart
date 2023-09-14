@@ -13,12 +13,14 @@ class ClubModel {
   String clubZipCode;
   String clubAmentities;
   String clubDescription;
+  final followers;
 
   ClubModel(
       {required this.uid,
       required this.clubLocation,
       required this.clubPhoneNumber,
       required this.coverPhoto,
+      required this.followers,
       required this.clubType,
       required this.clubState,
       required this.clubDescription,
@@ -41,6 +43,7 @@ class ClubModel {
         'clubState': clubState,
         'clubCity': clubCity,
         "clubZipCode": clubZipCode,
+        "followers": followers,
         'clubAmentities': clubAmentities,
       };
 
@@ -55,6 +58,7 @@ class ClubModel {
         coverPhoto: snapshot['coverPhoto'],
         clubPhoneNumber: snapshot['clubPhoneNumber'],
         clubType: snapshot['clubType'],
+        followers: snapshot['followers'],
         ticketPhoto: snapshot['ticketPhoto'],
         clubCity: snapshot['clubCity'],
         clubAmentities: snapshot['clubAmentities'],
