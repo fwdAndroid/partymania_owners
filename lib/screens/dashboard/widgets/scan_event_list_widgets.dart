@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:partymania_owners/screens/booking/booking.dart';
 import 'package:partymania_owners/screens/scan_event/scan_event.dart';
 import 'package:partymania_owners/utils/colors.dart';
 
@@ -72,8 +73,12 @@ class _ScanEventListWidgetState extends State<ScanEventListWidget> {
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (builder) =>
-                                                    ScanEvent()));
+                                                builder: (buil) => Booking()));
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (builder) =>
+                                        //             ScanEvent()));
                                       },
                                       child: Row(
                                         mainAxisAlignment:
@@ -125,11 +130,13 @@ class _ScanEventListWidgetState extends State<ScanEventListWidget> {
                                                       width: 50,
                                                       child: Center(
                                                         child: Text(
-                                                          "Music",
+                                                          data['eventType'],
                                                           style: TextStyle(
                                                               color: otpColor),
                                                           textAlign:
                                                               TextAlign.center,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
                                                         ),
                                                       )),
                                                   const SizedBox(
@@ -174,12 +181,31 @@ class _ScanEventListWidgetState extends State<ScanEventListWidget> {
                                                         width: 1,
                                                         color: textColor
                                                             .withOpacity(.80))),
-                                                child: Text(
-                                                  data['eventDate'],
-                                                  style: TextStyle(
-                                                      color: textColor
-                                                          .withOpacity(.6)),
-                                                  textAlign: TextAlign.center,
+                                                child: Row(
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 8,
+                                                    ),
+                                                    Text(
+                                                      data['eventStartDate'],
+                                                      style: TextStyle(
+                                                          color: textColor
+                                                              .withOpacity(.6)),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 8,
+                                                    ),
+                                                    Text(
+                                                      data['fromEventDate'],
+                                                      style: TextStyle(
+                                                          color: textColor
+                                                              .withOpacity(.6)),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ],

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:partymania_owners/screens/booking/booking.dart';
 import 'package:partymania_owners/screens/handlers/manage_handlers.dart';
 import 'package:partymania_owners/screens/user_profie/edit_user_club_profile.dart';
 import 'package:partymania_owners/screens/user_profie/edit_user_profile.dart';
@@ -228,6 +229,30 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     title: Text(
                       "Help & Support",
+                      style: TextStyle(
+                          color: textColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Divider(
+                      color: textColor.withOpacity(.7),
+                    ),
+                  ),
+                  ListTile(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (builder) => Booking()));
+                    },
+                    leading: Icon(
+                      Icons.book,
+                      size: 30,
+                      color: textColor,
+                    ),
+                    title: Text(
+                      "Booking",
                       style: TextStyle(
                           color: textColor,
                           fontSize: 14,
