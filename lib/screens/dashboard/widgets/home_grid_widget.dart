@@ -77,26 +77,55 @@ class _HomeGridWidgetState extends State<HomeGridWidget> {
                                             builder: (builder) => EventDetails(
                                                   eventAmenities:
                                                       data['eventAmenities'],
-                                                  eventDate: data['eventDate'],
                                                   eventCoverPhoto:
                                                       data['eventCoverPhoto'],
                                                   eventDescription:
                                                       data['eventDescription'],
                                                   eventLocation:
                                                       data['eventLocation'],
-                                                  fromTime: data['fromTime'],
-                                                  coupleValue:
-                                                      data['coupleValue'],
+                                                  artistType:
+                                                      data['artistType'],
+                                                  bird: data['bird'],
+                                                  dayNight: data['dayNight'],
                                                   eventName: data['eventName'],
-                                                  uuid: data['uuid'],
                                                   eventPhoto:
                                                       data['eventPhoto'],
+                                                  eventStartDate:
+                                                      data['eventStartDate'],
+                                                  eventTicketPrice:
+                                                      data['eventTicketPrice'],
+                                                  eventTicketSession: data[
+                                                      'eventTicketSession'],
+                                                  eventTicketTimeBefore: data[
+                                                      'eventTicketTimeBefore'],
+                                                  eventTotalTickets:
+                                                      data['eventTotalTickets'],
                                                   eventType: data['eventType'],
-                                                  nameOffer: data['nameOffer'],
-                                                  table: data['tables'],
-                                                  tickets: data['tickets'],
+                                                  uid: data['uid'],
+                                                  uuid: data['uuid'],
+                                                  fromEventDate:
+                                                      data['fromEventDate'],
+                                                  numofPeople:
+                                                      data['numofPeople'],
+                                                  offerCode: data['offerCode'],
+                                                  offerName: data['offerName'],
+                                                  participantType:
+                                                      data['participantType'],
+                                                  tableNumber:
+                                                      data['tableNumber'],
+                                                  tablePrice: data['tablePrice']
+                                                      .toString(),
+                                                  tableType: data['tableType'],
+                                                  ticketPurchase:
+                                                      data['ticketPurchase']
+                                                          .toString(),
                                                   timeDeadlineTicket: data[
                                                       'timeDeadlineTicket'],
+                                                  toEventDate:
+                                                      data['toEventDate'],
+                                                  totaltables:
+                                                      data['totaltables']
+                                                          .toString(),
                                                 )));
                                   },
                                   child: Container(

@@ -2,42 +2,70 @@ import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/details/edit_event.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
-import 'package:partymania_owners/utils/longtext.dart';
 
 class EventDetails extends StatefulWidget {
   final uuid;
-  final coupleValue;
+  final artistType;
+  final bird;
+  final dayNight;
   final eventAmenities;
   final eventCoverPhoto;
-  final eventDate;
   final eventDescription;
   final eventLocation;
   final eventName;
   final eventPhoto;
+  final eventStartDate;
+  final eventTicketPrice;
+  final eventTicketSession;
+  final eventTicketTimeBefore;
+  final eventTotalTickets;
   final eventType;
-  final fromTime;
-  final nameOffer;
-  final tickets;
-  final table;
+  final fromEventDate;
+  final numofPeople;
+  final offerCode;
+  final offerName;
+  final participantType;
+  final tableNumber;
+  final tablePrice;
+  final tableType;
+  final ticketPurchase;
   final timeDeadlineTicket;
+  final toEventDate;
+  final totaltables;
+  final uid;
 
-  EventDetails(
-      {super.key,
-      required this.eventAmenities,
-      required this.coupleValue,
-      required this.eventCoverPhoto,
-      required this.eventDate,
-      required this.eventDescription,
-      required this.eventLocation,
-      required this.eventName,
-      required this.eventPhoto,
-      required this.eventType,
-      required this.fromTime,
-      required this.nameOffer,
-      required this.table,
-      required this.tickets,
-      required this.timeDeadlineTicket,
-      required this.uuid});
+  EventDetails({
+    super.key,
+    required this.artistType,
+    required this.bird,
+    required this.dayNight,
+    required this.eventAmenities,
+    required this.eventCoverPhoto,
+    required this.eventDescription,
+    required this.eventLocation,
+    required this.eventName,
+    required this.eventPhoto,
+    required this.eventStartDate,
+    required this.eventTicketPrice,
+    required this.eventTicketSession,
+    required this.eventTicketTimeBefore,
+    required this.eventTotalTickets,
+    required this.eventType,
+    required this.fromEventDate,
+    required this.numofPeople,
+    required this.offerCode,
+    required this.offerName,
+    required this.participantType,
+    required this.tableNumber,
+    required this.tablePrice,
+    required this.tableType,
+    required this.ticketPurchase,
+    required this.timeDeadlineTicket,
+    required this.toEventDate,
+    required this.totaltables,
+    required this.uid,
+    required this.uuid,
+  });
 
   @override
   State<EventDetails> createState() => _EventDetailsState();
@@ -147,7 +175,7 @@ class _EventDetailsState extends State<EventDetails> {
                     ),
                     Expanded(
                       child: Text(
-                        widget.nameOffer,
+                        widget.offerName,
                         style: TextStyle(
                             color: textColor.withOpacity(.7),
                             fontWeight: FontWeight.w400,
@@ -163,14 +191,14 @@ class _EventDetailsState extends State<EventDetails> {
               child: ListTile(
                 leading: Image.asset("assets/s.png"),
                 title: Text(
-                  widget.eventDate,
+                  widget.eventStartDate,
                   style: TextStyle(
                       color: textColor,
                       fontWeight: FontWeight.w500,
                       fontSize: 18),
                 ),
                 subtitle: Text(
-                  widget.fromTime,
+                  widget.eventTicketTimeBefore,
                   style: TextStyle(
                       color: textColor.withOpacity(.7),
                       fontWeight: FontWeight.w400,
