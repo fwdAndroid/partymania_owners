@@ -717,6 +717,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                             "numofPeople": peopleController.text,
                             "totaltables": totaltablesController.text,
                             "tablePrice": totalTablesPriceController.text,
+                            "eventCreated": true
                           }).then((value) {
                             Navigator.push(
                                 context,
