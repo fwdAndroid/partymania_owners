@@ -1,19 +1,16 @@
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:partymania_owners/screens/main_dashboard.dart';
-import 'package:partymania_owners/services/storage_methods.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
 import 'package:partymania_owners/utils/droplist.dart';
 import 'package:partymania_owners/utils/image.dart';
 import 'package:partymania_owners/utils/textformfield.dart';
-import 'package:uuid/uuid.dart';
 
 enum Fruit { day, night, both }
 
@@ -23,7 +20,33 @@ enum TableNo { TableCharge, FullCover }
 
 class UpdateNewEventWidget extends StatefulWidget {
   final uuid;
-  const UpdateNewEventWidget({super.key, required this.uuid});
+  final eventName;
+  final toEventDate;
+  final fromEventDate;
+  final selectDate;
+  final eventLocation;
+  final eventPhoto;
+  final eventCoverPhoto;
+  final offerName;
+  final offerCode;
+  final eventDescription;
+  final eventAmenities;
+  final numofpeople;
+  const UpdateNewEventWidget(
+      {super.key,
+      required this.uuid,
+      required this.fromEventDate,
+      required this.eventAmenities,
+      required this.eventDescription,
+      required this.toEventDate,
+      required this.eventCoverPhoto,
+      required this.eventPhoto,
+      required this.numofpeople,
+      required this.eventName,
+      required this.eventLocation,
+      required this.offerCode,
+      required this.offerName,
+      required this.selectDate});
 
   @override
   State<UpdateNewEventWidget> createState() => _UpdateNewEventWidgetState();
@@ -49,6 +72,16 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
 
   @override
   Widget build(BuildContext context) {
+    eventUpdateNameController.text = widget.eventName;
+    selectUpdateDate.text = widget.selectDate;
+    fromUpdateDateController.text = widget.fromEventDate;
+    toDateUpdateController.text = widget.toEventDate;
+    eventLocationUpdateController.text = widget.eventLocation;
+    eventdescriptionControllerUpdate.text = widget.eventDescription;
+    eventamenitiesControllerIUpdate.text = widget.eventAmenities;
+    offerNameControllerUpdate.text = widget.offerName;
+    offerCodeControllerUpdate.text = widget.offerCode;
+    peopleControllerUpdate.text = widget.numofpeople;
     return Column(
       children: [
         Padding(
@@ -58,33 +91,22 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: eventCoverPhoto != null
-                    ? Image.memory(
-                        eventCoverPhoto!,
-                        width: 335,
-                        height: 160,
-                        fit: BoxFit.fill,
-                      )
-                    : InkWell(
-                        onTap: () => selectEventImage(),
-                        child: Image.asset("assets/img.png")),
+                child: InkWell(
+                    onTap: () => selectEventImage(),
+                    child: Image.network(
+                      widget.eventCoverPhoto.toString(),
+                      height: 200,
+                      width: MediaQuery.of(context).size.height,
+                    )),
               ),
-              eventPhoto != null
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.memory(
-                        eventPhoto!,
-                        width: 80,
-                        height: 80,
-                      ))
-                  : InkWell(
-                      onTap: () => eventPhotos(),
-                      child: Image.asset(
-                        "assets/add.png",
-                        width: 80,
-                        height: 80,
-                      ),
-                    ),
+              InkWell(
+                onTap: () => eventPhotos(),
+                child: Image.network(
+                  widget.eventPhoto.toString(),
+                  width: 80,
+                  height: 80,
+                ),
+              ),
               const SizedBox(
                 height: 10,
               ),
@@ -681,7 +703,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                               .collection("events")
                               .doc(widget.uuid)
                               .update({
-                            "eventName": eventNameController.text,
+                            "eventName": eventUpdateNameController.text,
                             "eventType": eventTypeList,
                             "eventStartDate": selectUpdateDate.text,
                             "fromEventDate": fromUpdateDateController.text,
@@ -699,8 +721,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                                 timeBeforeControllerUpdate.text,
                             "eventTotalTickets":
                                 totalTicketsControllerUpdate.text,
-                            "eventTicketPrice":
-                                int.parse(priceControllerUpdate.text),
+                            "eventTicketPrice": priceControllerUpdate.text,
                             "timeDeadlineTicket":
                                 ticketPurchaseDeadlineControllerUpdate.text,
                             "ticketPurchase":
@@ -712,8 +733,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                             "tableType": _tableNo.toString(),
                             "numofPeople": peopleControllerUpdate.text,
                             "totaltables": totaltablesControllerUpdate.text,
-                            "tablePrice":
-                                int.parse(totalTablespriceControllerUpdate.text)
+                            "tablePrice": totalTablespriceControllerUpdate.text
                           }).then((value) {
                             Navigator.push(
                                 context,

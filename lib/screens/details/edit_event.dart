@@ -4,7 +4,33 @@ import 'package:partymania_owners/utils/colors.dart';
 
 class EditEvent extends StatefulWidget {
   final uuid;
-  const EditEvent({super.key, required this.uuid});
+  final eventName;
+  final fromEventDate;
+  final selectDate;
+  final toEventDate;
+  final eventLocation;
+  final offerCode;
+  final offerName;
+  final eventDescription;
+  final eventAmenities;
+  final numofpeople;
+  final coverPhoto;
+  final shortPhoto;
+  const EditEvent(
+      {super.key,
+      required this.uuid,
+      required this.eventName,
+      required this.eventAmenities,
+      required this.eventDescription,
+      required this.eventLocation,
+      required this.coverPhoto,
+      required this.numofpeople,
+      required this.shortPhoto,
+      required this.offerCode,
+      required this.offerName,
+      required this.fromEventDate,
+      required this.toEventDate,
+      required this.selectDate});
 
   @override
   State<EditEvent> createState() => _EditEventState();
@@ -41,8 +67,19 @@ class _EditEventState extends State<EditEvent> {
                 height: 20,
               ),
               UpdateNewEventWidget(
-                uuid: widget.uuid,
-              )
+                  uuid: widget.uuid,
+                  eventCoverPhoto: widget.coverPhoto,
+                  eventPhoto: widget.shortPhoto,
+                  offerName: widget.offerName,
+                  offerCode: widget.offerCode,
+                  fromEventDate: widget.fromEventDate,
+                  toEventDate: widget.toEventDate,
+                  eventDescription: widget.eventDescription,
+                  eventAmenities: widget.eventAmenities,
+                  eventLocation: widget.eventLocation,
+                  eventName: widget.eventName,
+                  numofpeople: widget.numofpeople,
+                  selectDate: widget.selectDate)
             ],
           ),
         ),

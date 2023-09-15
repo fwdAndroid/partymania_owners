@@ -99,58 +99,7 @@ class _EventDetailsState extends State<EventDetails> {
                     fontSize: 20),
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Text(
-            //     widget.eventName,
-            //     style: TextStyle(
-            //         color: textColor,
-            //         fontWeight: FontWeight.w400,
-            //         fontSize: 12),
-            //   ),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Row(
-            //     children: [
-            //       Container(
-            //         width: 50,
-            //         height: 26,
-            //         decoration: BoxDecoration(
-            //           borderRadius: BorderRadius.circular(10),
-            //           border: Border.all(
-            //             color: textColor.withOpacity(.8),
-            //           ),
-            //         ),
-            //         child: Center(
-            //           child: Text(
-            //             "Music",
-            //             style: TextStyle(color: textColor.withOpacity(.6)),
-            //           ),
-            //         ),
-            //       ),
-            //       SizedBox(
-            //         width: 10,
-            //       ),
-            //       Container(
-            //         width: 50,
-            //         height: 26,
-            //         decoration: BoxDecoration(
-            //           borderRadius: BorderRadius.circular(10),
-            //           border: Border.all(
-            //             color: textColor.withOpacity(.8),
-            //           ),
-            //         ),
-            //         child: Center(
-            //           child: Text(
-            //             "Night",
-            //             style: TextStyle(color: textColor.withOpacity(.6)),
-            //           ),
-            //         ),
-            //       )
-            //     ],
-            //   ),
-            // ),
+
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListTile(
@@ -693,8 +642,20 @@ class _EventDetailsState extends State<EventDetails> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (builder) => EditEvent(
-                                            uuid: widget.uuid,
-                                          )));
+                                          offerCode: widget.offerCode,
+                                          offerName: widget.offerName,
+                                          uuid: widget.uuid,
+                                          coverPhoto: widget.eventCoverPhoto,
+                                          shortPhoto: widget.eventPhoto,
+                                          eventName: widget.eventName,
+                                          fromEventDate: widget.fromEventDate,
+                                          toEventDate: widget.toEventDate,
+                                          eventLocation: widget.eventLocation,
+                                          numofpeople: widget.numofPeople,
+                                          eventDescription:
+                                              widget.eventDescription,
+                                          eventAmenities: widget.eventAmenities,
+                                          selectDate: widget.eventStartDate)));
                             }),
                       ),
                     ],
