@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:partymania_owners/screens/scan_event/scan_event.dart';
 import 'package:partymania_owners/utils/colors.dart';
 
 class Booking extends StatefulWidget {
@@ -89,21 +90,10 @@ class _BookingState extends State<Booking> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (buil) =>
-                                                        Booking()));
-                                            // Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (builder) =>
-                                            //             ScanEvent()));
-                                          },
+                                          onTap: () {},
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               const SizedBox(
                                                 width: 30,
@@ -206,6 +196,41 @@ class _BookingState extends State<Booking> {
                                                   ),
                                                 ],
                                               ),
+                                              TextButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder:
+                                                                (builder) =>
+                                                                    ScanEvent(
+                                                                      cost: data[
+                                                                              'cost']
+                                                                          .toString(),
+                                                                      seats: data[
+                                                                              'seats']
+                                                                          .toString(),
+                                                                      bookinguuid:
+                                                                          data['bookinguuid']
+                                                                              .toString(),
+                                                                      name: data[
+                                                                          'name'],
+                                                                      phone: data[
+                                                                          'phone'],
+                                                                      email: data[
+                                                                          'email'],
+                                                                      eventUuid:
+                                                                          data[
+                                                                              'eventuuid'],
+                                                                      uid: data[
+                                                                          'uid'],
+                                                                    )));
+                                                  },
+                                                  child: Text(
+                                                    "Scan Ticket",
+                                                    style: TextStyle(
+                                                        color: otpColor),
+                                                  ))
                                             ],
                                           ),
                                         )
