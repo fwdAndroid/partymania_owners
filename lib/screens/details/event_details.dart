@@ -692,7 +692,9 @@ class _EventDetailsState extends State<EventDetails> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (builder) => EditEvent()));
+                                      builder: (builder) => EditEvent(
+                                            uuid: widget.uuid,
+                                          )));
                             }),
                       ),
                     ],
