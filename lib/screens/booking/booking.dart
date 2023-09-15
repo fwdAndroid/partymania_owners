@@ -28,8 +28,8 @@ class _BookingState extends State<Booking> {
           height: MediaQuery.of(context).size.height,
           child: StreamBuilder(
               stream: FirebaseFirestore.instance
-                  .collection("booking")
-                  .where("uid",
+                  .collection("bookings")
+                  .where("clubid",
                       isEqualTo: FirebaseAuth.instance.currentUser!.uid)
                   .snapshots(),
               builder: (context, snapshot) {
@@ -55,8 +55,8 @@ class _BookingState extends State<Booking> {
                     itemBuilder: (BuildContext context, int index) {
                       return StreamBuilder<Object>(
                           stream: FirebaseFirestore.instance
-                              .collection("booking")
-                              .where("uid",
+                              .collection("bookings")
+                              .where("clubid",
                                   isEqualTo:
                                       FirebaseAuth.instance.currentUser!.uid)
                               .snapshots(),
@@ -74,6 +74,7 @@ class _BookingState extends State<Booking> {
                             return Padding(
                                 padding: const EdgeInsets.all(4.0),
                                 child: Container(
+                                    alignment: Alignment.center,
                                     margin:
                                         EdgeInsets.only(left: 10, right: 10),
                                     width: 235,
@@ -84,6 +85,8 @@ class _BookingState extends State<Booking> {
                                             color: textColor.withOpacity(.6))),
                                     height: 130,
                                     child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         InkWell(
                                           onTap: () {
@@ -100,32 +103,17 @@ class _BookingState extends State<Booking> {
                                           },
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                                MainAxisAlignment.center,
                                             children: [
-                                              Stack(
-                                                children: [
-                                                  ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            12),
-                                                    child: Image.network(
-                                                      data['eventCoverPhoto'],
-                                                      width: 100,
-                                                      height: 128,
-                                                      fit: BoxFit.fitHeight,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
                                               const SizedBox(
                                                 width: 30,
                                               ),
                                               Column(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                    CrossAxisAlignment.center,
                                                 children: [
                                                   Text(
-                                                    data['eventName'],
+                                                    data['name'],
                                                     style: TextStyle(
                                                         color: textColor,
                                                         fontWeight:
@@ -135,40 +123,41 @@ class _BookingState extends State<Booking> {
                                                   const SizedBox(
                                                     height: 6,
                                                   ),
-                                                  Row(
-                                                    children: [
-                                                      Container(
-                                                          decoration: BoxDecoration(
-                                                              borderRadius: BorderRadius
-                                                                  .all(Radius
-                                                                      .circular(
-                                                                          16)),
-                                                              border: Border.all(
-                                                                  color:
-                                                                      otpColor)),
-                                                          height: 30,
-                                                          width: 50,
-                                                          child: Center(
-                                                            child: Text(
-                                                              data['eventType'],
-                                                              style: TextStyle(
-                                                                  color:
-                                                                      otpColor),
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                            ),
-                                                          )),
-                                                      const SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                      Image.asset(
-                                                        "assets/Auto Layout Horizontal.png",
-                                                      )
-                                                    ],
+                                                  Container(
+                                                    height: 40,
+                                                    width: 200,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(16),
+                                                        border: Border.all(
+                                                            width: 1,
+                                                            color: textColor
+                                                                .withOpacity(
+                                                                    .80))),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Icon(
+                                                          Icons.mobile_friendly,
+                                                          color: textColor,
+                                                        ),
+                                                        SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        Text(
+                                                          data['phone'],
+                                                          style: TextStyle(
+                                                              color: textColor
+                                                                  .withOpacity(
+                                                                      .6)),
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                   const SizedBox(
                                                     height: 6,
@@ -176,12 +165,13 @@ class _BookingState extends State<Booking> {
                                                   Row(
                                                     children: [
                                                       Icon(
-                                                        Icons.location_pin,
+                                                        Icons.chair,
                                                         color: otpColor,
                                                         size: 15,
                                                       ),
                                                       Text(
-                                                        data['eventLocation'],
+                                                        data['seats']
+                                                            .toString(),
                                                         style: TextStyle(
                                                             color: otpColor,
                                                             fontWeight:
@@ -205,34 +195,13 @@ class _BookingState extends State<Booking> {
                                                             color: textColor
                                                                 .withOpacity(
                                                                     .80))),
-                                                    child: Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          width: 8,
-                                                        ),
-                                                        Text(
-                                                          data[
-                                                              'eventStartDate'],
-                                                          style: TextStyle(
-                                                              color: textColor
-                                                                  .withOpacity(
-                                                                      .6)),
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                        ),
-                                                        SizedBox(
-                                                          width: 8,
-                                                        ),
-                                                        Text(
-                                                          data['fromEventDate'],
-                                                          style: TextStyle(
-                                                              color: textColor
-                                                                  .withOpacity(
-                                                                      .6)),
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                        ),
-                                                      ],
+                                                    child: Text(
+                                                      data['email'],
+                                                      style: TextStyle(
+                                                          color: textColor
+                                                              .withOpacity(.6)),
+                                                      textAlign:
+                                                          TextAlign.center,
                                                     ),
                                                   ),
                                                 ],

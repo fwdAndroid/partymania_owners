@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:csc_picker/csc_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -23,6 +24,11 @@ class CreateProfileWidget extends StatefulWidget {
 class _CreateProfileWidgetState extends State<CreateProfileWidget> {
   Uint8List? _coverPhoto;
   Uint8List? _ticketBluePrint;
+  String countryValue = "";
+  String stateValue = "";
+  String cityValue = "";
+  String address = "";
+
   bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
