@@ -184,7 +184,7 @@ class _EventListViewWidgetState extends State<EventListViewWidget> {
                                                       width: 50,
                                                       child: Center(
                                                         child: Text(
-                                                          "Music",
+                                                          data['eventType'],
                                                           style: TextStyle(
                                                               color: otpColor),
                                                           textAlign:
@@ -233,12 +233,31 @@ class _EventListViewWidgetState extends State<EventListViewWidget> {
                                                         width: 1,
                                                         color: textColor
                                                             .withOpacity(.80))),
-                                                child: Text(
-                                                  data['eventDate'],
-                                                  style: TextStyle(
-                                                      color: textColor
-                                                          .withOpacity(.6)),
-                                                  textAlign: TextAlign.center,
+                                                child: Row(
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 8,
+                                                    ),
+                                                    Text(
+                                                      data['eventStartDate'],
+                                                      style: TextStyle(
+                                                          color: textColor
+                                                              .withOpacity(.6)),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 8,
+                                                    ),
+                                                    Text(
+                                                      data['fromEventDate'],
+                                                      style: TextStyle(
+                                                          color: textColor
+                                                              .withOpacity(.6)),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ],

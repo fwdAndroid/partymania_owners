@@ -701,7 +701,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                             "eventTicketSession": dropdownvalue,
                             "eventTicketTimeBefore": timeBeforeController.text,
                             "eventTotalTickets": totalTicketsController.text,
-                            "eventTicketPrice": int.parse(priceController.text),
+                            "eventTicketPrice": priceController.text,
                             "timeDeadlineTicket":
                                 ticketPurchaseDeadlineController.text,
                             "ticketPurchase":
@@ -716,8 +716,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                             "tableType": _tableNo.toString(),
                             "numofPeople": peopleController.text,
                             "totaltables": totaltablesController.text,
-                            "tablePrice":
-                                int.parse(totalTablesPriceController.text)
+                            "tablePrice": totalTablesPriceController.text,
                           }).then((value) {
                             Navigator.push(
                                 context,
