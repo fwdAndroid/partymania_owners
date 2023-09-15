@@ -185,7 +185,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
               TextFormInputField(
                 textInputType: TextInputType.text,
                 hintText: "Event Name",
-                controller: eventNameController,
+                controller: eventUpdateNameController,
               )
             ],
           ),
@@ -266,7 +266,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
               ),
               TextFormInputField(
                 onTap: () {
-                  _selectDate();
+                  _selectUpdateDate();
                 },
                 suIcon: Icon(
                   Icons.calendar_month,
@@ -274,7 +274,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                 ),
                 textInputType: TextInputType.datetime,
                 hintText: "Select Date",
-                controller: selectDate,
+                controller: selectUpdateDate,
               )
             ],
           ),
@@ -311,7 +311,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                       ),
                       textInputType: TextInputType.text,
                       hintText: "From",
-                      controller: fromDateController,
+                      controller: fromUpdateDateController,
                     ),
                   ],
                 ),
@@ -347,7 +347,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                       ),
                       textInputType: TextInputType.text,
                       hintText: "To",
-                      controller: toDateController,
+                      controller: toDateUpdateController,
                     ),
                   ],
                 ),
@@ -381,7 +381,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                 ),
                 textInputType: TextInputType.text,
                 hintText: "Eden Garden",
-                controller: eventLocationController,
+                controller: eventLocationUpdateController,
               ),
             ],
           ),
@@ -407,7 +407,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                   maxLines: 5,
                   textInputType: TextInputType.text,
                   hintText: "Type Something",
-                  controller: eventdescriptionController,
+                  controller: eventdescriptionControllerUpdate,
                 ),
               ),
             ],
@@ -443,7 +443,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                         ))),
                 textInputType: TextInputType.text,
                 hintText: "Add Amenities",
-                controller: eventamenitiesController,
+                controller: eventamenitiesControllerIUpdate,
               )
             ],
           ),
@@ -489,7 +489,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                 height: 10,
               ),
               TextFormInputField(
-                onTap: _selectDate2,
+                onTap: _selectUpdateDate2,
                 suIcon: Padding(
                     padding: const EdgeInsets.all(13.0),
                     child: Icon(
@@ -498,7 +498,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                     )),
                 textInputType: TextInputType.text,
                 hintText: "Choose a Ticket Purchase Deadline",
-                controller: ticketPurchaseDeadlineController,
+                controller: ticketPurchaseDeadlineControllerUpdate,
               )
             ],
           ),
@@ -544,7 +544,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                         ))),
                 textInputType: TextInputType.text,
                 hintText: "12.jpg",
-                controller: ticketPurchaseUploadController,
+                controller: ticketPurchaseUploadControllerIUpdate,
               )
             ],
           ),
@@ -598,7 +598,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
               TextFormInputField(
                 textInputType: TextInputType.text,
                 hintText: "12255",
-                controller: offerNameController,
+                controller: offerNameControllerUpdate,
               )
             ],
           ),
@@ -621,7 +621,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
               TextFormInputField(
                 textInputType: TextInputType.text,
                 hintText: "12255",
-                controller: offerCodeController,
+                controller: offerCodeControllerUpdate,
               )
             ],
           ),
@@ -671,54 +671,49 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                     )
                   : Center(
                       child: SaveButton(
-                        title: "Publish Event",
+                        title: "Update Event",
                         onTap: () async {
                           setState(() {
                             _isLoading = true;
                           });
-                          var uuid = Uuid().v4();
-                          String eventcPhoto = await StorageMethods()
-                              .uploadImageToStorage(
-                                  "eventCoverPhoto", eventCoverPhoto!, true);
-                          String eventTicketPhoto = await StorageMethods()
-                              .uploadImageToStorage(
-                                  "eventTicketPhoto", eventPhoto!, true);
+
                           await FirebaseFirestore.instance
                               .collection("events")
-                              .doc(uuid)
-                              .set({
+                              .doc(widget.uuid)
+                              .update({
                             "eventName": eventNameController.text,
                             "eventType": eventTypeList,
-                            "eventStartDate": selectDate.text,
-                            "fromEventDate": fromDateController.text,
-                            "toEventDate": toDateController.text,
-                            "eventLocation": eventLocationController.text,
-                            "uuid": uuid,
-                            "eventDescription": eventdescriptionController.text,
-                            "eventAmenities": eventamenitiesController.text,
+                            "eventStartDate": selectUpdateDate.text,
+                            "fromEventDate": fromUpdateDateController.text,
+                            "toEventDate": toDateUpdateController.text,
+                            "eventLocation": eventLocationUpdateController.text,
+                            "eventDescription":
+                                eventdescriptionControllerUpdate.text,
+                            "eventAmenities":
+                                eventamenitiesControllerIUpdate.text,
                             "participantType": couplesDropDown,
-                            "bird": birdController.text,
+                            "bird": birdControllerUpdate.text,
                             "artistType": _artist.toString(),
                             "eventTicketSession": dropdownvalue,
-                            "eventTicketTimeBefore": timeBeforeController.text,
-                            "eventTotalTickets": totalTicketsController.text,
-                            "eventTicketPrice": int.parse(priceController.text),
+                            "eventTicketTimeBefore":
+                                timeBeforeControllerUpdate.text,
+                            "eventTotalTickets":
+                                totalTicketsControllerUpdate.text,
+                            "eventTicketPrice":
+                                int.parse(priceControllerUpdate.text),
                             "timeDeadlineTicket":
-                                ticketPurchaseDeadlineController.text,
+                                ticketPurchaseDeadlineControllerUpdate.text,
                             "ticketPurchase":
-                                ticketPurchaseUploadController.text,
-                            "offerName": offerNameController.text,
-                            "offerCode": offerCodeController.text,
-                            "uid": FirebaseAuth.instance.currentUser!.uid,
-                            "eventCoverPhoto": eventcPhoto,
-                            "eventPhoto": eventTicketPhoto,
+                                ticketPurchaseUploadControllerIUpdate.text,
+                            "offerName": offerNameControllerUpdate.text,
+                            "offerCode": offerCodeControllerUpdate.text,
                             "dayNight": _fruit.toString(),
-                            "tableNumber": tableNumberController.text,
+                            "tableNumber": tableNumberControllerUpdate.text,
                             "tableType": _tableNo.toString(),
-                            "numofPeople": peopleController.text,
-                            "totaltables": totaltablesController.text,
+                            "numofPeople": peopleControllerUpdate.text,
+                            "totaltables": totaltablesControllerUpdate.text,
                             "tablePrice":
-                                int.parse(totalTablesPriceController.text)
+                                int.parse(totalTablespriceControllerUpdate.text)
                           }).then((value) {
                             Navigator.push(
                                 context,
@@ -746,7 +741,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
   }
 
   //Functions
-  void _selectDate() async {
+  void _selectUpdateDate() async {
     await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -754,12 +749,12 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
       lastDate: DateTime(2025),
     ).then((selectedDate) {
       if (selectedDate != null) {
-        selectDate.text = DateFormat('yyyy-MM-dd').format(selectedDate);
+        selectUpdateDate.text = DateFormat('yyyy-MM-dd').format(selectedDate);
       }
     });
   }
 
-  void _selectDate2() async {
+  void _selectUpdateDate2() async {
     await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -767,7 +762,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
       lastDate: DateTime(2025),
     ).then((selectedDate) {
       if (selectedDate != null) {
-        ticketPurchaseDeadlineController.text =
+        ticketPurchaseDeadlineControllerUpdate.text =
             DateFormat('yyyy-MM-dd').format(selectedDate);
       }
     });
@@ -782,7 +777,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
     if (picked != null && picked != _selectedTime) {
       setState(() {
         _selectedTime = picked;
-        fromDateController.text = _selectedTime.format(context);
+        fromUpdateDateController.text = _selectedTime.format(context);
       });
     }
   }
@@ -796,7 +791,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
     if (picked != null && picked != _selectedTime) {
       setState(() {
         _selectedTime = picked;
-        toDateController.text = _selectedTime.format(context);
+        toDateUpdateController.text = _selectedTime.format(context);
       });
     }
   }
@@ -895,7 +890,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                             border: InputBorder.none,
                             hintStyle: TextStyle(color: Colors.black),
                             hintText: "Early Bird"),
-                        controller: birdController,
+                        controller: birdControllerUpdate,
                       ),
                     ),
                     Row(
@@ -1031,7 +1026,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                                     border: InputBorder.none,
                                     hintStyle: TextStyle(color: Colors.black),
                                     hintText: "9:30 AM"),
-                                controller: timeBeforeController,
+                                controller: timeBeforeControllerUpdate,
                               ),
                             ),
                           ),
@@ -1055,7 +1050,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                                     border: InputBorder.none,
                                     hintText: "Total Tickets",
                                     hintStyle: TextStyle(color: Colors.black)),
-                                controller: totalTicketsController,
+                                controller: totalTicketsControllerUpdate,
                               ),
                             ),
                           ),
@@ -1075,7 +1070,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                                     border: InputBorder.none,
                                     hintText: "Price",
                                     hintStyle: TextStyle(color: Colors.black)),
-                                controller: priceController,
+                                controller: priceControllerUpdate,
                                 keyboardType: TextInputType.number,
                               ),
                             ),
@@ -1111,7 +1106,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
     if (picked != null && picked != _selectedTime) {
       setState(() {
         _selectedTime = picked;
-        timeBeforeController.text = _selectedTime.format(context);
+        timeBeforeControllerUpdate.text = _selectedTime.format(context);
       });
     }
   }
@@ -1152,7 +1147,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                               border: InputBorder.none,
                               hintStyle: TextStyle(color: Colors.black),
                               hintText: "Enter Table Number"),
-                          controller: tableNumberController,
+                          controller: tableNumberControllerUpdate,
                         ),
                       ),
                       Row(
@@ -1215,7 +1210,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                                 border: InputBorder.none,
                                 hintText: "Number of people",
                                 hintStyle: TextStyle(color: Colors.black)),
-                            controller: peopleController,
+                            controller: peopleControllerUpdate,
                           ),
                         ),
                       ),
@@ -1237,7 +1232,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                                       hintText: "Total Tables",
                                       hintStyle:
                                           TextStyle(color: Colors.black)),
-                                  controller: totaltablesController,
+                                  controller: totaltablesControllerUpdate,
                                 ),
                               ),
                             ),
@@ -1258,7 +1253,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                                       hintText: "Price",
                                       hintStyle:
                                           TextStyle(color: Colors.black)),
-                                  controller: totalTablesPriceController,
+                                  controller: totalTablespriceControllerUpdate,
                                   keyboardType: TextInputType.number,
                                 ),
                               ),

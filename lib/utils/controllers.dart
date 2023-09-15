@@ -89,3 +89,24 @@ final tableType = TextEditingController();
 final birdController = TextEditingController();
 final totaltablesController = TextEditingController();
 final totalTablesPriceController = TextEditingController();
+
+//Update Event Controllers
+final eventUpdateNameController = TextEditingController();
+final selectUpdateDate = TextEditingController();
+final fromUpdateDateController = TextEditingController();
+final toDateUpdateController = TextEditingController();
+final eventLocationUpdateController = TextEditingController();
+final eventdescriptionControllerUpdate = TextEditingController();
+final eventamenitiesControllerIUpdate = TextEditingController();
+final ticketPurchaseDeadlineControllerUpdate = TextEditingController();
+final ticketPurchaseUploadControllerIUpdate = TextEditingController();
+final offerNameControllerUpdate = TextEditingController();
+final offerCodeControllerUpdate = TextEditingController();
+final birdControllerUpdate = TextEditingController();
+final timeBeforeControllerUpdate = TextEditingController();
+final totalTicketsControllerUpdate = TextEditingController();
+final priceControllerUpdate = TextEditingController();
+final tableNumberControllerUpdate = TextEditingController();
+final peopleControllerUpdate = TextEditingController();
+final totaltablesControllerUpdate = TextEditingController();
+final totalTablespriceControllerUpdate = TextEditingController();
