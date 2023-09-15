@@ -30,6 +30,7 @@ environment:
 dependencies:
   cached_network_image: ^3.2.3
   cloud_firestore: ^4.9.0
+  country_code_picker: ^3.0.0
   cupertino_icons: ^1.0.2
   firebase_auth: ^4.8.0
   firebase_core: ^2.15.1
@@ -38,8 +39,10 @@ dependencies:
     sdk: flutter
   flutter_rating_bar: ^4.0.1
   flutter_svg: ^2.0.7
+  form_field_validator: ^1.1.0
   image_picker: ^1.0.2
   intl: ^0.18.1
+  pin_code_fields: ^8.0.1
   table_calendar: ^3.0.9
   uuid: ^3.0.7
 
