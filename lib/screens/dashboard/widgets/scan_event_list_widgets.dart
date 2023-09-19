@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/booking/booking.dart';
-import 'package:partymania_owners/screens/scan_event/scan_event.dart';
 import 'package:partymania_owners/utils/colors.dart';
 
 class ScanEventListWidget extends StatefulWidget {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/scan_event/scanning_page.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
-import 'package:scanning_effect/scanning_effect.dart';
 
 class ScanEvent extends StatefulWidget {
   String name;
