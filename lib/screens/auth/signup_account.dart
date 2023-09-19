@@ -144,7 +144,7 @@ class _SignUpAccountsState extends State<SignUpAccounts> {
                         ),
                       ),
                       textInputType: TextInputType.number,
-                      hintText: "424-232-000",
+                      hintText: "Enter Number",
                       controller: phoneNumberController,
                     )
                   ],

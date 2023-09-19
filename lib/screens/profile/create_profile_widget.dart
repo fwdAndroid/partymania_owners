@@ -37,11 +37,14 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: _coverPhoto != null
-              ? Image.memory(
-                  _coverPhoto!,
-                  width: 335,
-                  height: 160,
-                  fit: BoxFit.fill,
+              ? InkWell(
+                  onTap: selectImage,
+                  child: Image.memory(
+                    _coverPhoto!,
+                    width: 335,
+                    height: 160,
+                    fit: BoxFit.fitHeight,
+                  ),
                 )
               : InkWell(
                   onTap: selectImage, child: Image.asset("assets/img.png")),
@@ -210,7 +213,7 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
                   ),
                 ),
                 textInputType: TextInputType.number,
-                hintText: "424-232-000",
+                hintText: "Club Phone Number",
                 controller: phoneNumberClubController,
               )
             ],
@@ -241,7 +244,7 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
                   ),
                 ),
                 textInputType: TextInputType.text,
-                hintText: "Eden Garden",
+                hintText: "Enter Address",
                 controller: clubLocationController,
               ),
             ],
