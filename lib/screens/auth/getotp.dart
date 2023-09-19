@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:partymania_owners/screens/auth/login_screen.dart';
 import 'package:partymania_owners/screens/auth/otp/verify_phone.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';

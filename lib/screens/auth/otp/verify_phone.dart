@@ -17,7 +17,6 @@ class VerifyPhone extends StatefulWidget {
 }
 
 class _VerifyPhoneState extends State<VerifyPhone> {
-  final GlobalKey<ScaffoldState> _scalfoldkey = GlobalKey<ScaffoldState>();
   final TextEditingController controllerpin = TextEditingController();
   final FocusNode pinOTPFocusNode = FocusNode();
 
