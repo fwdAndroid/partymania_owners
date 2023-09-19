@@ -71,10 +71,11 @@ class _GetOtpState extends State<GetOtp> {
                   Expanded(
                     child: Container(
                       child: TextFormField(
+                        maxLength: 10,
                         validator: RequiredValidator(errorText: "Required"),
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: "7665060613",
+                          hintText: "Enter Number",
                           //  prefix: Padding(padding: EdgeInsets.all(10),child: Text(dialCodeDigits,style: TextStyle(color: Colors.black),),),
                         ),
                         keyboardType: TextInputType.number,
