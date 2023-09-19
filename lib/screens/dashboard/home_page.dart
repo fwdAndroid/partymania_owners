@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:partymania_owners/screens/dashboard/widgets/home_grid_widget.dart';
@@ -101,12 +104,17 @@ class _HomePageState extends State<HomePage> {
                             shape: BoxShape.circle,
                             color: otpColor,
                           ),
-                          child: Text(
-                            "4",
-                            style: TextStyle(
-                                color: textColor, fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center,
-                          ),
+                          child: FutureBuilder(
+                              future: docss(),
+                              builder: (context, snapshot) {
+                                return Text(
+                                  snapshot.data.toString(),
+                                  style: TextStyle(
+                                      color: textColor,
+                                      fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center,
+                                );
+                              }),
                         )
                       ],
                     ),
@@ -162,12 +170,17 @@ class _HomePageState extends State<HomePage> {
                             shape: BoxShape.circle,
                             color: otpColor,
                           ),
-                          child: Text(
-                            "4",
-                            style: TextStyle(
-                                color: textColor, fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center,
-                          ),
+                          child: FutureBuilder(
+                              future: docss(),
+                              builder: (context, snapshot) {
+                                return Text(
+                                  snapshot.data.toString(),
+                                  style: TextStyle(
+                                      color: textColor,
+                                      fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center,
+                                );
+                              }),
                         )
                       ],
                     ),
@@ -198,5 +211,16 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  docss() async {
+    AggregateQuerySnapshot query = await FirebaseFirestore.instance
+        .collection('events')
+        .where("uid", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .count()
+        .get();
+
+    int numberOfDocuments = query.count;
+    return numberOfDocuments;
   }
 }

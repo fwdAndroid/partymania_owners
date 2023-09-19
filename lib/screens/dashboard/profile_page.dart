@@ -37,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
       body: SingleChildScrollView(
         child: StreamBuilder<Object>(
             stream: FirebaseFirestore.instance
-                .collection("users")
+                .collection("clubs")
                 .doc(FirebaseAuth.instance.currentUser!.uid)
                 .snapshots(),
             builder: (context, AsyncSnapshot snapshot) {
@@ -59,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: 10,
                   ),
                   Text(
-                    document['fullName'],
+                    document['clubName'],
                     style: TextStyle(
                         color: textColor,
                         fontWeight: FontWeight.w600,

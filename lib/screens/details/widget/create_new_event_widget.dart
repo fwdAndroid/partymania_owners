@@ -379,7 +379,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                   ),
                 ),
                 textInputType: TextInputType.text,
-                hintText: "Eden Garden",
+                hintText: "Enter Address",
                 controller: eventLocationController,
               ),
             ],
@@ -639,6 +639,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormInputField(
+            maxLines: 10,
             suIcon: Padding(
                 padding: const EdgeInsets.all(13.0),
                 child: ElevatedButton(
@@ -717,7 +718,8 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                             "numofPeople": peopleController.text,
                             "totaltables": totaltablesController.text,
                             "tablePrice": totalTablesPriceController.text,
-                            "eventCreated": true
+                            "eventCreated": true,
+                            "conditions": termsController.text
                           }).then((value) {
                             Navigator.push(
                                 context,
@@ -854,7 +856,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                             value: couplesDropDown,
                             underline: SizedBox(),
                             isDense: true,
-                            dropdownColor: Colors.black,
+                            dropdownColor: Colors.white,
                             isExpanded: true,
                             // Down Arrow Icon
                             icon: const Icon(Icons.keyboard_arrow_down),
@@ -1055,6 +1057,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                                     hintText: "Total Tickets",
                                     hintStyle: TextStyle(color: Colors.black)),
                                 controller: totalTicketsController,
+                                keyboardType: TextInputType.number,
                               ),
                             ),
                           ),
@@ -1146,6 +1149,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                                 width: 1),
                             borderRadius: BorderRadius.circular(12)),
                         child: TextFormField(
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                               contentPadding: EdgeInsets.all(12),
                               border: InputBorder.none,
@@ -1209,6 +1213,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                                   width: 1),
                               borderRadius: BorderRadius.circular(12)),
                           child: TextFormField(
+                            keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                                 contentPadding: EdgeInsets.all(8),
                                 border: InputBorder.none,
@@ -1230,6 +1235,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                                         width: 1),
                                     borderRadius: BorderRadius.circular(12)),
                                 child: TextFormField(
+                                  keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                       contentPadding: EdgeInsets.all(8),
                                       border: InputBorder.none,

@@ -44,7 +44,7 @@ class _BookingState extends State<Booking> {
                     child: Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(
-                        "No Booking Found yet As User Booking Able you're able to scan",
+                        "No Booking availble",
                         style: TextStyle(color: Colors.white),
                         textAlign: TextAlign.center,
                       ),

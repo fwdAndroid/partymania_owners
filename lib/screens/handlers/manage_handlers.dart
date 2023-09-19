@@ -81,12 +81,24 @@ class _ManageHandlersState extends State<ManageHandlers> {
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500),
                                 ),
-                                subtitle: Text(
-                                  data['email'],
-                                  style: TextStyle(
-                                      color: textColor,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      data['email'],
+                                      style: TextStyle(
+                                          color: textColor,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    Text(
+                                      data['createPassword'],
+                                      style: TextStyle(
+                                          color: textColor,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500),
+                                    )
+                                  ],
                                 ),
                               ));
                         });
