@@ -31,6 +31,8 @@ dependencies:
   cached_network_image: ^3.2.3
   cloud_firestore: ^4.9.0
   country_code_picker: ^3.0.0
+  country_picker_plus: ^2.0.2
+  country_state_picker_plus: ^1.0.0+1
   csc_picker: ^0.2.7
   cupertino_icons: ^1.0.2
   firebase_auth: ^4.8.0

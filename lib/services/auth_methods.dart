@@ -35,6 +35,7 @@ class AuthMethods {
           fullName: fullName,
           uid: cred.user!.uid,
           email: email,
+          type: "Owner",
           phone_Number: phone_Number,
           confrimPassword: confrimPassword,
           createPassword: confrimPassword,

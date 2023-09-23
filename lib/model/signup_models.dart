@@ -7,10 +7,12 @@ class SignUp_Model {
   String phone_Number;
   String createPassword;
   String confrimPassword;
+  String type;
 
   SignUp_Model(
       {required this.uid,
       required this.email,
+      required this.type,
       required this.fullName,
       required this.createPassword,
       required this.confrimPassword,
@@ -21,6 +23,7 @@ class SignUp_Model {
         'phone_Number': phone_Number,
         'uid': uid,
         'email': email,
+        'type': type,
         'fullName': fullName,
         'confrimPassword': confrimPassword,
         'createPassword': createPassword
@@ -33,6 +36,7 @@ class SignUp_Model {
     return SignUp_Model(
       phone_Number: snapshot['phone_Number'],
       uid: snapshot['uid'],
+      type: snapshot['type'],
       email: snapshot['email'],
       createPassword: snapshot['createPassword'],
       fullName: snapshot['fullName'],
