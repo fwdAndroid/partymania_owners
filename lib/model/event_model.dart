@@ -12,7 +12,7 @@ class EventModel {
   String toDate;
   String eventLocation;
   String timeDeadlineTicket;
-  String eventAmenities;
+  var eventAmenities;
   String eventDescription;
   final coupleValue;
   String createOffer;

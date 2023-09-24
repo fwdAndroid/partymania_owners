@@ -34,6 +34,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
   TimeOfDay _selectedTime = TimeOfDay.now();
   bool _isLoading = false;
   // List of items in our dropdown menu
+  List<String> values = [];
 
   Fruit? _fruit = Fruit.day;
   Artist? _artist = Artist.Guestlist;
@@ -45,6 +46,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
   TableNo? _tableNo = TableNo.TableCharge;
 
   String dropdownvalue = 'Before';
+  var uuid = Uuid().v4();
 
   @override
   Widget build(BuildContext context) {
@@ -435,7 +437,11 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0)),
                             backgroundColor: otpColor),
-                        onPressed: () {},
+                        onPressed: () {
+                          values.add(eventamenitiesController.text);
+                          eventamenitiesController.clear();
+                          addToAmenties(values);
+                        },
                         child: Text(
                           "Add",
                           style: TextStyle(color: textColor),
@@ -676,7 +682,6 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                           setState(() {
                             _isLoading = true;
                           });
-                          var uuid = Uuid().v4();
                           String eventcPhoto = await StorageMethods()
                               .uploadImageToStorage(
                                   "eventCoverPhoto", eventCoverPhoto!, true);
@@ -695,7 +700,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                             "eventLocation": eventLocationController.text,
                             "uuid": uuid,
                             "eventDescription": eventdescriptionController.text,
-                            "eventAmenities": eventamenitiesController.text,
+                            "eventAmenities": values,
                             "participantType": couplesDropDown,
                             "bird": birdController.text,
                             "artistType": _artist.toString(),
@@ -1286,5 +1291,11 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
             },
           );
         });
+  }
+
+  addToAmenties(List<String> values) {
+    var items = FirebaseFirestore.instance.collection('events').doc(uuid);
+    items.set({"eventAmenities": values});
+    return values;
   }
 }
