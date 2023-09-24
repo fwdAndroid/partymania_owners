@@ -10,8 +10,9 @@ class ClubModel {
   String clubType;
   String clubState;
   String clubCity;
+  String clubCountry;
   String clubZipCode;
-  String clubAmentities;
+  List<String> clubAmentities;
   String clubDescription;
   final followers;
 
@@ -26,6 +27,7 @@ class ClubModel {
       required this.clubDescription,
       required this.ticketPhoto,
       required this.clubCity,
+      required this.clubCountry,
       required this.clubAmentities,
       required this.clubZipCode,
       required this.clubName});
@@ -37,6 +39,7 @@ class ClubModel {
         'clubLocation': clubLocation,
         'clubPhoneNumber': clubPhoneNumber,
         'clubType': clubType,
+        'clubCountry': clubCountry,
         'ticketPhoto': ticketPhoto,
         'coverPhoto': coverPhoto,
         "clubDescription": clubDescription,
@@ -58,6 +61,7 @@ class ClubModel {
         coverPhoto: snapshot['coverPhoto'],
         clubPhoneNumber: snapshot['clubPhoneNumber'],
         clubType: snapshot['clubType'],
+        clubCountry: snapshot['clubCountry'],
         followers: snapshot['followers'],
         ticketPhoto: snapshot['ticketPhoto'],
         clubCity: snapshot['clubCity'],

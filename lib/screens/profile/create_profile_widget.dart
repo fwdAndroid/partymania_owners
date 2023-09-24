@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:country_picker_plus/country_picker_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -27,6 +28,7 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
   String stateValue = "";
   String cityValue = "";
   String address = "";
+  List<String> values = [];
 
   bool _isLoading = false;
   @override
@@ -249,74 +251,35 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "State",
-                      style: TextStyle(
-                          color: textColor,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12),
-                    ),
-                    const SizedBox(
-                      height: 7,
-                    ),
-                    TextFormInputField(
-                      suIcon: Padding(
-                        padding: const EdgeInsets.all(13.0),
-                        child: Image.asset(
-                          "assets/Vector.png",
-                          width: 10,
-                          height: 10,
-                        ),
-                      ),
-                      textInputType: TextInputType.text,
-                      hintText: "Select State",
-                      controller: clubStateController,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                width: 7,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "City",
-                      style: TextStyle(
-                          color: textColor,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12),
-                    ),
-                    const SizedBox(
-                      height: 7,
-                    ),
-                    TextFormInputField(
-                      suIcon: Padding(
-                        padding: const EdgeInsets.all(13.0),
-                        child: Image.asset(
-                          "assets/Vector.png",
-                          width: 10,
-                          height: 10,
-                        ),
-                      ),
-                      textInputType: TextInputType.text,
-                      hintText: "Select City",
-                      controller: clubCityController,
-                    ),
-                  ],
-                ),
-              ),
-            ],
+        SizedBox(
+          width: 600,
+          child: CountryPickerPlus(
+            bottomSheetDecoration: bottomSheetDecoration,
+            decoration: fieldDecoration,
+            isRequired: true,
+            countryLabel: "Country",
+            countrySearchHintText: "Search Country",
+            stateLabel: "State",
+            stateHintText: "Tap to Select State",
+            cityLabel: "City",
+            countryHintText: "Tap to Select Country",
+            cityHintText: "Tap to Select City",
+            onCountrySaved: (value) {
+              countryValue = value!;
+              print(countryValue);
+            },
+            onCountrySelected: (value) {
+              countryValue = value;
+              print(countryValue);
+            },
+            onStateSelected: (value) {
+              stateValue = value;
+              print(stateValue);
+            },
+            onCitySelected: (value) {
+              cityValue = value;
+              print(cityValue);
+            },
           ),
         ),
         Padding(
@@ -365,7 +328,7 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0)),
                             backgroundColor: otpColor),
-                        onPressed: () {},
+                        onPressed: addToAmenties,
                         child: Text(
                           "Add",
                           style: TextStyle(color: textColor),
@@ -444,10 +407,11 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
         phoneNumberClubController.text,
         clubNameController.text,
         club,
-        clubStateController.text,
-        clubCityController.text,
+        stateValue,
+        cityValue,
+        countryValue,
         clubZipCodeController.text,
-        amenitiesController.text);
+        values);
 
     print(rse);
     setState(() {
@@ -461,5 +425,12 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (builder) => MainScreen()));
     }
+  }
+
+  void addToAmenties() {
+    String inputText = amenitiesController.text;
+    values = inputText.split(',');
+    values = values.map((value) => value.trim()).toList();
+    print(values);
   }
 }

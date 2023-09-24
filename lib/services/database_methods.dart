@@ -21,8 +21,9 @@ class FirebaseMethods {
       String clubType,
       String clubState,
       String clubCity,
+      String clubCountry,
       String clubZipCode,
-      String clubAmentities) async {
+      List<String> clubAmentities) async {
     String res = "Some Information Regarding Club is Missing";
     try {
       String clubPhoto = await StorageMethods()
@@ -31,6 +32,7 @@ class FirebaseMethods {
           .uploadImageToStorage("clubTablePhoto", ticketPhoto, true);
       ClubModel postModel = ClubModel(
           followers: [],
+          clubCountry: clubCountry,
           coverPhoto: clubPhoto,
           clubState: clubState,
           clubType: clubType,
@@ -68,8 +70,9 @@ class FirebaseMethods {
       String clubType,
       String clubState,
       String clubCity,
+      String clubCountry,
       String clubZipCode,
-      String clubAmentities) async {
+      List<String> clubAmentities) async {
     String res = "Some Information Regarding Club is Missing";
     try {
       String clubPhoto = await StorageMethods()
@@ -89,6 +92,7 @@ class FirebaseMethods {
           clubDescription: description,
           clubLocation: clubLocation,
           clubName: clubName,
+          clubCountry: clubCountry,
           clubPhoneNumber: clubPhoneNumber);
 
       ///Uploading Post To Firebase
