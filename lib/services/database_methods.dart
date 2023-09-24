@@ -23,7 +23,7 @@ class FirebaseMethods {
       String clubCity,
       String clubCountry,
       String clubZipCode,
-      List<String> clubAmentities) async {
+      var clubAmentities) async {
     String res = "Some Information Regarding Club is Missing";
     try {
       String clubPhoto = await StorageMethods()

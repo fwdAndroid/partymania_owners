@@ -12,7 +12,7 @@ class ClubModel {
   String clubCity;
   String clubCountry;
   String clubZipCode;
-  List<String> clubAmentities;
+  var clubAmentities;
   String clubDescription;
   final followers;
 

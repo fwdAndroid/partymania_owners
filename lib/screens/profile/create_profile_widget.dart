@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_picker_plus/country_picker_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -328,7 +329,11 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0)),
                             backgroundColor: otpColor),
-                        onPressed: addToAmenties,
+                        onPressed: () {
+                          values.add(amenitiesController.text);
+                          amenitiesController.clear();
+                          addToAmenties(values);
+                        },
                         child: Text(
                           "Add",
                           style: TextStyle(color: textColor),
@@ -427,10 +432,11 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
     }
   }
 
-  void addToAmenties() {
-    String inputText = amenitiesController.text;
-    values = inputText.split(',');
-    values = values.map((value) => value.trim()).toList();
-    print(values);
+  addToAmenties(List<String> values) {
+    var items = FirebaseFirestore.instance
+        .collection('clubs')
+        .doc(FirebaseAuth.instance.currentUser!.uid);
+    items.set({"clubAmentities": values});
+    return values;
   }
 }
