@@ -31,10 +31,12 @@ class CreateNewEventWidget extends StatefulWidget {
 class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
   Uint8List? eventCoverPhoto;
   Uint8List? eventPhoto;
+  Uint8List? eventTable;
   TimeOfDay _selectedTime = TimeOfDay.now();
   bool _isLoading = false;
   // List of items in our dropdown menu
   List<String> values = [];
+  List<String> addedTicketValues = [];
 
   Fruit? _fruit = Fruit.day;
   Artist? _artist = Artist.Guestlist;
@@ -441,6 +443,8 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                           values.add(eventamenitiesController.text);
                           eventamenitiesController.clear();
                           addToAmenties(values);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Values are Added")));
                         },
                         child: Text(
                           "Add",
@@ -464,19 +468,81 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: InkWell(
-              onTap: () => showAlertDialog(),
-              child: Image.asset(
-                "assets/add.png",
-                width: 100,
-                height: 100,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: InkWell(
+                  onTap: () => showAlertDialog(),
+                  child: Image.asset(
+                    "assets/add.png",
+                    width: 100,
+                    height: 100,
+                  ),
+                ),
               ),
             ),
-          ),
+            //        couplesDropDown,
+            // priceController.text,
+            // totalTicketsController.text,
+            // timeBeforeController.text,
+            // dropdownvalue,
+            // _artist.toString(),
+            // birdController.text
+            Container(
+              margin: EdgeInsets.only(left: 10, top: 10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                border: Border.all(width: .3, color: textColor),
+              ),
+              height: 113,
+              width: 125,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      couplesDropDown,
+                      style: TextStyle(color: textColor),
+                    ),
+                    Text(
+                      _artist.toString().substring(7),
+                      style: TextStyle(color: textColor),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          dropdownvalue,
+                          style: TextStyle(color: textColor),
+                        ),
+                        Text(
+                          timeBeforeController.text,
+                          style: TextStyle(color: textColor),
+                        ),
+                      ],
+                    ),
+                    Divider(),
+                    Row(
+                      children: [
+                        Text(
+                          "RS",
+                          style: TextStyle(color: textColor),
+                        ),
+                        Text(
+                          priceController.text,
+                          style: TextStyle(color: textColor),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -534,23 +600,31 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
               SizedBox(
                 height: 10,
               ),
-              TextFormInputField(
-                suIcon: Padding(
-                    padding: const EdgeInsets.all(13.0),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0)),
-                            backgroundColor: otpColor),
-                        onPressed: () {},
-                        child: Text(
-                          "Upload",
-                          style: TextStyle(color: textColor),
-                        ))),
-                textInputType: TextInputType.text,
-                hintText: "12.jpg",
-                controller: ticketPurchaseUploadController,
-              )
+              eventTable != null
+                  ? Image.memory(
+                      eventTable!,
+                      width: 335,
+                      height: 160,
+                      fit: BoxFit.fill,
+                    )
+                  : TextFormInputField(
+                      suIcon: Padding(
+                          padding: const EdgeInsets.all(13.0),
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                  backgroundColor: otpColor),
+                              onPressed: () => selectEventTableImage(),
+                              child: Text(
+                                "Upload",
+                                style: TextStyle(color: textColor),
+                              ))),
+                      textInputType: TextInputType.text,
+                      hintText: "12.jpg",
+                      controller: ticketPurchaseUploadController,
+                    )
             ],
           ),
         ),
@@ -688,6 +762,10 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                           String eventTicketPhoto = await StorageMethods()
                               .uploadImageToStorage(
                                   "eventTicketPhoto", eventPhoto!, true);
+                          String eventTablePhoto = await StorageMethods()
+                              .uploadImageToStorage(
+                                  "eventTable", eventTable!, true);
+                          ;
                           await FirebaseFirestore.instance
                               .collection("events")
                               .doc(uuid)
@@ -717,6 +795,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                             "uid": FirebaseAuth.instance.currentUser!.uid,
                             "eventCoverPhoto": eventcPhoto,
                             "eventPhoto": eventTicketPhoto,
+                            "eventTablePhoto": eventTablePhoto,
                             "dayNight": _fruit.toString(),
                             "tableNumber": tableNumberController.text,
                             "tableType": _tableNo.toString(),
@@ -724,7 +803,8 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                             "totaltables": totaltablesController.text,
                             "tablePrice": totalTablesPriceController.text,
                             "eventCreated": true,
-                            "conditions": termsController.text
+                            "conditions": termsController.text,
+                            "eventCreationTime": FieldValue.serverTimestamp()
                           }).then((value) {
                             Navigator.push(
                                 context,
@@ -814,6 +894,13 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
     });
   }
 
+  selectEventTableImage() async {
+    Uint8List ui = await pickImage(ImageSource.gallery);
+    setState(() {
+      eventTable = ui;
+    });
+  }
+
   eventPhotos() async {
     Uint8List ui = await pickImage(ImageSource.gallery);
     setState(() {
@@ -877,8 +964,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                                 ),
                               );
                             }).toList(),
-                            // After selecting the desired option,it will
-                            // change button value to selected value
+
                             onChanged: (String? newValue) {
                               setState(() {
                                 couplesDropDown = newValue!;
@@ -1096,9 +1182,23 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                       child: SaveButton(
                           title: "Add",
                           onTap: () {
-                            Navigator.pop(
-                              context,
-                            );
+                            addedTicketValues.addAll([
+                              couplesDropDown,
+                              priceController.text,
+                              totalTicketsController.text,
+                              timeBeforeController.text,
+                              dropdownvalue,
+                              _artist.toString(),
+                              birdController.text
+                            ]);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (builder) => MainScreen()));
+                            print(addedTicketValues);
+                            // birdController.clear();
+                            // priceController.clear();
+                            // totalTicketsController.clear();
                           }),
                     )
                   ],
