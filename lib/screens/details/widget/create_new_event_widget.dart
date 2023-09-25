@@ -810,6 +810,25 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (builder) => MainScreen()));
+                            termsController.clear();
+                            totaltablesController.clear();
+                            totalTablesPriceController.clear();
+                            offerNameController.clear();
+                            ticketPurchaseDeadlineController.clear();
+                            ticketPurchaseUploadController.clear();
+                            priceController.clear();
+                            totalTicketsController.clear();
+                            offerCodeController.clear();
+                            peopleController.clear();
+                            tableNumberController.clear();
+                            timeBeforeController.clear();
+                            eventdescriptionController.clear();
+                            birdController.clear();
+                            eventLocationController.clear();
+                            toDateController.clear();
+                            fromDateController.clear();
+                            selectDate.clear();
+                            eventNameController.clear();
                           });
                           setState(() {
                             _isLoading = false;
@@ -818,6 +837,26 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                               context,
                               MaterialPageRoute(
                                   builder: (builder) => MainScreen()));
+
+                          termsController.clear();
+                          totaltablesController.clear();
+                          totalTablesPriceController.clear();
+                          offerNameController.clear();
+                          ticketPurchaseDeadlineController.clear();
+                          ticketPurchaseUploadController.clear();
+                          priceController.clear();
+                          totalTicketsController.clear();
+                          offerCodeController.clear();
+                          peopleController.clear();
+                          tableNumberController.clear();
+                          timeBeforeController.clear();
+                          eventdescriptionController.clear();
+                          birdController.clear();
+                          eventLocationController.clear();
+                          toDateController.clear();
+                          fromDateController.clear();
+                          selectDate.clear();
+                          eventNameController.clear();
                         },
                       ),
                     ),
