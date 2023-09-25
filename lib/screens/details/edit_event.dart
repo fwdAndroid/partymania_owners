@@ -75,7 +75,7 @@ class _EditEventState extends State<EditEvent> {
                   fromEventDate: widget.fromEventDate,
                   toEventDate: widget.toEventDate,
                   eventDescription: widget.eventDescription,
-                  eventAmenities: widget.eventAmenities,
+                  // eventAmenities: widget.eventAmenities,
                   eventLocation: widget.eventLocation,
                   eventName: widget.eventName,
                   numofpeople: widget.numofpeople,

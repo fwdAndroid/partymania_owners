@@ -30,13 +30,13 @@ class UpdateNewEventWidget extends StatefulWidget {
   final offerName;
   final offerCode;
   final eventDescription;
-  final eventAmenities;
+  // final eventAmenities;
   final numofpeople;
   const UpdateNewEventWidget(
       {super.key,
       required this.uuid,
       required this.fromEventDate,
-      required this.eventAmenities,
+      // required this.eventAmenities,
       required this.eventDescription,
       required this.toEventDate,
       required this.eventCoverPhoto,
@@ -78,7 +78,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
     toDateUpdateController.text = widget.toEventDate;
     eventLocationUpdateController.text = widget.eventLocation;
     eventdescriptionControllerUpdate.text = widget.eventDescription;
-    eventamenitiesControllerIUpdate.text = widget.eventAmenities;
+    // eventamenitiesControllerIUpdate.text = widget.eventAmenities;
     offerNameControllerUpdate.text = widget.offerName;
     offerCodeControllerUpdate.text = widget.offerCode;
     peopleControllerUpdate.text = widget.numofpeople;

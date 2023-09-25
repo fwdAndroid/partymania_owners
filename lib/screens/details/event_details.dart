@@ -194,7 +194,7 @@ class _EventDetailsState extends State<EventDetails> {
                     ),
                     child: Center(
                       child: Text(
-                        widget.eventAmenities,
+                        widget.eventAmenities.toString(),
                         style: TextStyle(color: textColor.withOpacity(.6)),
                       ),
                     ),
