@@ -8,7 +8,8 @@ import 'package:partymania_owners/utils/controllers.dart';
 import 'package:partymania_owners/utils/textformfield.dart';
 
 class CreateHandler extends StatefulWidget {
-  const CreateHandler({super.key});
+  final owernerid;
+  const CreateHandler({super.key, required this.owernerid});
 
   @override
   State<CreateHandler> createState() => _CreateHandlerState();
@@ -238,8 +239,12 @@ class _CreateHandlerState extends State<CreateHandler> {
       setState(() {
         _isLoading = true;
       });
+
+      // FirebaseAuth.instance.createUserWithEmailAndPassword(
+      //     email: handlerEmail.text, password: handlerP.text);
+
       String rse = await AuthMethods().handlerSignUp(
-          currentUid: FirebaseAuth.instance.currentUser!.uid,
+          ownerUid: widget.owernerid,
           email: handlerEmail.text,
           fullName: handlerFullName.text,
           phone_Number: handlerPhone.text,
@@ -254,7 +259,11 @@ class _CreateHandlerState extends State<CreateHandler> {
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Conguration Handler is Created")));
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (builder) => ManageHandlers()));
+          context,
+          MaterialPageRoute(
+              builder: (builder) => ManageHandlers(
+                    clubid: widget.owernerid,
+                  )));
     }
   }
 }

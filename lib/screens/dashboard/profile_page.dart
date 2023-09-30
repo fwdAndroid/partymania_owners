@@ -172,7 +172,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (builder) => ManageHandlers()));
+                              builder: (builder) => ManageHandlers(
+                                    clubid:
+                                        FirebaseAuth.instance.currentUser!.uid,
+                                  )));
                     },
                     leading: Image.asset(
                       "assets/user-octagon.png",

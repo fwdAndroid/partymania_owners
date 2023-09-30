@@ -9,6 +9,7 @@ class HandlerModel {
   String createPassword;
   String type;
   String confrimPassword;
+  String ownerUid;
 
   HandlerModel(
       {required this.uid,
@@ -16,6 +17,7 @@ class HandlerModel {
       required this.fullName,
       required this.currentUid,
       required this.type,
+      required this.ownerUid,
       required this.createPassword,
       required this.confrimPassword,
       required this.phone_Number});
@@ -24,6 +26,7 @@ class HandlerModel {
   Map<String, dynamic> toJson() => {
         'phone_Number': phone_Number,
         'uid': uid,
+        "ownerUid": ownerUid,
         "currentUid": currentUid,
         "type": type,
         'email': email,
@@ -39,6 +42,7 @@ class HandlerModel {
     return HandlerModel(
       phone_Number: snapshot['phone_Number'],
       uid: snapshot['uid'],
+      ownerUid: snapshot['ownerUid'],
       type: snapshot['type'],
       email: snapshot['email'],
       createPassword: snapshot['createPassword'],

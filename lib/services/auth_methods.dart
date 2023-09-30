@@ -81,7 +81,7 @@ class AuthMethods {
       {required String email,
       required String fullName,
       required String phone_Number,
-      required currentUid,
+      required ownerUid,
       required String createPassword,
       required String confrimPassword}) async {
     String res = 'Some error occured';
@@ -98,6 +98,7 @@ class AuthMethods {
           fullName: fullName,
           type: "Handlers",
           uid: cred.user!.uid,
+          ownerUid: ownerUid,
           email: email,
           phone_Number: phone_Number,
           confrimPassword: confrimPassword,

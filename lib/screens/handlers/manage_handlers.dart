@@ -4,7 +4,8 @@ import 'package:partymania_owners/screens/handlers/create_handler.dart';
 import 'package:partymania_owners/utils/colors.dart';
 
 class ManageHandlers extends StatefulWidget {
-  const ManageHandlers({super.key});
+  final clubid;
+  const ManageHandlers({super.key, required this.clubid});
 
   @override
   State<ManageHandlers> createState() => _ManageHandlersState();
@@ -17,8 +18,13 @@ class _ManageHandlersState extends State<ManageHandlers> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: otpColor,
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (builder) => CreateHandler()));
+          print(widget.clubid);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (builder) => CreateHandler(
+                        owernerid: widget.clubid,
+                      )));
         },
         child: Icon(
           Icons.add,
