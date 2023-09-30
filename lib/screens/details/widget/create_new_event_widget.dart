@@ -1231,10 +1231,11 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                               _artist.toString(),
                               birdController.text
                             ]);
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (builder) => MainScreen()));
+                            Navigator.pop(context);
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (builder) => MainScreen()));
                             print(addedTicketValues);
                             // birdController.clear();
                             // priceController.clear();

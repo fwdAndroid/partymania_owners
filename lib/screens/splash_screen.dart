@@ -1,9 +1,7 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/auth/login_screen.dart';
-import 'package:partymania_owners/screens/main_dashboard.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,7 +15,10 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    authfunction(context);
+    Timer(
+        Duration(seconds: 3),
+        () => Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LoginScreen())));
   }
 
   @override
@@ -47,20 +48,4 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
-}
-
-void authfunction(BuildContext context) {
-  FirebaseAuth.instance.authStateChanges().listen((User? user) {
-    if (user == null) {
-      Timer(
-          Duration(seconds: 3),
-          () => Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => LoginScreen())));
-    } else {
-      Timer(
-          Duration(seconds: 3),
-          () => Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => MainScreen())));
-    }
-  });
 }

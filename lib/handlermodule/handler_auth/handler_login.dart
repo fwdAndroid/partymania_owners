@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:partymania_owners/handlermodule/handler_auth/handler_login.dart';
+import 'package:partymania_owners/handlermodule/dashboard/handler_dashboard.dart';
 import 'package:partymania_owners/screens/auth/getotp.dart';
 import 'package:partymania_owners/screens/auth/signup_account.dart';
 import 'package:partymania_owners/screens/status/checkstatus.dart';
@@ -10,14 +10,14 @@ import 'package:partymania_owners/utils/controllers.dart';
 import 'package:partymania_owners/utils/textformfield.dart';
 import 'package:partymania_owners/utils/utils.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class HandlerLogin extends StatefulWidget {
+  const HandlerLogin({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<HandlerLogin> createState() => _HandlerLoginState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _HandlerLoginState extends State<HandlerLogin> {
   bool _isLoading = false;
   @override
   void initState() {
@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       controller: loginEmailController,
-                      hintText: "Enter Email or Phone",
+                      hintText: "Enter Email",
                       textInputType: TextInputType.emailAddress),
                 ],
               ),
@@ -105,17 +105,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 5,
                   ),
                   TextFormInputField(
-                      suIcon: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (builder) => GetOtp()));
-                          },
-                          child: Text(
-                            "Get OTP",
-                            style: TextStyle(color: otpColor),
-                          )),
                       preIcon: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Image.asset(
@@ -146,54 +135,6 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(
               height: 15,
             ),
-            Center(
-                child: TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (builder) => HandlerLogin()));
-                    },
-                    child: Text(
-                      "Login As Handler",
-                      style: TextStyle(color: textColor),
-                    ))),
-            const SizedBox(
-              height: 15,
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Dont't have an account?",
-                    style: TextStyle(
-                        color: textColor.withOpacity(.7),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (builder) => SignUpAccounts()));
-                    },
-                    child: Text(
-                      " Sign Up",
-                      style: TextStyle(
-                          color: textColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ],
         ),
       ),
@@ -215,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
     if (rse == 'sucess') {
       Navigator.push(
-          context, MaterialPageRoute(builder: (builder) => CheckStatus()));
+          context, MaterialPageRoute(builder: (builder) => HandlerDashboard()));
       loginEmailController.clear();
       passwordController.clear();
     } else {
