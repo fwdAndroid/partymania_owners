@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:partymania_owners/handlermodule/pages/widget/event_by_frame_handler.dart';
+import 'package:partymania_owners/handlermodule/pages/widget/home_grid_widget.handler.dart';
+import 'package:partymania_owners/handlermodule/pages/widget/home_view_list_widget_handler.dart';
 import 'package:partymania_owners/screens/dashboard/widgets/home_grid_widget.dart';
-import 'package:partymania_owners/screens/dashboard/widgets/home_list_view_widget.dart';
 import 'package:partymania_owners/screens/event_near_by_frame.dart';
 import 'package:partymania_owners/utils/colors.dart';
 
 class HomePageHandler extends StatefulWidget {
-  const HomePageHandler({super.key});
+  final ownerId;
+  const HomePageHandler({super.key, required this.ownerId});
 
   @override
   State<HomePageHandler> createState() => _HomePageHandlerState();
@@ -97,7 +100,10 @@ class _HomePageHandlerState extends State<HomePageHandler> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (builder) => EventNearByYourFrame()));
+                                builder: (builder) =>
+                                    EventNearByYourFrameHandler(
+                                      ownerid: widget.ownerId,
+                                    )));
                       },
                       child: Text(
                         "See All",
@@ -111,7 +117,9 @@ class _HomePageHandlerState extends State<HomePageHandler> {
                 ],
               ),
             ),
-            HomeListViewWidget(),
+            HomeListViewWidgetHandler(
+              ownerId: widget.ownerId,
+            ),
             const SizedBox(
               height: 10,
             ),
@@ -172,7 +180,9 @@ class _HomePageHandlerState extends State<HomePageHandler> {
                 ],
               ),
             ),
-            HomeGridWidget()
+            HomeGridWidgetHandler(
+              ownerid: widget.ownerId,
+            )
           ],
         ),
       ),

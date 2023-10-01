@@ -83,7 +83,9 @@ class _HandlerDashboardState extends State<HandlerDashboard> {
           print('Page Changes to index $int');
         },
         children: <Widget>[
-          HomePageHandler(),
+          HomePageHandler(
+            ownerId: widget.ownerId,
+          ),
           HandlerScanPage(ownerId: widget.ownerId),
           HandlerProfilePage()
         ],
