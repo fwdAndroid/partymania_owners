@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:partymania_owners/handlermodule/pages/widget/event_by_frame_handler.dart';
 import 'package:partymania_owners/handlermodule/pages/widget/home_grid_widget.handler.dart';
 import 'package:partymania_owners/handlermodule/pages/widget/home_view_list_widget_handler.dart';
-import 'package:partymania_owners/screens/dashboard/widgets/home_grid_widget.dart';
 import 'package:partymania_owners/screens/event_near_by_frame.dart';
 import 'package:partymania_owners/utils/colors.dart';
 

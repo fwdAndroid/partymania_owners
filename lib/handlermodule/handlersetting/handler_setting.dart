@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:partymania_owners/handlermodule/handler_auth/handler_login.dart';
+import 'package:partymania_owners/screens/auth/login_screen.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/utils.dart';
@@ -74,7 +74,7 @@ class _HandlerSettingState extends State<HandlerSetting> {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (builder) => HandlerLogin()));
+                                      builder: (builder) => LoginScreen()));
                               FirebaseAuth.instance.currentUser!.delete();
                               await FirebaseFirestore.instance
                                   .collection("handlers")
@@ -149,7 +149,7 @@ class _HandlerSettingState extends State<HandlerSetting> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (builder) =>
-                                                    HandlerLogin()))
+                                                    LoginScreen()))
                                       });
                             },
                           ),
