@@ -739,6 +739,32 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (builder) => MainScreen()));
+                            eventUpdateNameController.clear();
+                            selectUpdateDate.clear();
+                            fromUpdateDateController.clear();
+                            toDateUpdateController.clear();
+                            eventLocationUpdateController.clear();
+
+                            eventdescriptionControllerUpdate.clear();
+
+                            birdControllerUpdate.clear();
+
+                            timeBeforeControllerUpdate.clear();
+
+                            totalTicketsControllerUpdate.clear();
+                            priceControllerUpdate.clear();
+
+                            ticketPurchaseDeadlineControllerUpdate.clear();
+
+                            ticketPurchaseUploadControllerIUpdate.clear();
+                            offerNameControllerUpdate.clear();
+                            offerCodeControllerUpdate.clear();
+
+                            tableNumberControllerUpdate.clear();
+
+                            peopleControllerUpdate.clear();
+                            totaltablesControllerUpdate.clear();
+                            totalTablespriceControllerUpdate.clear();
                           });
                           setState(() {
                             _isLoading = false;

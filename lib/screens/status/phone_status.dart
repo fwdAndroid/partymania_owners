@@ -2,8 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/main_dashboard.dart';
-import 'package:partymania_owners/screens/profile/sp.dart';
-import 'package:partymania_owners/screens/status/profile_detail_page.dart';
+import 'package:partymania_owners/screens/profile/create_profile.dart';
 
 class CheckPhoneStatus extends StatefulWidget {
   const CheckPhoneStatus({super.key});

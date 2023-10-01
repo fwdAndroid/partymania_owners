@@ -424,9 +424,19 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
     });
     if (rse != 'sucess') {
       showSnakBar(rse, context);
+      clubZipCodeController.clear();
+      clubNameController.clear();
+      phoneNumberClubController.clear();
+      descriptionController.clear();
+      clubLocationController.clear();
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (builder) => MainScreen()));
     } else {
+      clubZipCodeController.clear();
+      clubNameController.clear();
+      phoneNumberClubController.clear();
+      descriptionController.clear();
+      clubLocationController.clear();
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (builder) => MainScreen()));
     }

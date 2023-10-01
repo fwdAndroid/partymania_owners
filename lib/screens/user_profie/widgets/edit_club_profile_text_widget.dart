@@ -465,6 +465,14 @@ class _EditClubProfileTextWidgetState extends State<EditClubProfileTextWidget> {
 
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (builder) => MainScreen()));
+    editclubLocationController.clear();
+    editclubStateController.clear();
+    editclubCityController.clear();
+    editclubdescriptionController.clear();
+    editclubLocationController.clear();
+    editclubZipCodeController.clear();
+    editamenitiesController.clear();
+    editclubNameController.clear();
     showSnakBar("Club Updated Successfully", context);
   }
 

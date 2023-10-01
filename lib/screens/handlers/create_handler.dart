@@ -258,6 +258,11 @@ class _CreateHandlerState extends State<CreateHandler> {
 
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Conguration Handler is Created")));
+      handlerEmail.clear();
+      handlerFullName.clear();
+      handlerPhone.clear();
+      handlerP.clear();
+      handlerCP.clear();
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(

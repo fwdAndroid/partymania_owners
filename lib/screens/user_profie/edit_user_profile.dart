@@ -217,6 +217,9 @@ class _EditUserProfileState extends State<EditUserProfile>
                                                     content: Text(
                                                         "User Profile Updated")))
                                           });
+                                  editProfileFullNameController.clear();
+                                  editProfileEmailController.clear();
+                                  editPhoneController.clear();
                                   Navigator.pop(context);
                                 })),
                     const SizedBox(
