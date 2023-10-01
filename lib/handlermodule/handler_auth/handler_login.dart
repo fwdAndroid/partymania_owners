@@ -174,16 +174,16 @@ class _HandlerLoginState extends State<HandlerLogin> {
     Map<String, dynamic> data = userSnapshot.data() as Map<String, dynamic>;
 
     ;
-    final type = data['type'];
-    if (type == "Handlers") {
-      // User is blocked
 
-      Navigator.push(
-          context, MaterialPageRoute(builder: (builder) => HandlerDashboard()));
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Login Complete")));
-    } else {
-      print("Error");
-    }
+    // User is blocked
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (builder) => HandlerDashboard(
+                  ownerId: data['ownerUid'],
+                )));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("Login Complete")));
   }
 }

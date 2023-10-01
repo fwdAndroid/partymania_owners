@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:partymania_owners/screens/dashboard/widgets/scan_event_list_widgets.dart';
+import 'package:partymania_owners/handlermodule/pages/widget/scan_list_widget_hander.dart';
 import 'package:partymania_owners/utils/colors.dart';
 
 class HandlerScanPage extends StatefulWidget {
-  const HandlerScanPage({super.key});
+  final ownerId;
+  const HandlerScanPage({
+    super.key,
+    required this.ownerId,
+  });
 
   @override
   State<HandlerScanPage> createState() => _HandlerScanPageState();
@@ -26,7 +30,11 @@ class _HandlerScanPageState extends State<HandlerScanPage> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [ScanEventListWidget()],
+          children: [
+            ScanEventListWidgetHandler(
+              ownerId: widget.ownerId,
+            )
+          ],
         ),
       ),
     );
