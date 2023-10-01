@@ -54,7 +54,7 @@ class _GetOtpState extends State<GetOtp> {
                   border: Border.all(color: Colors.blueAccent),
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.white70),
-              margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+              margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
               child: Row(
                 children: [
                   CountryCodePicker(
@@ -66,14 +66,14 @@ class _GetOtpState extends State<GetOtp> {
                       initialSelection: "IN",
                       showCountryOnly: false,
                       showOnlyCountryWhenClosed: false,
-                      favorite: ["+91", "IND"]),
+                      favorite: const ["+91", "IN"]),
                   Expanded(
                     child: Container(
                       child: TextFormField(
                         validator: RequiredValidator(errorText: "Required"),
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: "7665060613",
+                          hintText: "12345678",
                           //  prefix: Padding(padding: EdgeInsets.all(10),child: Text(dialCodeDigits,style: TextStyle(color: Colors.black),),),
                         ),
                         keyboardType: TextInputType.number,

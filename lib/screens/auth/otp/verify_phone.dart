@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:partymania_owners/screens/status/checkstatus.dart';
-import 'package:partymania_owners/utils/button.dart';
+import 'package:partymania_owners/screens/status/phone_status.dart';
 import 'package:partymania_owners/utils/colors.dart';
-
-import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:pinput/pinput.dart';
 
 class VerifyPhone extends StatefulWidget {
   final String phone;
@@ -18,7 +16,7 @@ class VerifyPhone extends StatefulWidget {
 
 class _VerifyPhoneState extends State<VerifyPhone> {
   final TextEditingController controllerpin = TextEditingController();
-  final FocusNode pinOTPFocusNode = FocusNode();
+  final FocusNode pinVerifyPhonePFocusNode = FocusNode();
 
   String? verificationCode;
 
@@ -31,6 +29,23 @@ class _VerifyPhoneState extends State<VerifyPhone> {
 
   @override
   Widget build(BuildContext context) {
+    final defaultPinTheme = PinTheme(
+      width: 56,
+      height: 56,
+      textStyle: const TextStyle(
+          fontSize: 20,
+          color: Color.fromRGBO(30, 60, 87, 1),
+          fontWeight: FontWeight.w600),
+      decoration: BoxDecoration(
+        border: Border.all(color: const Color.fromRGBO(234, 239, 243, 1)),
+        borderRadius: BorderRadius.circular(20),
+      ),
+    );
+
+    final focusedPinTheme = defaultPinTheme.copyDecorationWith(
+      border: Border.all(color: const Color.fromRGBO(114, 178, 238, 1)),
+      borderRadius: BorderRadius.circular(8),
+    );
     return Scaffold(
       backgroundColor: backgroundColor,
       body: Column(
@@ -53,73 +68,52 @@ class _VerifyPhoneState extends State<VerifyPhone> {
           SizedBox(
             height: 6,
           ),
-          Text("verification: ${widget.codeDigits}-${widget.phone}"),
+          InkWell(
+            child: Text("verification: ${widget.codeDigits}-${widget.phone}"),
+          ),
           SizedBox(height: 50),
-          Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 30),
-              child: PinCodeTextField(
-                focusNode: pinOTPFocusNode,
-                controller: controllerpin,
-                appContext: context,
-                pastedTextStyle: TextStyle(
-                  color: textColor,
-                  fontWeight: FontWeight.bold,
-                ),
-                length: 6,
-                onSubmitted: (pin) async {
-                  try {
-                    await FirebaseAuth.instance
-                        .signInWithCredential(PhoneAuthProvider.credential(
-                            verificationId: verificationCode!, smsCode: pin))
-                        .then((value) async {
-                      if (value.user != null) {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (builder) => CheckStatus()));
-                      }
-                    });
-                  } catch (e) {
-                    FocusScope.of(context).unfocus();
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("Invalide Code"),
-                      duration: Duration(seconds: 12),
-                    ));
-                  }
-                },
-                animationType: AnimationType.fade,
-                validator: (v) {
-                  if (v!.length < 3) {
-                    return "I'm from validator";
-                  } else {
-                    return null;
-                  }
-                },
-                pinTheme: PinTheme(),
-                animationDuration: const Duration(milliseconds: 300),
-                keyboardType: TextInputType.number,
-                onCompleted: (v) {
-                  debugPrint("Completed");
-                },
-                onChanged: (value) {
-                  debugPrint(value);
-                  setState(() {});
-                },
-                beforeTextPaste: (text) {
-                  debugPrint("Allowing to paste $text");
-                  //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                  //but you can show anything you want here, like your pop up saying wrong paste format or etc
-                  return true;
-                },
-              )),
-          SizedBox(height: 60),
           Container(
-            margin: EdgeInsets.only(bottom: 20),
-            child: SaveButton(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (builder) => CheckStatus()));
-                },
-                title: 'Continue'),
+            margin:
+                const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 20),
+            child: Pinput(
+              length: 6,
+              focusNode: pinVerifyPhonePFocusNode,
+              controller: controllerpin,
+              defaultPinTheme: defaultPinTheme,
+              focusedPinTheme: focusedPinTheme,
+              onCompleted: (pin) async {
+                try {
+                  await FirebaseAuth.instance
+                      .signInWithCredential(PhoneAuthProvider.credential(
+                          verificationId: verificationCode!, smsCode: pin))
+                      .then((value) {
+                    if (value.user != null) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (ctx) => CheckPhoneStatus()));
+                    }
+                  });
+                } catch (e) {
+                  FocusScope.of(context).unfocus();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text("Invalid Code"),
+                    duration: Duration(seconds: 12),
+                  ));
+                }
+              },
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 20, bottom: 20),
+            child: const Text(
+              'Please enter the 6-digit code \n  sent to your number',
+              style: TextStyle(color: Colors.black),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(
+            height: 30,
           ),
         ],
       ),
@@ -134,10 +128,9 @@ class _VerifyPhoneState extends State<VerifyPhone> {
               .signInWithCredential(credential)
               .then((value) {
             if (value.user != null) {
-              // Customdialog.showDialogBox(context);
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (builder) => CheckStatus(),
+                  builder: (builder) => CheckPhoneStatus(),
                 ),
               );
               // Customdialog.closeDialog(context);
@@ -148,7 +141,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
           FocusScope.of(context).unfocus();
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(e.message.toString()),
-            duration: Duration(seconds: 12),
+            duration: const Duration(seconds: 12),
           ));
         },
         codeSent: (String VID, int? resentToken) {
@@ -161,7 +154,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
             verificationCode = VID;
           });
         },
-        timeout: Duration(seconds: 50));
+        timeout: const Duration(seconds: 50));
   }
 
   // void addPhone() async {
