@@ -1,9 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:partymania_owners/handlermodule/dashboard/handler_dashboard.dart';
-import 'package:partymania_owners/screens/auth/getotp.dart';
-import 'package:partymania_owners/screens/auth/signup_account.dart';
-import 'package:partymania_owners/screens/status/checkstatus.dart';
-import 'package:partymania_owners/services/auth_methods.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
@@ -63,7 +61,7 @@ class _HandlerLoginState extends State<HandlerLogin> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Enter Email or Phone",
+                    "Enter Email",
                     style: TextStyle(
                         color: textColor,
                         fontWeight: FontWeight.w400,
@@ -82,7 +80,7 @@ class _HandlerLoginState extends State<HandlerLogin> {
                           height: 15,
                         ),
                       ),
-                      controller: loginEmailController,
+                      controller: loginEmailControllerH,
                       hintText: "Enter Email",
                       textInputType: TextInputType.emailAddress),
                 ],
@@ -113,7 +111,7 @@ class _HandlerLoginState extends State<HandlerLogin> {
                           height: 15,
                         ),
                       ),
-                      controller: passwordController,
+                      controller: createPassH,
                       hintText: "Enter Password",
                       textInputType: TextInputType.emailAddress),
                 ],
@@ -142,25 +140,51 @@ class _HandlerLoginState extends State<HandlerLogin> {
   }
 
   void loginUser() async {
-    setState(() {
-      _isLoading = true;
-    });
-    String rse = await AuthMethods().loginUpUser(
-      email: loginEmailController.text,
-      pass: passwordController.text,
-    );
+    try {
+      await FirebaseFirestore.instance
+          .collection("handlers")
+          .get()
+          .then((QuerySnapshot snapshot) {
+        print("sad");
+        snapshot.docs.forEach((element) {
+          if (element['createPassword'] == createPassH.text &&
+              element['email'] == loginEmailControllerH.text &&
+              element['type'] == "Handlers") {
+            FirebaseAuth.instance
+                .signInWithEmailAndPassword(
+              email: loginEmailControllerH.text,
+              password: createPassH.text,
+            )
+                .then((value) {
+              checckstatus();
+            });
+          } else {
+            // ScaffoldMessenger.of(context)
+            //     .showSnackBar(SnackBar(content: Text("w")));
+          }
+        });
+      });
+    } catch (e) {}
+  }
 
-    print(rse);
-    setState(() {
-      _isLoading = false;
-    });
-    if (rse == 'sucess') {
+  void checckstatus() async {
+    final DocumentReference userRef = FirebaseFirestore.instance
+        .collection('handlers')
+        .doc(FirebaseAuth.instance.currentUser!.uid);
+    final DocumentSnapshot userSnapshot = await userRef.get();
+    Map<String, dynamic> data = userSnapshot.data() as Map<String, dynamic>;
+
+    ;
+    final type = data['type'];
+    if (type == "Handlers") {
+      // User is blocked
+
       Navigator.push(
           context, MaterialPageRoute(builder: (builder) => HandlerDashboard()));
-      loginEmailController.clear();
-      passwordController.clear();
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Login Complete")));
     } else {
-      showSnakBar(rse, context);
+      print("Error");
     }
   }
 }

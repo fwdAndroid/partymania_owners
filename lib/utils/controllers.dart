@@ -110,3 +110,7 @@ final tableNumberControllerUpdate = TextEditingController();
 final peopleControllerUpdate = TextEditingController();
 final totaltablesControllerUpdate = TextEditingController();
 final totalTablespriceControllerUpdate = TextEditingController();
+
+//Handler
+final loginEmailControllerH = TextEditingController();
+final createPassH = TextEditingController();
