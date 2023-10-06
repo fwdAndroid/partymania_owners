@@ -45,8 +45,10 @@ class _ManageHandlersState extends State<ManageHandlers> {
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: StreamBuilder(
-            stream:
-                FirebaseFirestore.instance.collection("handlers").snapshots(),
+            stream: FirebaseFirestore.instance
+                .collection("handlers")
+                .where("ownerUid", isEqualTo: widget.clubid)
+                .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return const Center(
@@ -54,8 +56,11 @@ class _ManageHandlersState extends State<ManageHandlers> {
                 );
               }
               if (snapshot.data!.docs.isEmpty) {
-                return const Center(
-                  child: Text("No Handler added yet"),
+                return Center(
+                  child: Text(
+                    "No Handler added yet",
+                    style: TextStyle(color: otpColor),
+                  ),
                 );
               }
               return ListView.builder(
@@ -64,6 +69,7 @@ class _ManageHandlersState extends State<ManageHandlers> {
                     return StreamBuilder<Object>(
                         stream: FirebaseFirestore.instance
                             .collection("handlers")
+                            .where("ownerUid", isEqualTo: widget.clubid)
                             .snapshots(),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {

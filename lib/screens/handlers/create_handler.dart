@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:partymania_owners/screens/auth/login_screen.dart';
 import 'package:partymania_owners/screens/handlers/manage_handlers.dart';
 import 'package:partymania_owners/services/auth_methods.dart';
 import 'package:partymania_owners/utils/button.dart';
@@ -264,11 +265,7 @@ class _CreateHandlerState extends State<CreateHandler> {
       handlerP.clear();
       handlerCP.clear();
       Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (builder) => ManageHandlers(
-                    clubid: widget.owernerid,
-                  )));
+          context, MaterialPageRoute(builder: (builder) => LoginScreen()));
     }
   }
 }
