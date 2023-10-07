@@ -31,6 +31,13 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
   String address = "";
   List<String> values = [];
 
+  void addToStringList(String text) {
+    setState(() {
+      values.add(text);
+      amenitiesController.clear();
+    });
+  }
+
   bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -306,6 +313,10 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
             ],
           ),
         ),
+        Container(
+            height: 40,
+            width: MediaQuery.of(context).size.width,
+            child: buildStringList()),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -330,9 +341,10 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
                                 borderRadius: BorderRadius.circular(10.0)),
                             backgroundColor: otpColor),
                         onPressed: () {
-                          values.add(amenitiesController.text);
-                          amenitiesController.clear();
-                          addToAmenties(values);
+                          String text = amenitiesController.text;
+                          if (text.isNotEmpty) {
+                            addToStringList(text);
+                          }
                         },
                         child: Text(
                           "Add",
@@ -399,6 +411,22 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
     });
   }
 
+  ListView buildStringList() {
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: values.length,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            values[index],
+            style: TextStyle(color: textColor),
+          ),
+        );
+      },
+    );
+  }
+
   createClub() async {
     setState(() {
       _isLoading = true;
@@ -450,3 +478,6 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
     return values;
   }
 }
+// Future<void> addItems(List<String> itemList) async {
+//   await itemsCollection.add({'values': itemList});
+// }
