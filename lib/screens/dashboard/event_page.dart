@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/dashboard/widgets/event_list_widget.dart';
 import 'package:partymania_owners/utils/colors.dart';
-import 'package:table_calendar/table_calendar.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:intl/intl.dart';
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
@@ -11,6 +14,40 @@ class EventsPage extends StatefulWidget {
 }
 
 class _EventsPageState extends State<EventsPage> {
+  String selectedDate = '';
+  String dateCount = '';
+  String range = '';
+  String rangeCount = '';
+
+  /// The method for [DateRangePickerSelectionChanged] callback, which will be
+  /// called whenever a selection changed on the date picker widget.
+  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+    setState(() {
+      if (args.value is PickerDateRange) {
+        range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
+            // ignore: lines_longer_than_80_chars
+            ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
+      } else if (args.value is DateTime) {
+        selectedDate = args.value.toString();
+      } else if (args.value is List<DateTime>) {
+        dateCount = args.value.length.toString();
+      } else {
+        rangeCount = args.value.length.toString();
+      }
+    });
+  }
+
+  docss() async {
+    AggregateQuerySnapshot query = await FirebaseFirestore.instance
+        .collection('events')
+        .where("uid", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .count()
+        .get();
+
+    int numberOfDocuments = query.count;
+    return numberOfDocuments;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,14 +72,12 @@ class _EventsPageState extends State<EventsPage> {
                   color: colorBlack,
                   border: Border.all(color: Color(0xff7B7F91).withOpacity(.4))),
               margin: const EdgeInsets.only(left: 5, right: 5),
-              child: TableCalendar(
-                calendarStyle: CalendarStyle(
-                    todayDecoration:
-                        BoxDecoration(color: otpColor, shape: BoxShape.circle),
-                    markerDecoration: BoxDecoration(color: Colors.white)),
-                firstDay: DateTime.utc(2010, 10, 16),
-                lastDay: DateTime.utc(2030, 3, 14),
-                focusedDay: DateTime.now(),
+              child: SfDateRangePicker(
+                onSelectionChanged: _onSelectionChanged,
+                todayHighlightColor: Colors.pink,
+                showTodayButton: true,
+                selectionColor: Colors.pink,
+                selectionMode: DateRangePickerSelectionMode.single,
               ),
             ),
           ),
@@ -67,17 +102,21 @@ class _EventsPageState extends State<EventsPage> {
                     shape: BoxShape.circle,
                     color: otpColor,
                   ),
-                  child: Text(
-                    "4",
-                    style: TextStyle(
-                        color: textColor, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
+                  child: FutureBuilder(
+                      future: docss(),
+                      builder: (context, snapshot) {
+                        return Text(
+                          snapshot.data.toString(),
+                          style: TextStyle(
+                              color: textColor, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        );
+                      }),
+                )
               ],
             ),
           ),
-          EventListViewWidget(),
+          // EventListViewWidget(),
         ],
       ),
     );

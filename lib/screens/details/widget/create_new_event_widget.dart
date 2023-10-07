@@ -1147,9 +1147,12 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                           "offerName": offerNameController.text,
                           "offerCode": offerCodeController.text,
                           "uid": FirebaseAuth.instance.currentUser!.uid,
-                          "eventCoverPhoto": eventcPhoto,
-                          "eventPhoto": eventTicketPhoto,
-                          "eventTablePhoto": eventTablePhoto,
+                          "eventCoverPhoto": eventcPhoto ??
+                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQxQEctK8hFdSQaxXLVMTYNjEdrd9Z23RI03bu5vzi2A&s",
+                          "eventPhoto": eventTicketPhoto ??
+                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQxQEctK8hFdSQaxXLVMTYNjEdrd9Z23RI03bu5vzi2A&s",
+                          "eventTablePhoto": eventTablePhoto ??
+                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQxQEctK8hFdSQaxXLVMTYNjEdrd9Z23RI03bu5vzi2A&s",
                           "dayNight": _fruit.toString(),
                           "tableNumber": tableNumberController.text,
                           "tableType": _tableNo.toString(),
