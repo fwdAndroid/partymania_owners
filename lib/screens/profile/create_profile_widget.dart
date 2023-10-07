@@ -469,14 +469,6 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
           context, MaterialPageRoute(builder: (builder) => MainScreen()));
     }
   }
-
-  addToAmenties(List<String> values) {
-    var items = FirebaseFirestore.instance
-        .collection('clubs')
-        .doc(FirebaseAuth.instance.currentUser!.uid);
-    items.set({"clubAmentities": values});
-    return values;
-  }
 }
 // Future<void> addItems(List<String> itemList) async {
 //   await itemsCollection.add({'values': itemList});

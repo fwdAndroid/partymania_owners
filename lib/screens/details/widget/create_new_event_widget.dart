@@ -48,6 +48,13 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
   var uuid = Uuid().v4();
   List<String> values = [];
 
+  void addToStringList(String text) {
+    setState(() {
+      values.add(text);
+      eventamenitiesController.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -432,6 +439,10 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
           ],
         ),
       ),
+      Container(
+          height: 40,
+          width: MediaQuery.of(context).size.width,
+          child: buildStringList()),
       Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -454,9 +465,10 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                               borderRadius: BorderRadius.circular(10.0)),
                           backgroundColor: otpColor),
                       onPressed: () {
-                        values.add(eventamenitiesController.text);
-                        eventamenitiesController.clear();
-                        addToAmenties(values);
+                        String text = eventamenitiesController.text;
+                        if (text.isNotEmpty) {
+                          addToStringList(text);
+                        }
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text("Values are Added")));
                       },
@@ -1249,9 +1261,19 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
     });
   }
 
-  addToAmenties(List<String> values) {
-    var items = FirebaseFirestore.instance.collection('events').doc(uuid);
-    items.set({"eventAmenities": values});
-    return values;
+  ListView buildStringList() {
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: values.length,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            values[index],
+            style: TextStyle(color: textColor),
+          ),
+        );
+      },
+    );
   }
 }
