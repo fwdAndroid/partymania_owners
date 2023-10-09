@@ -1,11 +1,13 @@
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:country_picker_plus/country_picker_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:partymania_owners/screens/main_dashboard.dart';
-import 'package:partymania_owners/services/storage_methods.dart';
+import 'package:partymania_owners/screens/user_profie/widgets/image_club_profile_photo_update.dart';
+import 'package:partymania_owners/screens/user_profie/widgets/image_cover_update.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
@@ -24,9 +26,11 @@ class EditClubProfileTextWidget extends StatefulWidget {
 
 class _EditClubProfileTextWidgetState extends State<EditClubProfileTextWidget> {
   bool _isLoading = false;
-
   Uint8List? _coverEditPhoto;
   Uint8List? _ticketBluePrint;
+  String countryValue = "";
+  String stateValue = "";
+  String cityValue = "";
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Object>(
@@ -43,17 +47,23 @@ class _EditClubProfileTextWidgetState extends State<EditClubProfileTextWidget> {
           // club = document['clubType'];
           editclubphoneNumberClubController.text = document['clubPhoneNumber'];
           editclubLocationController.text = document['clubLocation'];
-          editclubStateController.text = document['clubState'];
-          editclubCityController.text = document['clubCity'];
+
           editclubZipCodeController.text = document['clubZipCode'];
           editclubdescriptionController.text = document['clubDescription'];
-          editamenitiesController.text = document['clubAmentities'];
+
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _coverEditPhoto != null
                   ? InkWell(
-                      onTap: selectImage,
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (builder) => ImageCoverUpdate(
+                                      image: document['coverPhoto'],
+                                    )));
+                      },
                       child: Image.memory(
                         _coverEditPhoto!,
                         width: 335,
@@ -62,7 +72,14 @@ class _EditClubProfileTextWidgetState extends State<EditClubProfileTextWidget> {
                       ),
                     )
                   : InkWell(
-                      onTap: selectImage,
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (builder) => ImageCoverUpdate(
+                                      image: document['coverPhoto'],
+                                    )));
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Image.network(
@@ -99,7 +116,14 @@ class _EditClubProfileTextWidgetState extends State<EditClubProfileTextWidget> {
                             ),
                           )
                         : InkWell(
-                            onTap: selectTicketImage,
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (builder) => ImageTicketUpdate(
+                                            image: document['ticketPhoto'],
+                                          )));
+                            },
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Image.network(
@@ -267,76 +291,37 @@ class _EditClubProfileTextWidgetState extends State<EditClubProfileTextWidget> {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "State",
-                            style: TextStyle(
-                                color: textColor,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 12),
-                          ),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                          TextFormInputField(
-                            suIcon: Padding(
-                              padding: const EdgeInsets.all(13.0),
-                              child: Image.asset(
-                                "assets/Vector.png",
-                                width: 10,
-                                height: 10,
-                              ),
-                            ),
-                            textInputType: TextInputType.text,
-                            hintText: "Select State",
-                            controller: editclubStateController,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 7,
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "City",
-                            style: TextStyle(
-                                color: textColor,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 12),
-                          ),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                          TextFormInputField(
-                            suIcon: Padding(
-                              padding: const EdgeInsets.all(13.0),
-                              child: Image.asset(
-                                "assets/Vector.png",
-                                width: 10,
-                                height: 10,
-                              ),
-                            ),
-                            textInputType: TextInputType.text,
-                            hintText: "Select City",
-                            controller: editclubCityController,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // SizedBox(
+              //   width: 600,
+              //   child: CountryPickerPlus(
+              //     bottomSheetDecoration: bottomSheetDecoration,
+              //     decoration: fieldDecoration,
+              //     isRequired: true,
+              //     countryLabel: "Country",
+              //     countrySearchHintText: "Search Country",
+              //     stateLabel: "State",
+              //     stateHintText: "Tap to Select State",
+              //     cityLabel: "City",
+              //     countryHintText: "Tap to Select Country",
+              //     cityHintText: "Tap to Select City",
+              //     onCountrySaved: (value) {
+              //       countryValue = value!;
+              //       print(countryValue);
+              //     },
+              //     onCountrySelected: (value) {
+              //       countryValue = value;
+              //       print(countryValue);
+              //     },
+              //     onStateSelected: (value) {
+              //       stateValue = value;
+              //       print(stateValue);
+              //     },
+              //     onCitySelected: (value) {
+              //       cityValue = value;
+              //       print(cityValue);
+              //     },
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -360,42 +345,71 @@ class _EditClubProfileTextWidgetState extends State<EditClubProfileTextWidget> {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Amenities",
-                      style: TextStyle(
-                          color: textColor,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextFormInputField(
-                      suIcon: Padding(
-                          padding: const EdgeInsets.all(13.0),
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(10.0)),
-                                  backgroundColor: otpColor),
-                              onPressed: () {},
-                              child: Text(
-                                "Add",
-                                style: TextStyle(color: textColor),
-                              ))),
-                      textInputType: TextInputType.text,
-                      hintText: "Add Amenities",
-                      controller: editamenitiesController,
-                    )
-                  ],
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       Text(
+              //         "Amenities",
+              //         style: TextStyle(
+              //             color: textColor,
+              //             fontWeight: FontWeight.w400,
+              //             fontSize: 12),
+              //       ),
+              //       SizedBox(
+              //         height: 10,
+              //       ),
+              //       StreamBuilder(
+              //         stream: FirebaseFirestore.instance
+              //             .collection('clubs')
+              //             .snapshots(),
+              //         builder: (context, snapshot) {
+              //           if (!snapshot.hasData) {
+              //             return CircularProgressIndicator();
+              //           }
+              //           var stringList = [];
+              //           snapshot.data!.docs.forEach((document) {
+              //             // Assuming your document field is named 'stringValue'
+              //             stringList.add(document['clubAmentities']);
+              //           });
+
+              //           return SizedBox(
+              //             height: 40,
+              //             child: ListView.builder(
+              //               itemCount: stringList.length,
+              //               itemBuilder: (context, index) {
+              //                 return Text(
+              //                   stringList[index].toString(),
+              //                   style: TextStyle(color: textColor),
+              //                 );
+              //               },
+              //             ),
+              //           );
+              //         },
+              //       ),
+
+              //       // TextFormInputField(
+              //       //   suIcon: Padding(
+              //       //       padding: const EdgeInsets.all(13.0),
+              //       //       child: ElevatedButton(
+              //       //           style: ElevatedButton.styleFrom(
+              //       //               shape: RoundedRectangleBorder(
+              //       //                   borderRadius:
+              //       //                       BorderRadius.circular(10.0)),
+              //       //               backgroundColor: otpColor),
+              //       //           onPressed: () {},
+              //       //           child: Text(
+              //       //             "Add",
+              //       //             style: TextStyle(color: textColor),
+              //       //           ))),
+              //       //   textInputType: TextInputType.text,
+              //       //   hintText: "Add Amenities",
+              //       //   controller: editamenitiesController,
+              //       // )
+              //     ],
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -453,11 +467,8 @@ class _EditClubProfileTextWidgetState extends State<EditClubProfileTextWidget> {
       "clubType": club,
       "uid": FirebaseAuth.instance.currentUser!.uid,
       "clubLocation": editclubLocationController.text,
-      "clubState": editclubStateController.text,
-      "clubCity": editclubCityController.text,
       "clubZipCode": editclubZipCodeController.text,
-      "clubAmentities": editamenitiesController.text,
-      "clubDescription": editclubdescriptionController.text
+      "clubDescription": editclubdescriptionController.text,
     });
     setState(() {
       _isLoading = false;
@@ -471,7 +482,6 @@ class _EditClubProfileTextWidgetState extends State<EditClubProfileTextWidget> {
     editclubdescriptionController.clear();
     editclubLocationController.clear();
     editclubZipCodeController.clear();
-    editamenitiesController.clear();
     editclubNameController.clear();
     showSnakBar("Club Updated Successfully", context);
   }

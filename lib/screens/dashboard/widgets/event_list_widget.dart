@@ -74,8 +74,8 @@ class _EventListViewWidgetState extends State<EventListViewWidget> {
                                             MaterialPageRoute(
                                                 builder: (builder) =>
                                                     EventDetails(
-                                                      eventAmenities: data[
-                                                          'eventAmenities'],
+                                                      // eventAmenities: data[
+                                                      //     'eventAmenities'],
                                                       eventCoverPhoto: data[
                                                           'eventCoverPhoto'],
                                                       eventDescription: data[

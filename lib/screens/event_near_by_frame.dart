@@ -75,8 +75,8 @@ class _EventNearByYourFrameState extends State<EventNearByYourFrame> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (builder) => EventDetails(
-                                                  eventAmenities:
-                                                      data['eventAmenities'],
+                                                  // eventAmenities:
+                                                  //     data['eventAmenities'],
                                                   eventCoverPhoto:
                                                       data['eventCoverPhoto'],
                                                   eventDescription:

@@ -521,7 +521,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                       value: couplesDropDown,
                       underline: SizedBox(),
                       isDense: true,
-                      dropdownColor: Colors.white,
+                      dropdownColor: Colors.black,
                       isExpanded: true,
                       // Down Arrow Icon
                       icon: const Icon(Icons.keyboard_arrow_down),
@@ -887,6 +887,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                             color: textColor.withOpacity(.4), width: 1),
                         borderRadius: BorderRadius.circular(12)),
                     child: TextFormField(
+                      style: TextStyle(color: textColor),
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(12),
@@ -1159,12 +1160,9 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                           "offerName": offerNameController.text,
                           "offerCode": offerCodeController.text,
                           "uid": FirebaseAuth.instance.currentUser!.uid,
-                          "eventCoverPhoto": eventcPhoto ??
-                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQxQEctK8hFdSQaxXLVMTYNjEdrd9Z23RI03bu5vzi2A&s",
-                          "eventPhoto": eventTicketPhoto ??
-                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQxQEctK8hFdSQaxXLVMTYNjEdrd9Z23RI03bu5vzi2A&s",
-                          "eventTablePhoto": eventTablePhoto ??
-                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQxQEctK8hFdSQaxXLVMTYNjEdrd9Z23RI03bu5vzi2A&s",
+                          "eventCoverPhoto": eventcPhoto,
+                          "eventPhoto": eventTicketPhoto,
+                          "eventTablePhoto": eventTablePhoto,
                           "dayNight": _fruit.toString(),
                           "tableNumber": tableNumberController.text,
                           "tableType": _tableNo.toString(),

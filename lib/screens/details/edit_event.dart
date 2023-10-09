@@ -12,7 +12,7 @@ class EditEvent extends StatefulWidget {
   final offerCode;
   final offerName;
   final eventDescription;
-  final eventAmenities;
+  // final eventAmenities;
   final numofpeople;
   final coverPhoto;
   final shortPhoto;
@@ -20,7 +20,7 @@ class EditEvent extends StatefulWidget {
       {super.key,
       required this.uuid,
       required this.eventName,
-      required this.eventAmenities,
+      // required this.eventAmenities,
       required this.eventDescription,
       required this.eventLocation,
       required this.coverPhoto,

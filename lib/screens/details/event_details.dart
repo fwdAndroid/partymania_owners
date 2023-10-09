@@ -8,7 +8,7 @@ class EventDetails extends StatefulWidget {
   final artistType;
   final bird;
   final dayNight;
-  final eventAmenities;
+  // final eventAmenities;
   final eventCoverPhoto;
   final eventDescription;
   final eventLocation;
@@ -39,7 +39,7 @@ class EventDetails extends StatefulWidget {
     required this.artistType,
     required this.bird,
     required this.dayNight,
-    required this.eventAmenities,
+    // required this.eventAmenities,
     required this.eventCoverPhoto,
     required this.eventDescription,
     required this.eventLocation,
@@ -178,30 +178,30 @@ class _EventDetailsState extends State<EventDetails> {
                     fontSize: 16),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Container(
-                    width: 50,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      color: const Color(0xff4E4E4E),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: const Color(0xff4E4E4E),
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        widget.eventAmenities.toString(),
-                        style: TextStyle(color: textColor.withOpacity(.6)),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Row(
+            //     children: [
+            //       Container(
+            //         width: 50,
+            //         height: 30,
+            //         decoration: BoxDecoration(
+            //           color: const Color(0xff4E4E4E),
+            //           borderRadius: BorderRadius.circular(20),
+            //           border: Border.all(
+            //             color: const Color(0xff4E4E4E),
+            //           ),
+            //         ),
+            //         child: Center(
+            //           child: Text(
+            //             widget.eventAmenities.toString(),
+            //             style: TextStyle(color: textColor.withOpacity(.6)),
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
@@ -654,7 +654,7 @@ class _EventDetailsState extends State<EventDetails> {
                                           numofpeople: widget.numofPeople,
                                           eventDescription:
                                               widget.eventDescription,
-                                          eventAmenities: widget.eventAmenities,
+                                          // eventAmenities: widget.eventAmenities,
                                           selectDate: widget.eventStartDate)));
                             }),
                       ),
