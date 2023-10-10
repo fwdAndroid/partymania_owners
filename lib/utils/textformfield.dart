@@ -84,6 +84,7 @@ class TextFormInputField extends StatelessWidget {
             // fillColor: textFieldColor,
             // filled: true,
             hintText: hintText,
+            errorStyle: TextStyle(color: textColor),
             hintStyle: TextStyle(color: textColor.withOpacity(.7))),
       ),
     );
