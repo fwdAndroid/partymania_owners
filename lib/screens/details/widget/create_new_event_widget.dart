@@ -492,18 +492,373 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
               color: textColor, fontWeight: FontWeight.w500, fontSize: 20),
         ),
       ),
-      InkWell(
-        onTap: () {
-          alertTickets();
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Image.asset(
-            "assets/add.png",
-            width: 80,
-            height: 80,
-          ),
+      ExpansionTile(
+        title: Text(
+          "Upload Tickets",
+          style: TextStyle(color: textColor),
         ),
+        children: [
+          Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Add Ticket",
+                style: TextStyle(
+                    color: textColor,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+                textAlign: TextAlign.left,
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 11, right: 11),
+            height: 45,
+            decoration: BoxDecoration(
+                border: Border.all(color: textColor.withOpacity(.4), width: 1),
+                borderRadius: BorderRadius.circular(12)),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: DropdownButton(
+                  // Initial Value
+                  value: couplesDropDown,
+                  underline: SizedBox(),
+                  isDense: true,
+                  dropdownColor: Colors.black,
+                  isExpanded: true,
+                  // Down Arrow Icon
+                  icon: const Icon(Icons.keyboard_arrow_down),
+
+                  // Array list of items
+                  items: itemsCouples.map((String itemsCouples) {
+                    return DropdownMenuItem(
+                      value: itemsCouples,
+                      child: Text(
+                        itemsCouples,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: textColor),
+                      ),
+                    );
+                  }).toList(),
+
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      couplesDropDown = newValue!;
+                    });
+                  },
+                ),
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 10, right: 10, top: 10),
+            decoration: BoxDecoration(
+                border: Border.all(color: textColor.withOpacity(.4), width: 1),
+                borderRadius: BorderRadius.circular(12)),
+            child: TextFormField(
+              style: TextStyle(color: textColor),
+              decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(12),
+                  border: InputBorder.none,
+                  hintStyle: TextStyle(color: textColor),
+                  hintText: "Early Bird"),
+              controller: birdController,
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
+                child: Row(
+                  children: [
+                    Radio(
+                        value: Artist.Guestlist,
+                        groupValue: _artist,
+                        onChanged: (Artist? value) {
+                          setState(() {
+                            _artist = value;
+                          });
+                        }),
+                    Expanded(
+                        child: Text(
+                      'Guestlist',
+                      style: TextStyle(color: textColor),
+                    ))
+                  ],
+                ),
+                flex: 1,
+              ),
+              Expanded(
+                child: Row(
+                  children: [
+                    Radio(
+                        value: Artist.FullCover,
+                        groupValue: _artist,
+                        onChanged: (Artist? value) {
+                          setState(() {
+                            _artist = value;
+                          });
+                        }),
+                    Expanded(
+                      child: Text(
+                        'Full Cover',
+                        style: TextStyle(color: textColor),
+                      ),
+                    )
+                  ],
+                ),
+                flex: 1,
+              ),
+              Expanded(
+                child: Row(
+                  children: [
+                    Radio(
+                        value: Artist.NoCover,
+                        groupValue: _artist,
+                        onChanged: (Artist? value) {
+                          setState(() {
+                            _artist = value;
+                          });
+                        }),
+                    Expanded(
+                        child: Text(
+                      'No Cover',
+                      style: TextStyle(color: textColor),
+                    ))
+                  ],
+                ),
+                flex: 1,
+              ),
+            ],
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 10, right: 10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: textColor.withOpacity(.4), width: 1),
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: DropdownButton(
+                        dropdownColor: Colors.black,
+                        // Initial Value
+                        value: dropdownvalue,
+                        underline: SizedBox(),
+                        isDense: true,
+                        isExpanded: true,
+                        // Down Arrow Icon
+                        icon: Icon(
+                          Icons.keyboard_arrow_down,
+                          color: textColor,
+                        ),
+
+                        // Array list of items
+                        items: items.map((String items) {
+                          return DropdownMenuItem(
+                            value: items,
+                            child: Text(
+                              items,
+                              style: TextStyle(color: textColor),
+                            ),
+                          );
+                        }).toList(),
+                        // After selecting the desired option,it will
+                        // change button value to selected value
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownvalue = newValue!;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 7,
+                ),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: textColor.withOpacity(.4), width: 1),
+                        borderRadius: BorderRadius.circular(12)),
+                    child: TextFormField(
+                      style: TextStyle(color: textColor),
+                      onTap: () async {
+                        final TimeOfDay? picked = await showTimePicker(
+                          context: context,
+                          initialTime: _selectedTime,
+                        );
+
+                        if (picked != null && picked != _selectedTime) {
+                          setState(() {
+                            _selectedTime = picked;
+                            timeBeforeController.text =
+                                _selectedTime.format(context);
+                          });
+                        }
+                      },
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(12),
+                          suffixIcon: Padding(
+                            padding: const EdgeInsets.all(13.0),
+                            child: Icon(
+                              Icons.timer,
+                              color: textColor,
+                            ),
+                          ),
+                          border: InputBorder.none,
+                          hintStyle: TextStyle(color: textColor),
+                          hintText: "9:30 AM"),
+                      controller: timeBeforeController,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 12, right: 12, top: 10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: textColor.withOpacity(.4), width: 1),
+                        borderRadius: BorderRadius.circular(12)),
+                    child: TextFormField(
+                      style: TextStyle(color: textColor),
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(8),
+                          border: InputBorder.none,
+                          hintText: "Total Tickets",
+                          hintStyle: TextStyle(color: textColor)),
+                      controller: totalTicketsController,
+                      keyboardType: TextInputType.number,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 7,
+                ),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: textColor.withOpacity(.4), width: 1),
+                        borderRadius: BorderRadius.circular(12)),
+                    child: TextFormField(
+                      style: TextStyle(color: textColor),
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(8),
+                          border: InputBorder.none,
+                          hintText: "Price",
+                          hintStyle: TextStyle(color: textColor)),
+                      controller: priceController,
+                      keyboardType: TextInputType.number,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Ticket Purchase Deadline",
+                  style: TextStyle(
+                      color: textColor,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: textColor.withOpacity(.4), width: 1),
+                      borderRadius: BorderRadius.circular(12)),
+                  child: TextFormField(
+                    style: TextStyle(color: textColor),
+                    onTap: () async {
+                      await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2015),
+                        lastDate: DateTime(2025),
+                      ).then((selectedDate) {
+                        if (selectedDate != null) {
+                          ticketPurchaseDeadlineController.text =
+                              DateFormat('yyyy-MM-dd').format(selectedDate);
+                        }
+                      });
+                    },
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(left: 10, top: 10),
+                      border: InputBorder.none,
+                      hintText: "Choose a Ticket Purchase Deadline",
+                      hintStyle: TextStyle(color: textColor),
+                      suffixIcon: Padding(
+                          padding: const EdgeInsets.all(13.0),
+                          child: Icon(
+                            Icons.calendar_month,
+                            color: textColor,
+                          )),
+                    ),
+                    controller: ticketPurchaseDeadlineController,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SaveButton(
+                      title: "Add",
+                      onTap: () {
+                        if (priceController.text.isEmpty ||
+                            totalTicketsController.text.isEmpty ||
+                            timeBeforeController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Fields are required")));
+                        } else {
+                          itemList.add({
+                            "couple": couplesDropDown,
+                            "bird": birdController.text,
+                            "artist": _artist.toString(),
+                            "ticketDeadline":
+                                ticketPurchaseDeadlineController.text,
+                            "price": priceController.text,
+                            "timeBefore": timeBeforeController.text,
+                            "totalTickets": totalTicketsController.text,
+                            "eventTime": dropdownvalue,
+                          });
+
+                          print(itemList);
+                          birdController.clear();
+                          priceController.clear();
+                          timeBeforeController.clear();
+                          totalTicketsController.clear();
+                          setState(() {});
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Tickets are Added")));
+                        }
+                      }),
+                )
+              ],
+            ),
+          ),
+        ],
       ),
       itemList.isEmpty
           ? Container()
@@ -612,19 +967,189 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                     hintText: "12.jpg",
                     controller: ticketPurchaseUploadController,
                   ),
-            InkWell(
-              onTap: () {
-                alertTable();
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset(
-                  "assets/add.png",
-                  width: 80,
-                  height: 80,
-                ),
+            ExpansionTile(
+              title: Text(
+                "Upload Table",
+                style: TextStyle(color: textColor),
               ),
-            ),
+              children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Add Tables",
+                      style: TextStyle(
+                          color: textColor,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 5, right: 5, top: 10),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          color: textColor.withOpacity(.4), width: 1),
+                      borderRadius: BorderRadius.circular(12)),
+                  child: TextFormField(
+                    style: TextStyle(color: textColor),
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.all(12),
+                        border: InputBorder.none,
+                        hintStyle: TextStyle(color: textColor),
+                        hintText: "Enter Table Number"),
+                    controller: tableNumberController,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Radio(
+                                value: TableNo.TableCharge,
+                                groupValue: _tableNo,
+                                onChanged: (TableNo? value) {
+                                  setState(() {
+                                    _tableNo = value;
+                                  });
+                                }),
+                            Expanded(
+                                child: Text(
+                              'Table Charge',
+                              style: TextStyle(color: textColor),
+                            ))
+                          ],
+                        ),
+                        flex: 1,
+                      ),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Radio(
+                                value: TableNo.FullCover,
+                                groupValue: _tableNo,
+                                onChanged: (TableNo? value) {
+                                  setState(() {
+                                    _tableNo = value;
+                                  });
+                                }),
+                            Expanded(
+                              child: Text(
+                                'Full Cover',
+                                style: TextStyle(color: textColor),
+                              ),
+                            )
+                          ],
+                        ),
+                        flex: 1,
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: textColor.withOpacity(.4), width: 1),
+                        borderRadius: BorderRadius.circular(12)),
+                    child: TextFormField(
+                      style: TextStyle(color: textColor),
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(8),
+                          border: InputBorder.none,
+                          hintText: "Number of people",
+                          hintStyle: TextStyle(color: textColor)),
+                      controller: peopleController,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: textColor.withOpacity(.4), width: 1),
+                              borderRadius: BorderRadius.circular(12)),
+                          child: TextFormField(
+                            style: TextStyle(color: textColor),
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                border: InputBorder.none,
+                                hintText: "Total Tables",
+                                hintStyle: TextStyle(color: textColor)),
+                            controller: totaltablesController,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 7,
+                      ),
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: textColor.withOpacity(.4), width: 1),
+                              borderRadius: BorderRadius.circular(12)),
+                          child: TextFormField(
+                            style: TextStyle(color: textColor),
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                border: InputBorder.none,
+                                hintText: "Price",
+                                hintStyle: TextStyle(color: textColor)),
+                            controller: totalTablesPriceController,
+                            keyboardType: TextInputType.number,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SaveButton(
+                      title: "Add",
+                      onTap: () {
+                        if (tableNumberController.text.isEmpty ||
+                            peopleController.text.isEmpty ||
+                            totaltablesController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Fields are required")));
+                        } else {
+                          tableList.add({
+                            "tableNumber": tableNumberController.text,
+                            "peopleNumber": peopleController.text,
+                            "tableNo": _tableNo.toString(),
+                            "totalTables": totaltablesController.text,
+                            "tablePrice": totalTablesPriceController.text,
+                          });
+
+                          print(tableList);
+                          tableNumberController.clear();
+                          peopleController.clear();
+                          totalTablesPriceController.clear();
+                          setState(() {});
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Tables are Added")));
+                        }
+                      }),
+                )
+              ],
+            )
           ],
         ),
       ),
@@ -925,588 +1450,6 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
             style: TextStyle(color: textColor),
           ),
         );
-      },
-    );
-  }
-
-  Future<void> alertTickets() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return StatefulBuilder(builder: (context, setState) {
-          return AlertDialog(
-            insetPadding: EdgeInsets.all(10),
-            contentPadding: EdgeInsets.zero,
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Add Ticket",
-                      style: TextStyle(
-                          color: colorBlack,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 11, right: 11),
-                    height: 45,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            color: colorBlack.withOpacity(.4), width: 1),
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(
-                        child: DropdownButton(
-                          // Initial Value
-                          value: couplesDropDown,
-                          underline: SizedBox(),
-                          isDense: true,
-                          dropdownColor: Colors.white,
-                          isExpanded: true,
-                          // Down Arrow Icon
-                          icon: const Icon(Icons.keyboard_arrow_down),
-
-                          // Array list of items
-                          items: itemsCouples.map((String itemsCouples) {
-                            return DropdownMenuItem(
-                              value: itemsCouples,
-                              child: Text(
-                                itemsCouples,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: colorBlack),
-                              ),
-                            );
-                          }).toList(),
-
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              couplesDropDown = newValue!;
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 10, right: 10, top: 10),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            color: colorBlack.withOpacity(.4), width: 1),
-                        borderRadius: BorderRadius.circular(12)),
-                    child: TextFormField(
-                      style: TextStyle(color: colorBlack),
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(12),
-                          border: InputBorder.none,
-                          hintStyle: TextStyle(color: colorBlack),
-                          hintText: "Early Bird"),
-                      controller: birdController,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Radio(
-                                value: Artist.Guestlist,
-                                groupValue: _artist,
-                                onChanged: (Artist? value) {
-                                  setState(() {
-                                    _artist = value;
-                                  });
-                                }),
-                            Expanded(
-                                child: Text(
-                              'Guestlist',
-                              style: TextStyle(color: colorBlack),
-                            ))
-                          ],
-                        ),
-                        flex: 1,
-                      ),
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Radio(
-                                value: Artist.FullCover,
-                                groupValue: _artist,
-                                onChanged: (Artist? value) {
-                                  setState(() {
-                                    _artist = value;
-                                  });
-                                }),
-                            Expanded(
-                              child: Text(
-                                'Full Cover',
-                                style: TextStyle(color: colorBlack),
-                              ),
-                            )
-                          ],
-                        ),
-                        flex: 1,
-                      ),
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Radio(
-                                value: Artist.NoCover,
-                                groupValue: _artist,
-                                onChanged: (Artist? value) {
-                                  setState(() {
-                                    _artist = value;
-                                  });
-                                }),
-                            Expanded(
-                                child: Text(
-                              'No Cover',
-                              style: TextStyle(color: colorBlack),
-                            ))
-                          ],
-                        ),
-                        flex: 1,
-                      ),
-                    ],
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 10, right: 10),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: colorBlack.withOpacity(.4),
-                                    width: 1),
-                                borderRadius: BorderRadius.circular(12)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: DropdownButton(
-                                dropdownColor: Colors.white,
-                                // Initial Value
-                                value: dropdownvalue,
-                                underline: SizedBox(),
-                                isDense: true,
-                                isExpanded: true,
-                                // Down Arrow Icon
-                                icon: const Icon(Icons.keyboard_arrow_down),
-
-                                // Array list of items
-                                items: items.map((String items) {
-                                  return DropdownMenuItem(
-                                    value: items,
-                                    child: Text(
-                                      items,
-                                      style: TextStyle(color: colorBlack),
-                                    ),
-                                  );
-                                }).toList(),
-                                // After selecting the desired option,it will
-                                // change button value to selected value
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    dropdownvalue = newValue!;
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 7,
-                        ),
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: colorBlack.withOpacity(.4),
-                                    width: 1),
-                                borderRadius: BorderRadius.circular(12)),
-                            child: TextFormField(
-                              style: TextStyle(color: colorBlack),
-                              onTap: () async {
-                                final TimeOfDay? picked = await showTimePicker(
-                                  context: context,
-                                  initialTime: _selectedTime,
-                                );
-
-                                if (picked != null && picked != _selectedTime) {
-                                  setState(() {
-                                    _selectedTime = picked;
-                                    timeBeforeController.text =
-                                        _selectedTime.format(context);
-                                  });
-                                }
-                              },
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(12),
-                                  suffixIcon: Padding(
-                                    padding: const EdgeInsets.all(13.0),
-                                    child: Icon(
-                                      Icons.timer,
-                                      color: colorBlack,
-                                    ),
-                                  ),
-                                  border: InputBorder.none,
-                                  hintStyle: TextStyle(color: colorBlack),
-                                  hintText: "9:30 AM"),
-                              controller: timeBeforeController,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 12, right: 12, top: 10),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: colorBlack.withOpacity(.4),
-                                    width: 1),
-                                borderRadius: BorderRadius.circular(12)),
-                            child: TextFormField(
-                              style: TextStyle(color: colorBlack),
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(8),
-                                  border: InputBorder.none,
-                                  hintText: "Total Tickets",
-                                  hintStyle: TextStyle(color: colorBlack)),
-                              controller: totalTicketsController,
-                              keyboardType: TextInputType.number,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 7,
-                        ),
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: colorBlack.withOpacity(.4),
-                                    width: 1),
-                                borderRadius: BorderRadius.circular(12)),
-                            child: TextFormField(
-                              style: TextStyle(color: colorBlack),
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(8),
-                                  border: InputBorder.none,
-                                  hintText: "Price",
-                                  hintStyle: TextStyle(color: colorBlack)),
-                              controller: priceController,
-                              keyboardType: TextInputType.number,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Ticket Purchase Deadline",
-                          style: TextStyle(
-                              color: colorBlack,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: colorBlack.withOpacity(.4), width: 1),
-                              borderRadius: BorderRadius.circular(12)),
-                          child: TextFormField(
-                            style: TextStyle(color: colorBlack),
-                            onTap: () async {
-                              await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(2015),
-                                lastDate: DateTime(2025),
-                              ).then((selectedDate) {
-                                if (selectedDate != null) {
-                                  ticketPurchaseDeadlineController.text =
-                                      DateFormat('yyyy-MM-dd')
-                                          .format(selectedDate);
-                                }
-                              });
-                            },
-                            decoration: InputDecoration(
-                              contentPadding:
-                                  EdgeInsets.only(left: 10, top: 10),
-                              border: InputBorder.none,
-                              hintText: "Choose a Ticket Purchase Deadline",
-                              hintStyle: TextStyle(color: colorBlack),
-                              suffixIcon: Padding(
-                                  padding: const EdgeInsets.all(13.0),
-                                  child: Icon(
-                                    Icons.calendar_month,
-                                    color: colorBlack,
-                                  )),
-                            ),
-                            controller: ticketPurchaseDeadlineController,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SaveButton(
-                              title: "Add",
-                              onTap: () {
-                                if (priceController.text.isEmpty ||
-                                    totalTicketsController.text.isEmpty ||
-                                    timeBeforeController.text.isEmpty) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content:
-                                              Text("Fields are required")));
-                                } else {
-                                  itemList.add({
-                                    "couple": couplesDropDown,
-                                    "bird": birdController.text,
-                                    "artist": _artist.toString(),
-                                    "ticketDeadline":
-                                        ticketPurchaseDeadlineController.text,
-                                    "price": priceController.text,
-                                    "timeBefore": timeBeforeController.text,
-                                    "totalTickets": totalTicketsController.text,
-                                    "eventTime": dropdownvalue,
-                                  });
-
-                                  print(itemList);
-                                  birdController.clear();
-                                  priceController.clear();
-                                  timeBeforeController.clear();
-                                  totalTicketsController.clear();
-                                  setState(() {});
-
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text("Tickets are Added")));
-                                  Navigator.pop(context);
-                                }
-                              }),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-      },
-    );
-  }
-
-  //Alert 2
-  Future<void> alertTable() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return StatefulBuilder(builder: (context, setState) {
-          return AlertDialog(
-            insetPadding: EdgeInsets.all(10),
-            contentPadding: EdgeInsets.zero,
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Add Tables",
-                      style: TextStyle(
-                          color: colorBlack,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 5, right: 5, top: 10),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            color: colorBlack.withOpacity(.4), width: 1),
-                        borderRadius: BorderRadius.circular(12)),
-                    child: TextFormField(
-                      style: TextStyle(color: colorBlack),
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(12),
-                          border: InputBorder.none,
-                          hintStyle: TextStyle(color: colorBlack),
-                          hintText: "Enter Table Number"),
-                      controller: tableNumberController,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Radio(
-                                  value: TableNo.TableCharge,
-                                  groupValue: _tableNo,
-                                  onChanged: (TableNo? value) {
-                                    setState(() {
-                                      _tableNo = value;
-                                    });
-                                  }),
-                              Expanded(
-                                  child: Text(
-                                'Table Charge',
-                                style: TextStyle(color: colorBlack),
-                              ))
-                            ],
-                          ),
-                          flex: 1,
-                        ),
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Radio(
-                                  value: TableNo.FullCover,
-                                  groupValue: _tableNo,
-                                  onChanged: (TableNo? value) {
-                                    setState(() {
-                                      _tableNo = value;
-                                    });
-                                  }),
-                              Expanded(
-                                child: Text(
-                                  'Full Cover',
-                                  style: TextStyle(color: colorBlack),
-                                ),
-                              )
-                            ],
-                          ),
-                          flex: 1,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: colorBlack.withOpacity(.4), width: 1),
-                          borderRadius: BorderRadius.circular(12)),
-                      child: TextFormField(
-                        style: TextStyle(color: colorBlack),
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.all(8),
-                            border: InputBorder.none,
-                            hintText: "Number of people",
-                            hintStyle: TextStyle(color: colorBlack)),
-                        controller: peopleController,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: colorBlack.withOpacity(.4),
-                                    width: 1),
-                                borderRadius: BorderRadius.circular(12)),
-                            child: TextFormField(
-                              style: TextStyle(color: colorBlack),
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(8),
-                                  border: InputBorder.none,
-                                  hintText: "Total Tables",
-                                  hintStyle: TextStyle(color: colorBlack)),
-                              controller: totaltablesController,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 7,
-                        ),
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: colorBlack.withOpacity(.4),
-                                    width: 1),
-                                borderRadius: BorderRadius.circular(12)),
-                            child: TextFormField(
-                              style: TextStyle(color: colorBlack),
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(8),
-                                  border: InputBorder.none,
-                                  hintText: "Price",
-                                  hintStyle: TextStyle(color: colorBlack)),
-                              controller: totalTablesPriceController,
-                              keyboardType: TextInputType.number,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SaveButton(
-                        title: "Add",
-                        onTap: () {
-                          if (tableNumberController.text.isEmpty ||
-                              peopleController.text.isEmpty ||
-                              totaltablesController.text.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Fields are required")));
-                          } else {
-                            tableList.add({
-                              "tableNumber": tableNumberController.text,
-                              "peopleNumber": peopleController.text,
-                              "tableNo": _tableNo.toString(),
-                              "totalTables": totaltablesController.text,
-                              "tablePrice": totalTablesPriceController.text,
-                            });
-
-                            print(tableList);
-                            tableNumberController.clear();
-                            peopleController.clear();
-                            totalTablesPriceController.clear();
-                            setState(() {});
-
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Tables are Added")));
-                            Navigator.pop(context);
-                          }
-                        }),
-                  )
-                ],
-              ),
-            ),
-          );
-        });
       },
     );
   }

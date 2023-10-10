@@ -168,16 +168,16 @@ class _EventDetailsState extends State<EventDetails> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "Amenities",
-                style: TextStyle(
-                    color: textColor,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Text(
+            //     "Amenities",
+            //     style: TextStyle(
+            //         color: textColor,
+            //         fontWeight: FontWeight.w500,
+            //         fontSize: 16),
+            //   ),
+            // ),
             // Padding(
             //   padding: const EdgeInsets.all(8.0),
             //   child: Row(

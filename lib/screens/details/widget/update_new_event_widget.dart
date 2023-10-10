@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:partymania_owners/screens/details/widget/eventsimageupdate/update_event_cover.dart';
+import 'package:partymania_owners/screens/details/widget/eventsimageupdate/update_event_photo.dart';
 import 'package:partymania_owners/screens/main_dashboard.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
@@ -92,7 +94,15 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
-                    onTap: () => selectEventImage(),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (builder) => EventCoverUpdate(
+                                    uuid: widget.uuid,
+                                    image: widget.eventCoverPhoto.toString(),
+                                  )));
+                    },
                     child: Image.network(
                       widget.eventCoverPhoto.toString(),
                       height: 200,
@@ -100,7 +110,15 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                     )),
               ),
               InkWell(
-                onTap: () => eventPhotos(),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (builder) => EventPhotoUpdate(
+                                uuid: widget.uuid,
+                                image: widget.eventPhoto.toString(),
+                              )));
+                },
                 child: Image.network(
                   widget.eventPhoto.toString(),
                   width: 80,
