@@ -78,8 +78,8 @@ class _HomeListViewWidgetHandlerState extends State<HomeListViewWidgetHandler> {
                                                           data['ticketdetail'],
                                                       myTableList:
                                                           data['tabledetail'],
-                                                      // eventAmenities: data[
-                                                      //     'eventAmenities'],
+                                                      eventAmenities: data[
+                                                          'eventAmenities'],
                                                       eventCoverPhoto: data[
                                                           'eventCoverPhoto'],
                                                       eventDescription: data[

@@ -79,8 +79,8 @@ class _EventNearByYourFrameState extends State<EventNearByYourFrame> {
                                                       data['ticketdetail'],
                                                   myTableList:
                                                       data['tabledetail'],
-                                                  // eventAmenities:
-                                                  //     data['eventAmenities'],
+                                                  eventAmenities:
+                                                      data['eventAmenities'],
                                                   eventCoverPhoto:
                                                       data['eventCoverPhoto'],
                                                   eventDescription:

@@ -78,8 +78,8 @@ class _HomeGridWidgetHandlerState extends State<HomeGridWidgetHandler> {
                                                       data['ticketdetail'],
                                                   myTableList:
                                                       data['tabledetail'],
-                                                  // eventAmenities:
-                                                  //     data['eventAmenities'],
+                                                  eventAmenities:
+                                                      data['eventAmenities'],
                                                   eventCoverPhoto:
                                                       data['eventCoverPhoto'],
                                                   eventDescription:

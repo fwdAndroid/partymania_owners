@@ -12,15 +12,19 @@ class EditEvent extends StatefulWidget {
   final offerCode;
   final offerName;
   final eventDescription;
-  // final eventAmenities;
+  var eventAmenities;
+  var myTableList;
+  var ticketdetail;
   final numofpeople;
   final coverPhoto;
   final shortPhoto;
-  const EditEvent(
+  EditEvent(
       {super.key,
       required this.uuid,
       required this.eventName,
-      // required this.eventAmenities,
+      required this.eventAmenities,
+      required this.myTableList,
+      required this.ticketdetail,
       required this.eventDescription,
       required this.eventLocation,
       required this.coverPhoto,
@@ -42,6 +46,7 @@ class _EditEventState extends State<EditEvent> {
     // TODO: implement initState
     super.initState();
     print(widget.uuid);
+    print(widget.myTableList);
   }
 
   @override
@@ -67,6 +72,7 @@ class _EditEventState extends State<EditEvent> {
                 height: 20,
               ),
               UpdateNewEventWidget(
+                  ticketdetail: widget.ticketdetail,
                   uuid: widget.uuid,
                   eventCoverPhoto: widget.coverPhoto,
                   eventPhoto: widget.shortPhoto,
@@ -75,7 +81,8 @@ class _EditEventState extends State<EditEvent> {
                   fromEventDate: widget.fromEventDate,
                   toEventDate: widget.toEventDate,
                   eventDescription: widget.eventDescription,
-                  // eventAmenities: widget.eventAmenities,
+                  myTableList: widget.myTableList,
+                  eventAmenities: widget.eventAmenities,
                   eventLocation: widget.eventLocation,
                   eventName: widget.eventName,
                   numofpeople: widget.numofpeople,

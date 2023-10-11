@@ -8,7 +8,7 @@ class EventDetails extends StatefulWidget {
   final artistType;
   final bird;
   final dayNight;
-  // final eventAmenities;
+  var eventAmenities;
   final eventCoverPhoto;
   final eventDescription;
   final eventLocation;
@@ -63,6 +63,7 @@ class EventDetails extends StatefulWidget {
       required this.tableType,
       required this.ticketPurchase,
       required this.timeDeadlineTicket,
+      required this.eventAmenities,
       required this.toEventDate,
       required this.totaltables,
       required this.uid,
@@ -169,40 +170,49 @@ class _EventDetailsState extends State<EventDetails> {
                 ),
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Text(
-            //     "Amenities",
-            //     style: TextStyle(
-            //         color: textColor,
-            //         fontWeight: FontWeight.w500,
-            //         fontSize: 16),
-            //   ),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Row(
-            //     children: [
-            //       Container(
-            //         width: 50,
-            //         height: 30,
-            //         decoration: BoxDecoration(
-            //           color: const Color(0xff4E4E4E),
-            //           borderRadius: BorderRadius.circular(20),
-            //           border: Border.all(
-            //             color: const Color(0xff4E4E4E),
-            //           ),
-            //         ),
-            //         child: Center(
-            //           child: Text(
-            //             widget.eventAmenities.toString(),
-            //             style: TextStyle(color: textColor.withOpacity(.6)),
-            //           ),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Amenities",
+                style: TextStyle(
+                    color: textColor,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: widget.eventAmenities.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          width: 60,
+                          height: 20,
+                          decoration: BoxDecoration(
+                            color: const Color(0xff4E4E4E),
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: const Color(0xff4E4E4E),
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              widget.eventAmenities[index].toString(),
+                              style: TextStyle(
+                                  color: Colors.white.withOpacity(.7)),
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
@@ -233,87 +243,82 @@ class _EventDetailsState extends State<EventDetails> {
                     fontSize: 20),
               ),
             ),
-            // Padding(
-            //   padding: EdgeInsets.all(8),
-            //   child: Container(
-            //     width: MediaQuery.of(context).size.width,
-            //     height: 114,
-            //     child: ListView.builder(
-            //         scrollDirection: Axis.horizontal,
-            //         itemCount: widget.ticketdetail.length,
-            //         itemBuilder: ((context, index) {
-            //           return Padding(
-            //             padding: EdgeInsets.all(4),
-            //             child: Container(
-            //               decoration: ShapeDecoration(shape: shape),
-            //             ),
-            //           );
-            //         })),
-            //   ),
-            // ),
 
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Container(
-            //     width: MediaQuery.of(context).size.width,
-            //     height: 114,
-            //     child: ListView.builder(
-            //         scrollDirection: Axis.horizontal,
-            //         itemCount: widget.ticketdetail.length,
-            //         itemBuilder: (BuildContext context, int index) {
-            //           return Padding(
-            //             padding: const EdgeInsets.all(4.0),
-            //             child: Container(
-            //               width: 120,
-            //               decoration: ShapeDecoration(
-            //                 color:
-            //                     Colors.white.withOpacity(0.03999999910593033),
-            //                 shape: RoundedRectangleBorder(
-            //                   side: BorderSide(
-            //                       width: 1, color: Color(0xFF4E4E4E)),
-            //                   borderRadius: BorderRadius.circular(10),
-            //                 ),
-            //               ),
-            //               child: Column(
-            //                 crossAxisAlignment: CrossAxisAlignment.center,
-            //                 children: [
-            //                   Text(
-            //                     widget.ticketdetail[index]['artist']
-            //                         .toString()
-            //                         .substring(3),
-            //                     style: TextStyle(color: Colors.white),
-            //                   ),
-            //                   Text(
-            //                     widget.myTableList[index]['bird'].toString(),
-            //                     style: TextStyle(color: Colors.white),
-            //                   ),
-            //                   // Row(
-            //                   //   mainAxisAlignment: MainAxisAlignment.center,
-            //                   //   children: [
-            //                   //     Text(
-            //                   //       widget.ticketdetail[index]['bird'],
-            //                   //       style: TextStyle(color: Colors.white),
-            //                   //     ),
-            //                   //     const SizedBox(
-            //                   //       width: 10,
-            //                   //     ),
-            //                   //     Text(
-            //                   //       widget.ticketdetail[index]['bird'],
-            //                   //       style: TextStyle(color: Colors.white),
-            //                   //     ),
-            //                   //   ],
-            //                   // ),
-            //                   // Divider(),
-            //                   // Text(
-            //                   //   "RS " + widget.ticketdetail[index]['bird'],
-            //                   //   style: TextStyle(color: Colors.white),
-            //                 ],
-            //               ),
-            //             ),
-            //           );
-            //         }),
-            //   ),
-            // ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 114,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: widget.ticketdetail.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Container(
+                          width: 120,
+                          decoration: ShapeDecoration(
+                            color:
+                                Colors.white.withOpacity(0.03999999910593033),
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                  width: 1, color: Color(0xFF4E4E4E)),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    "assets/Frame 14418.png",
+                                    height: 15,
+                                    width: 15,
+                                  ),
+                                  Text(
+                                    widget.ticketdetail[index]['couple'],
+                                    style: TextStyle(
+                                        color: Colors.white.withOpacity(.7)),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                widget.ticketdetail[index]['artist']
+                                    .toString()
+                                    .substring(7),
+                                style: TextStyle(
+                                    color: Colors.white.withOpacity(.7)),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    widget.ticketdetail[index]['eventTime'],
+                                    style: TextStyle(
+                                        color: Colors.white.withOpacity(.7)),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(widget.ticketdetail[index]['timeBefore'],
+                                      style: TextStyle(
+                                          color: Colors.white.withOpacity(.7))),
+                                ],
+                              ),
+                              Divider(),
+                              Text(
+                                "RS " + widget.ticketdetail[index]['price'],
+                                style: TextStyle(color: Colors.white),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    }),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
@@ -502,7 +507,9 @@ class _EventDetailsState extends State<EventDetails> {
                                           numofpeople: widget.numofPeople,
                                           eventDescription:
                                               widget.eventDescription,
-                                          // eventAmenities: widget.eventAmenities,
+                                          eventAmenities: widget.eventAmenities,
+                                          ticketdetail: widget.ticketdetail,
+                                          myTableList: widget.myTableList,
                                           selectDate: widget.eventStartDate)));
                             }),
                       ),

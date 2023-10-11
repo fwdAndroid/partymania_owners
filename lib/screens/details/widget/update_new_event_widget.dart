@@ -33,13 +33,17 @@ class UpdateNewEventWidget extends StatefulWidget {
   final offerName;
   final offerCode;
   final eventDescription;
-  // final eventAmenities;
+  var ticketdetail;
+  var myTableList;
+  var eventAmenities;
   final numofpeople;
-  const UpdateNewEventWidget(
+  UpdateNewEventWidget(
       {super.key,
       required this.uuid,
+      required this.myTableList,
       required this.fromEventDate,
-      // required this.eventAmenities,
+      required this.ticketdetail,
+      required this.eventAmenities,
       required this.eventDescription,
       required this.toEventDate,
       required this.eventCoverPhoto,
@@ -72,6 +76,13 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
   TableNo? _tableNo = TableNo.TableCharge;
 
   String dropdownvalue = 'Before';
+
+  void addToStringList(String text) {
+    setState(() {
+      widget.eventAmenities.add(text);
+      eventamenitiesControllerIUpdate.clear();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -454,159 +465,239 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
             ],
           ),
         ),
-        // Padding(
-        //   padding: const EdgeInsets.all(8.0),
-        //   child: Column(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: [
-        //       Text(
-        //         "Amenities",
-        //         style: TextStyle(
-        //             color: textColor,
-        //             fontWeight: FontWeight.w400,
-        //             fontSize: 12),
-        //       ),
-        //       SizedBox(
-        //         height: 10,
-        //       ),
-        //       TextFormInputField(
-        //         suIcon: Padding(
-        //             padding: const EdgeInsets.all(13.0),
-        //             child: ElevatedButton(
-        //                 style: ElevatedButton.styleFrom(
-        //                     shape: RoundedRectangleBorder(
-        //                         borderRadius: BorderRadius.circular(10.0)),
-        //                     backgroundColor: otpColor),
-        //                 onPressed: () {},
-        //                 child: Text(
-        //                   "Add",
-        //                   style: TextStyle(color: textColor),
-        //                 ))),
-        //         textInputType: TextInputType.text,
-        //         hintText: "Add Amenities",
-        //         controller: eventamenitiesControllerIUpdate,
-        //       )
-        //     ],
-        //   ),
-        // ),
-        // Padding(
-        //   padding: const EdgeInsets.all(8.0),
-        //   child: Align(
-        //     alignment: AlignmentDirectional.centerStart,
-        //     child: Text(
-        //       "Tickets and Payments",
-        //       style: TextStyle(
-        //           color: textColor, fontWeight: FontWeight.w500, fontSize: 20),
-        //     ),
-        //   ),
-        // ),
-        // Padding(
-        //   padding: const EdgeInsets.all(8.0),
-        //   child: Align(
-        //     alignment: AlignmentDirectional.centerStart,
-        //     child: InkWell(
-        //       onTap: () => showAlertDialog(),
-        //       child: Image.asset(
-        //         "assets/add.png",
-        //         width: 100,
-        //         height: 100,
-        //       ),
-        //     ),
-        //   ),
-        // ),
-        // Padding(
-        //   padding: const EdgeInsets.all(8.0),
-        //   child: Column(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: [
-        //       Text(
-        //         "Ticket Purchase Deadline",
-        //         style: TextStyle(
-        //             color: textColor,
-        //             fontWeight: FontWeight.w400,
-        //             fontSize: 12),
-        //       ),
-        //       SizedBox(
-        //         height: 10,
-        //       ),
-        //       TextFormInputField(
-        //         onTap: _selectUpdateDate2,
-        //         suIcon: Padding(
-        //             padding: const EdgeInsets.all(13.0),
-        //             child: Icon(
-        //               Icons.calendar_month,
-        //               color: textColor,
-        //             )),
-        //         textInputType: TextInputType.text,
-        //         hintText: "Choose a Ticket Purchase Deadline",
-        //         controller: ticketPurchaseDeadlineControllerUpdate,
-        //       )
-        //     ],
-        //   ),
-        // ),
-        // Padding(
-        //   padding: const EdgeInsets.all(8.0),
-        //   child: Align(
-        //     alignment: AlignmentDirectional.centerStart,
-        //     child: Text(
-        //       "Table and Blueprint",
-        //       style: TextStyle(
-        //           color: textColor, fontWeight: FontWeight.w500, fontSize: 20),
-        //     ),
-        //   ),
-        // ),
-        // Padding(
-        //   padding: const EdgeInsets.all(8.0),
-        //   child: Column(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: [
-        //       Text(
-        //         "Upload Tables Blueprint",
-        //         style: TextStyle(
-        //             color: textColor,
-        //             fontWeight: FontWeight.w400,
-        //             fontSize: 12),
-        //       ),
-        //       SizedBox(
-        //         height: 10,
-        //       ),
-        //       TextFormInputField(
-        //         suIcon: Padding(
-        //             padding: const EdgeInsets.all(13.0),
-        //             child: ElevatedButton(
-        //                 style: ElevatedButton.styleFrom(
-        //                     shape: RoundedRectangleBorder(
-        //                         borderRadius: BorderRadius.circular(10.0)),
-        //                     backgroundColor: otpColor),
-        //                 onPressed: () {},
-        //                 child: Text(
-        //                   "Upload",
-        //                   style: TextStyle(color: textColor),
-        //                 ))),
-        //         textInputType: TextInputType.text,
-        //         hintText: "12.jpg",
-        //         controller: ticketPurchaseUploadControllerIUpdate,
-        //       )
-        //     ],
-        //   ),
-        // ),
-        // SizedBox(
-        //   height: 10,
-        // ),
-        // Padding(
-        //   padding: const EdgeInsets.all(8.0),
-        //   child: Align(
-        //     alignment: AlignmentDirectional.centerStart,
-        //     child: InkWell(
-        //       onTap: showAlertDialog2,
-        //       child: Image.asset(
-        //         "assets/add.png",
-        //         width: 100,
-        //         height: 100,
-        //       ),
-        //     ),
-        //   ),
-        // ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Amenities",
+                  style: TextStyle(
+                      color: textColor,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 20),
+                  textAlign: TextAlign.start,
+                ),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SizedBox(
+            height: 50,
+            width: MediaQuery.of(context).size.width,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: widget.eventAmenities.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 60,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        color: const Color(0xff4E4E4E),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: const Color(0xff4E4E4E),
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          widget.eventAmenities[index].toString(),
+                          style: TextStyle(color: Colors.white.withOpacity(.7)),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        TextFormInputField(
+          suIcon: Padding(
+              padding: const EdgeInsets.all(13.0),
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      backgroundColor: otpColor),
+                  onPressed: () {
+                    String text = eventamenitiesControllerIUpdate.text;
+                    if (text.isNotEmpty) {
+                      addToStringList(text);
+                    }
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Values are Added")));
+                  },
+                  child: Text(
+                    "Add",
+                    style: TextStyle(color: textColor),
+                  ))),
+          textInputType: TextInputType.text,
+          hintText: "Add Amenities",
+          controller: eventamenitiesControllerIUpdate,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              "Tickets and Payments",
+              style: TextStyle(
+                  color: textColor, fontWeight: FontWeight.w500, fontSize: 20),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: 114,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: widget.ticketdetail.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Container(
+                      width: 120,
+                      decoration: ShapeDecoration(
+                        color: Colors.white.withOpacity(0.03999999910593033),
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(width: 1, color: Color(0xFF4E4E4E)),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                "assets/Frame 14418.png",
+                                height: 15,
+                                width: 15,
+                              ),
+                              Text(
+                                widget.ticketdetail[index]['couple'],
+                                style: TextStyle(
+                                    color: Colors.white.withOpacity(.7)),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            widget.ticketdetail[index]['artist']
+                                .toString()
+                                .substring(7),
+                            style:
+                                TextStyle(color: Colors.white.withOpacity(.7)),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                widget.ticketdetail[index]['eventTime'],
+                                style: TextStyle(
+                                    color: Colors.white.withOpacity(.7)),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(widget.ticketdetail[index]['timeBefore'],
+                                  style: TextStyle(
+                                      color: Colors.white.withOpacity(.7))),
+                            ],
+                          ),
+                          Divider(),
+                          Text(
+                            "RS " + widget.ticketdetail[index]['price'],
+                            style: TextStyle(color: Colors.white),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              "Table and Blueprint",
+              style: TextStyle(
+                  color: textColor, fontWeight: FontWeight.w500, fontSize: 20),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: 114,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: widget.myTableList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Container(
+                      width: 120,
+                      decoration: ShapeDecoration(
+                        color: Colors.white.withOpacity(0.03999999910593033),
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(width: 1, color: Color(0xFF4E4E4E)),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            widget.myTableList[index]['peopleNumber'],
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Text(
+                            widget.myTableList[index]['tableNo']
+                                .toString()
+                                .substring(8),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                widget.myTableList[index]['tableNumber'],
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                            ],
+                          ),
+                          Divider(),
+                          Text(
+                            "RS " + widget.myTableList[index]['tablePrice'],
+                            style: TextStyle(color: Colors.white),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+          ),
+        ),
         const SizedBox(
           height: 10,
         ),
@@ -730,8 +821,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                             "eventLocation": eventLocationUpdateController.text,
                             "eventDescription":
                                 eventdescriptionControllerUpdate.text,
-                            "eventAmenities":
-                                eventamenitiesControllerIUpdate.text,
+                            "eventAmenities": widget.eventAmenities,
                             "participantType": couplesDropDown,
                             "bird": birdControllerUpdate.text,
                             "artistType": _artist.toString(),

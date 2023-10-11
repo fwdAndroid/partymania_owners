@@ -73,12 +73,11 @@ class _HomeGridWidgetState extends State<HomeGridWidget> {
                                               builder: (builder) =>
                                                   EventDetails(
                                                     ticketdetail:
-                                                        data['tabledetail'],
-
+                                                        data['ticketdetail'],
                                                     myTableList:
                                                         data['tabledetail'],
-                                                    // eventAmenities:
-                                                    //     data['eventAmenities'],
+                                                    eventAmenities:
+                                                        data['eventAmenities'],
                                                     eventCoverPhoto:
                                                         data['eventCoverPhoto'],
                                                     eventDescription: data[
