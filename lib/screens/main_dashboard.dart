@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/dashboard/event_page.dart';
 import 'package:partymania_owners/screens/dashboard/home_page.dart';
@@ -6,6 +7,8 @@ import 'package:partymania_owners/screens/dashboard/scan_page.dart';
 import 'package:partymania_owners/utils/colors.dart';
 
 class MainScreen extends StatefulWidget {
+  User? user;
+  MainScreen({required this.user});
   @override
   _MainScreenState createState() => _MainScreenState();
 }

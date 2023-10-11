@@ -74,6 +74,10 @@ class _HomeGridWidgetHandlerState extends State<HomeGridWidgetHandler> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (builder) => EventDetails(
+                                                  ticketdetail:
+                                                      data['ticketdetail'],
+                                                  myTableList:
+                                                      data['tabledetail'],
                                                   // eventAmenities:
                                                   //     data['eventAmenities'],
                                                   eventCoverPhoto:

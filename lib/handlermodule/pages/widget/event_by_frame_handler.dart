@@ -76,6 +76,10 @@ class _EventNearByYourFrameHandlerState
                                         context,
                                         MaterialPageRoute(
                                             builder: (builder) => EventDetails(
+                                                  ticketdetail:
+                                                      data['tabledetail'],
+                                                  myTableList:
+                                                      data['tabledetail'],
                                                   // eventAmenities:
                                                   //     data['eventAmenities'],
                                                   eventCoverPhoto:

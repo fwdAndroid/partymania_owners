@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_picker_plus/country_picker_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -458,7 +457,11 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
       descriptionController.clear();
       clubLocationController.clear();
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (builder) => MainScreen()));
+          context,
+          MaterialPageRoute(
+              builder: (builder) => MainScreen(
+                    user: FirebaseAuth.instance.currentUser,
+                  )));
     } else {
       clubZipCodeController.clear();
       clubNameController.clear();
@@ -466,7 +469,11 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
       descriptionController.clear();
       clubLocationController.clear();
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (builder) => MainScreen()));
+          context,
+          MaterialPageRoute(
+              builder: (builder) => MainScreen(
+                    user: FirebaseAuth.instance.currentUser,
+                  )));
     }
   }
 }

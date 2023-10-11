@@ -37,7 +37,11 @@ class _CheckStatusState extends State<CheckStatus> {
 
     if (doesDocExist) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (builder) => MainScreen()));
+          context,
+          MaterialPageRoute(
+              builder: (builder) => MainScreen(
+                    user: FirebaseAuth.instance.currentUser,
+                  )));
     } else {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (builder) => CreateProfile()));

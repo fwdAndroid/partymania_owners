@@ -74,6 +74,10 @@ class _HomeListViewWidgetHandlerState extends State<HomeListViewWidgetHandler> {
                                             MaterialPageRoute(
                                                 builder: (builder) =>
                                                     EventDetails(
+                                                      ticketdetail:
+                                                          data['ticketdetail'],
+                                                      myTableList:
+                                                          data['tabledetail'],
                                                       // eventAmenities: data[
                                                       //     'eventAmenities'],
                                                       eventCoverPhoto: data[

@@ -475,7 +475,11 @@ class _EditClubProfileTextWidgetState extends State<EditClubProfileTextWidget> {
     });
 
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (builder) => MainScreen()));
+        context,
+        MaterialPageRoute(
+            builder: (builder) => MainScreen(
+                  user: FirebaseAuth.instance.currentUser,
+                )));
     editclubLocationController.clear();
     editclubStateController.clear();
     editclubCityController.clear();

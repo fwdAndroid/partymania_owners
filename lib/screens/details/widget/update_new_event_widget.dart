@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -753,10 +754,6 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                             "totaltables": totaltablesControllerUpdate.text,
                             "tablePrice": totalTablespriceControllerUpdate.text
                           }).then((value) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (builder) => MainScreen()));
                             eventUpdateNameController.clear();
                             selectUpdateDate.clear();
                             fromUpdateDateController.clear();
@@ -790,7 +787,9 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (builder) => MainScreen()));
+                                  builder: (builder) => MainScreen(
+                                        user: FirebaseAuth.instance.currentUser,
+                                      )));
                         },
                       ),
                     ),
@@ -1206,7 +1205,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                                 width: 1),
                             borderRadius: BorderRadius.circular(12)),
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               contentPadding: EdgeInsets.all(12),
                               border: InputBorder.none,
                               hintStyle: TextStyle(color: Colors.black),
@@ -1269,7 +1268,7 @@ class _UpdateNewEventWidgetState extends State<UpdateNewEventWidget> {
                                   width: 1),
                               borderRadius: BorderRadius.circular(12)),
                           child: TextFormField(
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.all(8),
                                 border: InputBorder.none,
                                 hintText: "Number of people",

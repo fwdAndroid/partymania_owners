@@ -74,6 +74,11 @@ class _HomeListViewWidgetState extends State<HomeListViewWidget> {
                                             MaterialPageRoute(
                                                 builder: (builder) =>
                                                     EventDetails(
+                                                      ticketdetail:
+                                                          data['tabledetail'],
+
+                                                      myTableList:
+                                                          data['tabledetail'],
                                                       // eventAmenities: data[
                                                       //     'eventAmenities'],
                                                       eventCoverPhoto: data[
@@ -169,38 +174,27 @@ class _HomeListViewWidgetState extends State<HomeListViewWidget> {
                                               const SizedBox(
                                                 height: 6,
                                               ),
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          16)),
-                                                          border: Border.all(
-                                                              color: otpColor)),
-                                                      height: 30,
-                                                      width: 50,
-                                                      child: Center(
-                                                        child: Text(
-                                                          data['eventType'],
-                                                          style: TextStyle(
-                                                              color: otpColor),
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                        ),
-                                                      )),
-                                                  const SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Image.asset(
-                                                    "assets/Auto Layout Horizontal.png",
-                                                  )
-                                                ],
-                                              ),
+                                              Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  16)),
+                                                      border: Border.all(
+                                                          color: otpColor)),
+                                                  height: 30,
+                                                  width: 150,
+                                                  child: Center(
+                                                    child: Text(
+                                                      data['eventType'],
+                                                      style: TextStyle(
+                                                          color: otpColor),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                  )),
                                               const SizedBox(
                                                 height: 6,
                                               ),

@@ -95,6 +95,10 @@ class _ImageCoverUpdateState extends State<ImageCoverUpdate> {
     });
 
     Navigator.push(
-        context, MaterialPageRoute(builder: (builder) => MainScreen()));
+        context,
+        MaterialPageRoute(
+            builder: (builder) => MainScreen(
+                  user: FirebaseAuth.instance.currentUser,
+                )));
   }
 }

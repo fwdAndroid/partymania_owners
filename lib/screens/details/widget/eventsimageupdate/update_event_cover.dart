@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:partymania_owners/screens/main_dashboard.dart';
@@ -97,6 +98,10 @@ class _EventCoverUpdateState extends State<EventCoverUpdate> {
     });
 
     Navigator.push(
-        context, MaterialPageRoute(builder: (builder) => MainScreen()));
+        context,
+        MaterialPageRoute(
+            builder: (builder) => MainScreen(
+                  user: FirebaseAuth.instance.currentUser,
+                )));
   }
 }

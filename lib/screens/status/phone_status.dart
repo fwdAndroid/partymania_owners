@@ -38,7 +38,11 @@ class _CheckPhoneStatusState extends State<CheckPhoneStatus> {
     if (doesDocExist) {
       print("wrong which");
       Navigator.push(
-          context, MaterialPageRoute(builder: (builder) => MainScreen()));
+          context,
+          MaterialPageRoute(
+              builder: (builder) => MainScreen(
+                    user: FirebaseAuth.instance.currentUser,
+                  )));
     } else {
       Navigator.push(
           context, MaterialPageRoute(builder: (builder) => CreateProfile()));

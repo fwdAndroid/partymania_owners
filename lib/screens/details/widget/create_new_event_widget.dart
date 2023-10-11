@@ -845,9 +845,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
 
                           print(itemList);
                           birdController.clear();
-                          priceController.clear();
-                          timeBeforeController.clear();
-                          totalTicketsController.clear();
+
                           setState(() {});
 
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -1373,10 +1371,6 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                           "conditions": termsController.text,
                           "eventCreationTime": FieldValue.serverTimestamp()
                         }).then((value) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (builder) => MainScreen()));
                           termsController.clear();
                           totaltablesController.clear();
                           totalTablesPriceController.clear();
@@ -1403,7 +1397,9 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (builder) => MainScreen()));
+                                builder: (builder) => MainScreen(
+                                      user: FirebaseAuth.instance.currentUser,
+                                    )));
                       },
                     ),
                   ),

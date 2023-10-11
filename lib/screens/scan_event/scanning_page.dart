@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/main_dashboard.dart';
 import 'package:partymania_owners/utils/button.dart';
@@ -36,8 +37,12 @@ class _ScanningPageState extends State<ScanningPage> {
               title: "Complete",
               onTap: () {
                 showSnakBar("Scan Complete Successfully", context);
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (builder) => MainScreen()));
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (builder) => MainScreen(
+                              user: FirebaseAuth.instance.currentUser,
+                            )));
               })
         ],
       ),

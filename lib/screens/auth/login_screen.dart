@@ -219,7 +219,7 @@ class _LoginScreenState extends State<LoginScreen> {
       loginEmailController.clear();
       passwordController.clear();
     } else {
-      showSnakBar(rse, context);
+      showSnakBar("Email OR Password is Wrong", context);
     }
   }
 }
