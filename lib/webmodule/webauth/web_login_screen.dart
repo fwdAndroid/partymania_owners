@@ -9,6 +9,7 @@ import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
 import 'package:partymania_owners/utils/textformfield.dart';
 import 'package:partymania_owners/utils/utils.dart';
+import 'package:partymania_owners/webmodule/webauth/web_sign_up_accounts.dart';
 import 'package:partymania_owners/webmodule/webhandler/web_handler_login.dart';
 
 class WebLoginScreen extends StatefulWidget {
@@ -182,7 +183,7 @@ class _WebLoginScreenState extends State<WebLoginScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (builder) => SignUpAccounts()));
+                              builder: (builder) => WebSignUpAccounts()));
                     },
                     child: Text(
                       " Sign Up",
