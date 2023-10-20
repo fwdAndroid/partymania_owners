@@ -1,24 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:partymania_owners/handlermodule/handler_auth/handler_login.dart';
-import 'package:partymania_owners/screens/auth/getotp.dart';
-import 'package:partymania_owners/screens/auth/signup_account.dart';
-import 'package:partymania_owners/screens/status/checkstatus.dart';
-import 'package:partymania_owners/services/auth_methods.dart';
+import 'package:partymania_owners/handlermodule/dashboard/handler_dashboard.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
 import 'package:partymania_owners/utils/textformfield.dart';
-import 'package:partymania_owners/utils/utils.dart';
-import 'package:partymania_owners/webmodule/webhandler/web_handler_login.dart';
 
-class WebLoginScreen extends StatefulWidget {
-  const WebLoginScreen({super.key});
+class WebHandlerLogin extends StatefulWidget {
+  const WebHandlerLogin({super.key});
 
   @override
-  State<WebLoginScreen> createState() => _WebLoginScreenState();
+  State<WebHandlerLogin> createState() => _WebHandlerLoginState();
 }
 
-class _WebLoginScreenState extends State<WebLoginScreen> {
+class _WebHandlerLoginState extends State<WebHandlerLogin> {
   bool _isLoading = false;
   @override
   void initState() {
@@ -64,12 +60,12 @@ class _WebLoginScreenState extends State<WebLoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   // Text(
-                  //   "Enter Email or Phone",
+                  //   "Enter Email",
                   //   style: TextStyle(
                   //       color: textColor,
                   //       fontWeight: FontWeight.w400,
                   //       fontSize: 12),
-                  //   textAlign: TextAlign.center,
+                  //   textAlign: TextAlign.start,
                   // ),
                   const SizedBox(
                     height: 5,
@@ -83,8 +79,8 @@ class _WebLoginScreenState extends State<WebLoginScreen> {
                           height: 15,
                         ),
                       ),
-                      controller: loginEmailController,
-                      hintText: "Enter Email or Phone",
+                      controller: loginEmailControllerH,
+                      hintText: "Enter Email",
                       textInputType: TextInputType.emailAddress),
                 ],
               ),
@@ -106,17 +102,6 @@ class _WebLoginScreenState extends State<WebLoginScreen> {
                     height: 5,
                   ),
                   TextFormInputField(
-                      suIcon: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (builder) => GetOtp()));
-                          },
-                          child: Text(
-                            "Get OTP",
-                            style: TextStyle(color: otpColor),
-                          )),
                       preIcon: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Image.asset(
@@ -125,7 +110,7 @@ class _WebLoginScreenState extends State<WebLoginScreen> {
                           height: 15,
                         ),
                       ),
-                      controller: passwordController,
+                      controller: createPassH,
                       hintText: "Enter Password",
                       textInputType: TextInputType.emailAddress),
                 ],
@@ -147,54 +132,6 @@ class _WebLoginScreenState extends State<WebLoginScreen> {
             const SizedBox(
               height: 15,
             ),
-            Center(
-                child: TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (builder) => WebHandlerLogin()));
-                    },
-                    child: Text(
-                      "Login As Handler",
-                      style: TextStyle(color: textColor),
-                    ))),
-            const SizedBox(
-              height: 15,
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Dont't have an account?",
-                    style: TextStyle(
-                        color: textColor.withOpacity(.7),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (builder) => SignUpAccounts()));
-                    },
-                    child: Text(
-                      " Sign Up",
-                      style: TextStyle(
-                          color: textColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ],
         ),
       ),
@@ -202,25 +139,51 @@ class _WebLoginScreenState extends State<WebLoginScreen> {
   }
 
   void loginUser() async {
-    setState(() {
-      _isLoading = true;
-    });
-    String rse = await AuthMethods().loginUpUser(
-      email: loginEmailController.text,
-      pass: passwordController.text,
-    );
+    try {
+      await FirebaseFirestore.instance
+          .collection("handlers")
+          .get()
+          .then((QuerySnapshot snapshot) {
+        print("sad");
+        snapshot.docs.forEach((element) {
+          if (element['createPassword'] == createPassH.text &&
+              element['email'] == loginEmailControllerH.text &&
+              element['type'] == "Handlers") {
+            FirebaseAuth.instance
+                .signInWithEmailAndPassword(
+              email: loginEmailControllerH.text,
+              password: createPassH.text,
+            )
+                .then((value) {
+              checckstatus();
+            });
+          } else {
+            // ScaffoldMessenger.of(context)
+            //     .showSnackBar(SnackBar(content: Text("w")));
+          }
+        });
+      });
+    } catch (e) {}
+  }
 
-    print(rse);
-    setState(() {
-      _isLoading = false;
-    });
-    if (rse == 'sucess') {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (builder) => CheckStatus()));
-      loginEmailController.clear();
-      passwordController.clear();
-    } else {
-      showSnakBar("Email OR Password is Wrong", context);
-    }
+  void checckstatus() async {
+    final DocumentReference userRef = FirebaseFirestore.instance
+        .collection('handlers')
+        .doc(FirebaseAuth.instance.currentUser!.uid);
+    final DocumentSnapshot userSnapshot = await userRef.get();
+    Map<String, dynamic> data = userSnapshot.data() as Map<String, dynamic>;
+
+    ;
+
+    // User is blocked
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (builder) => HandlerDashboard(
+                  ownerId: data['ownerUid'],
+                )));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text("Login Complete")));
   }
 }
