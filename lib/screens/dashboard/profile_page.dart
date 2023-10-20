@@ -79,7 +79,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Toburg Club",
+                          document['clubName'],
                           style: TextStyle(
                               color: textColor,
                               fontWeight: FontWeight.w400,
@@ -146,7 +146,22 @@ class _ProfilePageState extends State<ProfilePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (builder) => EditUserClubProfile()));
+                              builder: (builder) => EditUserClubProfile(
+                                    clubAmentities: document['clubAmentities'],
+                                    clubCity: document['clubCity'],
+                                    clubCountry: document['clubCountry'],
+                                    clubDescription:
+                                        document['clubDescription'],
+                                    clubLocation: document['clubLocation'],
+                                    clubName: document['clubName'],
+                                    clubPhoneNumber:
+                                        document['clubPhoneNumber'],
+                                    clubState: document['clubState'],
+                                    clubType: document['clubType'],
+                                    clubZipCode: document['clubZipCode'],
+                                    coverPhoto: document['coverPhoto'],
+                                    ticketPhoto: document['ticketPhoto'],
+                                  )));
                     },
                     leading: Image.asset(
                       "assets/club.png",
