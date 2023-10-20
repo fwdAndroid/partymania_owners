@@ -4,14 +4,14 @@ import 'package:partymania_owners/handlermodule/pages/handler_profile_page.dart'
 import 'package:partymania_owners/handlermodule/pages/handler_scan_page.dart';
 import 'package:partymania_owners/utils/colors.dart';
 
-class HandlerDashboard extends StatefulWidget {
+class HandlerWebDashboard extends StatefulWidget {
   String ownerId;
-  HandlerDashboard({required this.ownerId});
+  HandlerWebDashboard({required this.ownerId});
   @override
-  _HandlerDashboardState createState() => _HandlerDashboardState();
+  _HandlerWebDashboardState createState() => _HandlerWebDashboardState();
 }
 
-class _HandlerDashboardState extends State<HandlerDashboard> {
+class _HandlerWebDashboardState extends State<HandlerWebDashboard> {
   int _currentIndex = 0;
 
   @override

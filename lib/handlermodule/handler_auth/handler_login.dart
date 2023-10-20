@@ -6,6 +6,7 @@ import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
 import 'package:partymania_owners/utils/textformfield.dart';
+import 'package:partymania_owners/webmodule/webhandler/web_handler_dashboard/handler_web_dashboard.dart';
 
 class HandlerLogin extends StatefulWidget {
   const HandlerLogin({super.key});
@@ -180,7 +181,7 @@ class _HandlerLoginState extends State<HandlerLogin> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (builder) => HandlerDashboard(
+            builder: (builder) => HandlerWebDashboard(
                   ownerId: data['ownerUid'],
                 )));
     ScaffoldMessenger.of(context)
