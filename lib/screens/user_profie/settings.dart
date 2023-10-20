@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/auth/login_screen.dart';
 import 'package:partymania_owners/screens/user_profie/change_password.dart';
-import 'package:partymania_owners/screens/user_profie/edit_user_club_profile.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/utils.dart';

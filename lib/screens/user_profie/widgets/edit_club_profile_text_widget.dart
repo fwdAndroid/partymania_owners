@@ -27,9 +27,7 @@ class _EditClubProfileTextWidgetState extends State<EditClubProfileTextWidget> {
   bool _isLoading = false;
   Uint8List? _coverEditPhoto;
   Uint8List? _ticketBluePrint;
-  String countryValue = "";
-  String stateValue = "";
-  String cityValue = "";
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Object>(
