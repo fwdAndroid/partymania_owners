@@ -184,6 +184,4 @@ class _ScanEventState extends State<ScanEvent> {
           ],
         ));
   }
-
-  alert() {}
 }

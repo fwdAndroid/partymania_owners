@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/main_dashboard.dart';
 import 'package:partymania_owners/screens/profile/create_profile.dart';
+import 'package:partymania_owners/screens/status/otpprofile/create_otp_profile.dart';
 
 class CheckPhoneStatus extends StatefulWidget {
   const CheckPhoneStatus({super.key});
@@ -45,7 +46,7 @@ class _CheckPhoneStatusState extends State<CheckPhoneStatus> {
                   )));
     } else {
       Navigator.push(
-          context, MaterialPageRoute(builder: (builder) => CreateProfile()));
+          context, MaterialPageRoute(builder: (builder) => CreateOTPProfile()));
     }
   }
 }

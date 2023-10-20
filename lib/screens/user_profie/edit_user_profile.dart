@@ -57,7 +57,7 @@ class _EditUserProfileState extends State<EditUserProfile>
             var docum = snapshot.data;
 
             editProfileFullNameController.text = docum['fullName'];
-            editProfileEmailController.text = docum['email'];
+            // editProfileEmailController.text = docum['email'];
             editPhoneController.text = docum['phone_Number'];
 
             return SingleChildScrollView(
@@ -103,64 +103,64 @@ class _EditUserProfileState extends State<EditUserProfile>
                     SizedBox(
                       height: 5,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Email",
-                            style: TextStyle(
-                                color: textColor,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 12),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          TextFormInputField(
-                            suIcon: TextButton(
-                              child: Text(
-                                "Verify",
-                                style: TextStyle(color: Colors.green),
-                              ),
-                              onPressed: () async {
-                                try {
-                                  await user!.updateEmail(
-                                      editProfileEmailController.text);
-                                  // Send email verification
-                                  await user!.sendEmailVerification();
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                          'Email updated successfully. Verification email sent to $editProfileEmailController.text'),
-                                    ),
-                                  );
-                                } catch (error) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content:
-                                          Text('Error updating email: $error'),
-                                    ),
-                                  );
-                                }
-                              },
-                            ),
-                            preIcon: Padding(
-                              padding: const EdgeInsets.all(13.0),
-                              child: Image.asset(
-                                "assets/email.png",
-                                width: 10,
-                                height: 10,
-                              ),
-                            ),
-                            textInputType: TextInputType.text,
-                            hintText: "Email Address",
-                            controller: editProfileEmailController,
-                          )
-                        ],
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Text(
+                    //         "Email",
+                    //         style: TextStyle(
+                    //             color: textColor,
+                    //             fontWeight: FontWeight.w400,
+                    //             fontSize: 12),
+                    //       ),
+                    //       SizedBox(
+                    //         height: 10,
+                    //       ),
+                    //       TextFormInputField(
+                    //         suIcon: TextButton(
+                    //           child: Text(
+                    //             "Verify",
+                    //             style: TextStyle(color: Colors.green),
+                    //           ),
+                    //           onPressed: () async {
+                    //             try {
+                    //               await user!.updateEmail(
+                    //                   editProfileEmailController.text);
+                    //               // Send email verification
+                    //               await user!.sendEmailVerification();
+                    //               ScaffoldMessenger.of(context).showSnackBar(
+                    //                 SnackBar(
+                    //                   content: Text(
+                    //                       'Email updated successfully. Verification email sent to $editProfileEmailController.text'),
+                    //                 ),
+                    //               );
+                    //             } catch (error) {
+                    //               ScaffoldMessenger.of(context).showSnackBar(
+                    //                 SnackBar(
+                    //                   content:
+                    //                       Text('Error updating email: $error'),
+                    //                 ),
+                    //               );
+                    //             }
+                    //           },
+                    //         ),
+                    //         preIcon: Padding(
+                    //           padding: const EdgeInsets.all(13.0),
+                    //           child: Image.asset(
+                    //             "assets/email.png",
+                    //             width: 10,
+                    //             height: 10,
+                    //           ),
+                    //         ),
+                    //         textInputType: TextInputType.text,
+                    //         hintText: "Email Address",
+                    //         controller: editProfileEmailController,
+                    //       )
+                    //     ],
+                    //   ),
+                    // ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
