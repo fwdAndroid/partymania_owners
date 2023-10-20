@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
 import 'package:partymania_owners/utils/textformfield.dart';
+import 'package:uuid/uuid.dart';
 
 class Help extends StatefulWidget {
   const Help({super.key});
@@ -12,6 +15,8 @@ class Help extends StatefulWidget {
 }
 
 class _HelpState extends State<Help> {
+  bool isLoading = false;
+  var uuid = Uuid().v4();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,7 +114,39 @@ class _HelpState extends State<Help> {
                     controller: dse,
                   ),
                 ),
-                SaveButton(title: "Submit", onTap: () {})
+                isLoading
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : SaveButton(
+                        title: "Submit",
+                        onTap: () async {
+                          if (emailController.text.isEmpty ||
+                              subjectController.text.isEmpty ||
+                              emailController.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text("All Fields are required")));
+                          } else {
+                            setState(() {
+                              isLoading = true;
+                            });
+                            await FirebaseFirestore.instance
+                                .collection("complains")
+                                .doc(uuid)
+                                .set({
+                              "uid": FirebaseAuth.instance.currentUser!.uid,
+                              "email": emailController.text,
+                              "subject": subjectController.text,
+                              "uuid": uuid,
+                              "description": descriptionController.text
+                            });
+                            setState(() {
+                              isLoading = false;
+                            });
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text("Complain is Registered")));
+                          }
+                        })
               ],
             ),
           ),
