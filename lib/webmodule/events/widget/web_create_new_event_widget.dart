@@ -57,8 +57,8 @@ class _WebCreateNewEventWidgetState extends State<WebCreateNewEventWidget> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 500,
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Center(
+      child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        Align(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: eventCoverPhoto != null
@@ -70,7 +70,7 @@ class _WebCreateNewEventWidgetState extends State<WebCreateNewEventWidget> {
                   )
                 : InkWell(
                     onTap: () => selectEventImage(),
-                    child: Image.asset("assets/img.png")),
+                    child: Image.asset("assets/img.png", width: 300)),
           ),
         ),
         Center(

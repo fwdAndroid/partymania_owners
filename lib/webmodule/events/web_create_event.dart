@@ -24,17 +24,20 @@ class _WebCreateEventState extends State<WebCreateEvent> {
         backgroundColor: backgroundColor,
       ),
       backgroundColor: backgroundColor,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Center(child: WebCreateNewEventWidget())
-            ],
+      body: Align(
+        alignment: AlignmentDirectional.topCenter,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                Center(child: WebCreateNewEventWidget())
+              ],
+            ),
           ),
         ),
       ),
