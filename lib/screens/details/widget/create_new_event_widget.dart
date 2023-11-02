@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,7 +30,6 @@ class CreateNewEventWidget extends StatefulWidget {
 
 class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
   Uint8List? eventCoverPhoto;
-  Uint8List? eventPhoto;
   Fruit? _fruit = Fruit.day;
   Artist? _artist = Artist.Guestlist;
   Uint8List? eventTable;
@@ -48,6 +48,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
   List<String> values = [];
   List<Map<String, dynamic>> itemList = [];
   List<Map<String, dynamic>> tableList = [];
+  List<File> selectedImages = [];
 
   void addToStringList(String text) {
     setState(() {
@@ -74,22 +75,39 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
       ),
       Padding(
         padding: const EdgeInsets.only(left: 8.0, right: 8),
-        child: eventPhoto != null
-            ? ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.memory(
-                  eventPhoto!,
-                  width: 80,
-                  height: 80,
-                ))
-            : InkWell(
-                onTap: () => eventPhotos(),
-                child: Image.asset(
-                  "assets/add.png",
-                  width: 80,
-                  height: 80,
-                ),
-              ),
+        child: InkWell(
+          onTap: () {
+            pickImages();
+          },
+          child: Image.asset(
+            "assets/add.png",
+            width: 80,
+            height: 80,
+          ),
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SizedBox(
+          height: 100,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: selectedImages.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.file(
+                      selectedImages[index],
+                      fit: BoxFit.cover,
+                      height: 80,
+                      width: 80,
+                    )),
+              );
+            },
+          ),
+        ),
       ),
       const SizedBox(
         height: 10,
@@ -1404,13 +1422,10 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                         String eventcPhoto = await StorageMethods()
                             .uploadImageToStorage(
                                 "eventCoverPhoto", eventCoverPhoto!, true);
-                        String eventTicketPhoto = await StorageMethods()
-                            .uploadImageToStorage(
-                                "eventTicketPhoto", eventPhoto!, true);
+
                         String eventTablePhoto = await StorageMethods()
                             .uploadImageToStorage(
                                 "eventTable", eventTable!, true);
-                        ;
                         await FirebaseFirestore.instance
                             .collection("events")
                             .doc(uuid)
@@ -1439,7 +1454,6 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                           "offerCode": offerCodeController.text,
                           "uid": FirebaseAuth.instance.currentUser!.uid,
                           "eventCoverPhoto": eventcPhoto,
-                          "eventPhoto": eventTicketPhoto,
                           "eventTablePhoto": eventTablePhoto,
                           "dayNight": _fruit.toString(),
                           "tableNumber": tableNumberController.text,
@@ -1501,18 +1515,22 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
     });
   }
 
-  eventPhotos() async {
-    Uint8List ui = await pickImage(ImageSource.gallery);
-    setState(() {
-      eventPhoto = ui;
-    });
-  }
-
   selectEventTableImage() async {
     Uint8List ui = await pickImage(ImageSource.gallery);
     setState(() {
       eventTable = ui;
     });
+  }
+
+  Future<void> pickImages() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        selectedImages.add(File(pickedFile.path));
+      });
+    }
   }
 
   ListView buildStringList() {
