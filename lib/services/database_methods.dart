@@ -32,6 +32,7 @@ class FirebaseMethods {
           .uploadImageToStorage("clubTablePhoto", ticketPhoto, true);
       ClubModel postModel = ClubModel(
           followers: [],
+          rating: 0,
           clubCountry: clubCountry,
           coverPhoto: clubPhoto,
           clubState: clubState,

@@ -15,6 +15,7 @@ class ClubModel {
   var clubAmentities;
   String clubDescription;
   final followers;
+  int rating;
 
   ClubModel(
       {required this.uid,
@@ -22,6 +23,7 @@ class ClubModel {
       required this.clubPhoneNumber,
       required this.coverPhoto,
       required this.followers,
+      required this.rating,
       required this.clubType,
       required this.clubState,
       required this.clubDescription,
@@ -46,6 +48,7 @@ class ClubModel {
         'clubState': clubState,
         'clubCity': clubCity,
         "clubZipCode": clubZipCode,
+        "rating": rating,
         "followers": followers,
         'clubAmentities': clubAmentities,
       };
@@ -59,6 +62,7 @@ class ClubModel {
         uid: snapshot['uid'],
         clubLocation: snapshot['clubLocation'],
         coverPhoto: snapshot['coverPhoto'],
+        rating: snapshot['rating'],
         clubPhoneNumber: snapshot['clubPhoneNumber'],
         clubType: snapshot['clubType'],
         clubCountry: snapshot['clubCountry'],
