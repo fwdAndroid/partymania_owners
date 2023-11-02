@@ -8,6 +8,7 @@ import 'package:partymania_owners/screens/event_near_by_frame.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/webmodule/events/web_create_event.dart';
 import 'package:partymania_owners/webmodule/events/widget/web_grid_widget.dart';
+import 'package:partymania_owners/webmodule/events/widget/web_list_view_event.dart';
 
 class WebHomePage extends StatefulWidget {
   const WebHomePage({super.key});
@@ -140,7 +141,7 @@ class _WebHomePageState extends State<WebHomePage> {
                 ],
               ),
             ),
-            HomeListViewWidget(),
+            WebHomeListViewWidget(),
             const SizedBox(
               height: 10,
             ),

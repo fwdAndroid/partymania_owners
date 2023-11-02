@@ -4,7 +4,9 @@ import 'package:partymania_owners/screens/dashboard/event_page.dart';
 import 'package:partymania_owners/screens/dashboard/profile_page.dart';
 import 'package:partymania_owners/screens/dashboard/scan_page.dart';
 import 'package:partymania_owners/utils/colors.dart';
+import 'package:partymania_owners/webmodule/web_dashboard/web_event_page.dart';
 import 'package:partymania_owners/webmodule/web_dashboard/web_home_page.dart';
+import 'package:partymania_owners/webmodule/web_dashboard/web_profile_page.dart';
 
 class WebMainScreen extends StatefulWidget {
   User? user;
@@ -18,9 +20,9 @@ class _WebMainScreenState extends State<WebMainScreen> {
 
   final List<Widget> _screens = [
     WebHomePage(), // Replace with your screen widgets
-    EventsPage(),
+    WebEventsPage(),
     ScanPage(),
-    ProfilePage()
+    WebProfilePage()
   ];
 
   @override
