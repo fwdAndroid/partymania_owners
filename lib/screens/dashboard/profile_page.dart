@@ -8,7 +8,6 @@ import 'package:partymania_owners/screens/user_profie/edit_user_profile.dart';
 import 'package:partymania_owners/screens/user_profie/help.dart';
 import 'package:partymania_owners/screens/user_profie/settings.dart';
 import 'package:partymania_owners/utils/colors.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -18,8 +17,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  double? _ratingValue;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,13 +45,6 @@ class _ProfilePageState extends State<ProfilePage> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Center(
-                  //   child: Image.network(
-                  //     document[''],
-                  //     width: 100,
-                  //     height: 100,
-                  //   ),
-                  // ),
                   const SizedBox(
                     height: 10,
                   ),
@@ -83,29 +73,48 @@ class _ProfilePageState extends State<ProfilePage> {
                           style: TextStyle(
                               color: textColor,
                               fontWeight: FontWeight.w400,
-                              fontSize: 12),
+                              fontSize: 18),
                         ),
-                        RatingBar(
-                            initialRating: 0,
-                            direction: Axis.horizontal,
-                            allowHalfRating: true,
-                            itemCount: 5,
-                            ratingWidget: RatingWidget(
-                                full: const Icon(Icons.star,
-                                    color: Colors.yellow),
-                                half: const Icon(
-                                  Icons.star_half,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              document['rating'].toString(),
+                              style: TextStyle(
                                   color: Colors.yellow,
-                                ),
-                                empty: const Icon(
-                                  Icons.star_outline,
-                                  color: Colors.yellow,
-                                )),
-                            onRatingUpdate: (value) {
-                              setState(() {
-                                _ratingValue = value;
-                              });
-                            }),
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 18),
+                            ),
+                            const SizedBox(
+                              width: 3,
+                            ),
+                            Icon(
+                              Icons.star,
+                              color: Colors.yellow,
+                            )
+                          ],
+                        ),
+                        // RatingBar(
+                        //     initialRating: 0,
+                        //     direction: Axis.horizontal,
+                        //     allowHalfRating: true,
+                        //     itemCount: 5,
+                        //     ratingWidget: RatingWidget(
+                        //         full: const Icon(Icons.star,
+                        //             color: Colors.yellow),
+                        //         half: const Icon(
+                        //           Icons.star_half,
+                        //           color: Colors.yellow,
+                        //         ),
+                        //         empty: const Icon(
+                        //           Icons.star_outline,
+                        //           color: Colors.yellow,
+                        //         )),
+                        //     onRatingUpdate: (value) {
+                        //       setState(() {
+                        //         document['rating'] = value;
+                        //       });
+                        //     }),
                       ],
                     ),
                   ),
