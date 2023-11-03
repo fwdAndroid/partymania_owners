@@ -12,7 +12,7 @@ class TextFormInputField extends StatelessWidget {
   final Widget? suIcon;
 
   final void Function()? onTap;
-  final void Function(String)? onChanged;
+  final void Function(String?)? onSaved;
   final void Function(String)? onFieldSubmitted;
 
   final AutovalidateMode? autovalidateMode;
@@ -29,7 +29,7 @@ class TextFormInputField extends StatelessWidget {
       this.suIcon,
       this.onFieldSubmitted,
       this.hintStyle,
-      this.onChanged,
+      this.onSaved,
       this.error,
       this.maxLines,
       this.onTap,
@@ -44,7 +44,6 @@ class TextFormInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 335,
-      height: 65,
       child: TextFormField(
         onFieldSubmitted: onFieldSubmitted,
         maxLines: maxLines,
@@ -53,11 +52,12 @@ class TextFormInputField extends StatelessWidget {
         autovalidateMode: autovalidateMode,
         inputFormatters: inputFormatters,
         validator: validat,
-        onChanged: onChanged,
+        onSaved: onSaved,
         keyboardType: textInputType,
         obscureText: isPass,
         controller: controller,
         decoration: InputDecoration(
+            contentPadding: EdgeInsets.only(top: 10, left: 10),
             suffixIcon: suIcon,
             prefixIcon: preIcon,
             enabledBorder: OutlineInputBorder(
