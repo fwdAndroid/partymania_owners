@@ -154,7 +154,7 @@ class _HomePageState extends State<HomePage> {
                     child: Row(
                       children: [
                         Text(
-                          "Upcomming Events",
+                          "Upcoming Events",
                           style: TextStyle(
                               color: textColor,
                               fontSize: 18,
