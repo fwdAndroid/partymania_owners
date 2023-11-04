@@ -45,8 +45,9 @@ check(BuildContext context) {
         () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (context) => MainScreen(
-                      user: user,
+                builder: (context) => ResponsiveLayout(
+                      mobileScreenLayout: LoginScreen(),
+                      webScreenLayout: WebLoginScreen(),
                     ))));
   } else {
     Timer(

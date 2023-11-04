@@ -264,6 +264,7 @@ class _CreateHandlerState extends State<CreateHandler> {
       handlerPhone.clear();
       handlerP.clear();
       handlerCP.clear();
+      FirebaseAuth.instance.signOut();
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (builder) => LoginScreen()));
     }
