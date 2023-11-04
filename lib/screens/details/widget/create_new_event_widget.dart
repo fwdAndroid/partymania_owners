@@ -15,6 +15,7 @@ import 'package:partymania_owners/utils/image.dart';
 import 'package:partymania_owners/utils/textformfield.dart';
 import 'package:partymania_owners/utils/utils.dart';
 import 'package:uuid/uuid.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 enum Fruit { day, night, both }
 
@@ -44,12 +45,12 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
     'Before',
     'After',
   ];
+
   String dropdownvalue = 'Before';
   var uuid = Uuid().v4();
   List<String> values = [];
   List<Map<String, dynamic>> itemList = [];
   List<Map<String, dynamic>> tableList = [];
-  List<File> selectedImages = [];
 
   void addToStringList(String text) {
     setState(() {
@@ -57,6 +58,14 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
       eventamenitiesController.clear();
     });
   }
+
+  bool uploading = false;
+  double val = 0;
+  CollectionReference? imgRef;
+  firebase_storage.Reference? ref;
+
+  List<File> _image = [];
+  final picker = ImagePicker();
 
   final _formKey = GlobalKey<FormState>();
   String inputText = "Field is Required";
@@ -84,7 +93,7 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
             children: [
               InkWell(
                 onTap: () {
-                  pickImages();
+                  chooseImage();
                 },
                 child: Image.asset(
                   "assets/add.png",
@@ -99,14 +108,14 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                     height: 100,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: selectedImages.length,
+                      itemCount: _image.length,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(12),
                               child: Image.file(
-                                selectedImages[index],
+                                File(_image[index].path),
                                 fit: BoxFit.cover,
                                 height: 80,
                                 width: 80,
@@ -784,15 +793,6 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                             });
                           }
                         },
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter a value';
-                          }
-                          return null; // Return null if the input is valid.
-                        },
-                        onSaved: (value) {
-                          inputText = value!;
-                        },
                         decoration: InputDecoration(
                             contentPadding: EdgeInsets.all(12),
                             suffixIcon: Padding(
@@ -823,15 +823,6 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                               color: textColor.withOpacity(.4), width: 1),
                           borderRadius: BorderRadius.circular(12)),
                       child: TextFormField(
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Tickets are required';
-                          }
-                          return null; // Return null if the input is valid.
-                        },
-                        onSaved: (value) {
-                          inputText = value!;
-                        },
                         style: TextStyle(color: textColor),
                         decoration: InputDecoration(
                             contentPadding: EdgeInsets.all(8),
@@ -853,15 +844,6 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                               color: textColor.withOpacity(.4), width: 1),
                           borderRadius: BorderRadius.circular(12)),
                       child: TextFormField(
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Price is Required';
-                          }
-                          return null; // Return null if the input is valid.
-                        },
-                        onSaved: (value) {
-                          inputText = value!;
-                        },
                         style: TextStyle(color: textColor),
                         decoration: InputDecoration(
                             contentPadding: EdgeInsets.all(8),
@@ -897,15 +879,6 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                             color: textColor.withOpacity(.4), width: 1),
                         borderRadius: BorderRadius.circular(12)),
                     child: TextFormField(
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Ticket Purchased Deadline is Required';
-                        }
-                        return null; // Return null if the input is valid.
-                      },
-                      onSaved: (value) {
-                        inputText = value!;
-                      },
                       style: TextStyle(color: textColor),
                       onTap: () async {
                         await showDatePicker(
@@ -940,7 +913,15 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                     child: SaveButton(
                         title: "Add",
                         onTap: () {
-                          if (_formKey.currentState!.validate()) {
+                          if (ticketPurchaseDeadlineController.text.isEmpty) {
+                            showSnakBar("Ticket Purchase is Required", context);
+                          } else if (timeBeforeController.text.isEmpty) {
+                            showSnakBar("Time Selection is Required", context);
+                          } else if (totalTicketsController.text.isEmpty) {
+                            showSnakBar("Tickets are required", context);
+                          } else if (priceController.text.isEmpty) {
+                            showSnakBar("Price is Required", context);
+                          } else {
                             itemList.add({
                               "couple": couplesDropDown,
                               "bird": birdController.text ?? "",
@@ -955,14 +936,14 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
 
                             print(itemList);
                             birdController.clear();
-
+                            timeBeforeController.clear();
+                            ticketPurchaseDeadlineController.clear();
+                            priceController.clear();
                             setState(() {});
 
                             ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text("Tickets are Added")));
-                          } else {}
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Tickets are not Added")));
+                          }
                         }),
                   )
                 ],
@@ -1389,69 +1370,123 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
                     )
                   : Center(
                       child: SaveButton(
-                        title: "Publish Event",
-                        onTap: () async {
-                          if (_formKey.currentState!.validate()) {
-                            setState(() {
-                              _isLoading = true;
-                            });
-                            String eventcPhoto = await StorageMethods()
-                                .uploadImageToStorage(
-                                    "eventCoverPhoto", eventCoverPhoto!, true);
-                            String eventTablePhoto = await StorageMethods()
-                                .uploadImageToStorage(
-                                    "eventTable", eventTable!, true);
-                            await FirebaseFirestore.instance
-                                .collection("events")
-                                .doc(uuid)
-                                .set({
-                              "eventName": eventNameController.text,
-                              "eventType": eventTypeList,
-                              "eventTicketTimeBefore":
-                                  timeBeforeController.text,
-                              "eventStartDate": selectDate.text ??
-                                  DateTime.now().toIso8601String(),
-                              "fromEventDate": fromDateController.text,
-                              "toEventDate": toDateController.text,
-                              "eventLocation": eventLocationController.text,
-                              "ticketdetail": itemList,
-                              "tabledetail": tableList,
-                              "uuid": uuid,
-                              "uid": FirebaseAuth.instance.currentUser!.uid,
-                              "eventDescription":
-                                  eventdescriptionController.text,
-                              "eventAmenities": values,
-                              "timeDeadlineTicket":
-                                  ticketPurchaseDeadlineController.text,
-                              "eventTicketPrice":
-                                  int.parse(priceController.text),
-                              "eventTicketSession": dropdownvalue,
-                              "conditions": termsController.text ?? "",
-                              "eventCreatedDate": FieldValue.serverTimestamp(),
-                              "offerName": offerNameController.text,
-                              "offerCode": offerCodeController.text,
-                              "dayNight": _fruit.toString(),
-                              "eventImages": selectedImages,
-                              "eventType": eventTypeList,
-                              "eventCoverPhoto": eventcPhoto,
-                              "participantType": couplesDropDown,
-                              "bird": birdController.text ?? "",
-                              "artistType": _artist.toString(),
-                              "eventTotalTickets": totalTicketsController.text,
-                              "eventTablePhoto": eventTablePhoto,
-                              //Tables
-                              "tablesName": tableNumberController.text,
-                              "tableType": _tableNo.toString(),
-                              "numofPeople": peopleController.text,
-                              "tablePrice":
-                                  int.parse(totalTablesPriceController.text),
-                            });
-                            setState(() {
-                              _isLoading = false;
-                            });
-                          }
-                        },
-                      ),
+                          title: "Publish Event",
+                          onTap: () async {
+                            if (eventNameController.text.isEmpty) {
+                              showSnakBar("Name of event is Required", context);
+                            } else if (fromDateController.text.isEmpty) {
+                              showSnakBar("Event Start Date", context);
+                            } else if (toDateController.text.isEmpty) {
+                              showSnakBar("Event End Date", context);
+                            } else if (eventLocationController.text.isEmpty) {
+                              showSnakBar(
+                                  "Event Location is Required", context);
+                            } else if (eventNameController.text.isEmpty ||
+                                fromDateController.text.isEmpty ||
+                                toDateController.text.isEmpty ||
+                                eventLocationController.text.isEmpty) {
+                              showSnakBar("All Fields are required is Required",
+                                  context);
+                            } else {
+                              setState(() {
+                                _isLoading = true;
+                              });
+                              int i = 1;
+
+                              for (var img in _image) {
+                                setState(() {
+                                  val > i / _image.length;
+                                });
+                                ref = firebase_storage.FirebaseStorage.instance
+                                    .ref()
+                                    .child('images/${uuid}');
+                                await ref!.putFile(img).whenComplete(() async {
+                                  String eventcPhoto = await StorageMethods()
+                                      .uploadImageToStorage("eventCoverPhoto",
+                                          eventCoverPhoto!, true);
+                                  String eventTablePhoto =
+                                      await StorageMethods()
+                                          .uploadImageToStorage(
+                                              "eventTable", eventTable!, true);
+
+                                  await ref!.getDownloadURL().then((value) {
+                                    FirebaseFirestore.instance
+                                        .collection('events')
+                                        .doc(uuid)
+                                        .set({
+                                      'selectedImages': value,
+                                      "eventName": eventNameController.text,
+                                      "eventType": eventTypeList,
+                                      "eventTicketTimeBefore":
+                                          timeBeforeController.text,
+                                      "eventStartDate": selectDate.text ??
+                                          DateTime.now().toIso8601String(),
+                                      "fromEventDate": fromDateController
+                                          .text, //Event Start Date
+                                      "toEventDate": toDateController
+                                          .text, // Event End Date
+                                      "eventLocation":
+                                          eventLocationController.text,
+                                      "ticketdetail": itemList,
+                                      "tabledetail": tableList,
+                                      "uuid": uuid,
+                                      "uid": FirebaseAuth
+                                          .instance.currentUser!.uid,
+                                      "eventDescription":
+                                          eventdescriptionController.text,
+                                      "eventAmenities": values,
+                                      "timeDeadlineTicket":
+                                          ticketPurchaseDeadlineController.text,
+                                      "eventTicketPrice": priceController.text,
+                                      "eventTicketSession": dropdownvalue,
+                                      "conditions": termsController.text ?? "",
+                                      "eventCreatedDate":
+                                          FieldValue.serverTimestamp(),
+                                      "offerName": offerNameController.text,
+                                      "offerCode": offerCodeController.text,
+                                      "dayNight": _fruit.toString(),
+                                      "eventCoverPhoto": eventcPhoto,
+                                      "participantType": couplesDropDown,
+                                      "bird": birdController.text ?? "",
+                                      "artistType": _artist.toString(),
+                                      "eventTotalTickets":
+                                          totalTicketsController.text,
+                                      "eventTablePhoto": eventTablePhoto ?? "",
+                                      //Tables
+                                      "tablesName": tableNumberController.text,
+                                      "tableType": _tableNo.toString(),
+                                      "numofPeople": peopleController.text,
+                                      "tablePrice":
+                                          totalTablesPriceController.text
+                                    });
+                                    // imgRef!.add({'url': value});
+                                    i++;
+                                  });
+                                });
+                              }
+
+                              setState(() {
+                                _isLoading = false;
+                              });
+                              showSnakBar("Event is Created", context);
+                              Navigator.pop(context);
+                              peopleController.clear();
+                              priceController.clear();
+                              tableNumberController.clear();
+                              totalTicketsController.clear();
+                              birdController.clear();
+                              offerCodeController.clear();
+                              offerNameController.clear();
+                              termsController.clear();
+                              ticketPurchaseDeadlineController.clear();
+                              eventdescriptionController.clear();
+                              eventLocationController.clear();
+                              toDateController.clear();
+                              fromDateController.clear();
+                              eventNameController.clear();
+                              selectDate.clear();
+                            }
+                          }),
                     ),
               const SizedBox(
                 height: 15,
@@ -1478,17 +1513,6 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
     });
   }
 
-  Future<void> pickImages() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      setState(() {
-        selectedImages.add(File(pickedFile.path));
-      });
-    }
-  }
-
   ListView buildStringList() {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
@@ -1503,5 +1527,27 @@ class _CreateNewEventWidgetState extends State<CreateNewEventWidget> {
         );
       },
     );
+  }
+
+  chooseImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image.add(File(pickedFile!.path));
+    });
+    if (pickedFile!.path == null) retrieveLostData();
+  }
+
+  Future<void> retrieveLostData() async {
+    final response = await picker.retrieveLostData();
+    if (response.isEmpty) {
+      return;
+    }
+    if (response.file != null) {
+      setState(() {
+        _image.add(File(response.file!.path));
+      });
+    } else {
+      print(response.file);
+    }
   }
 }
