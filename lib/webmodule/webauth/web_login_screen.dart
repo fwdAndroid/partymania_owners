@@ -3,6 +3,7 @@ import 'package:partymania_owners/handlermodule/handler_auth/handler_login.dart'
 import 'package:partymania_owners/screens/auth/getotp.dart';
 import 'package:partymania_owners/screens/auth/signup_account.dart';
 import 'package:partymania_owners/screens/status/checkstatus.dart';
+import 'package:partymania_owners/screens/status/web_check_status.dart';
 import 'package:partymania_owners/services/auth_methods.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
@@ -217,7 +218,7 @@ class _WebLoginScreenState extends State<WebLoginScreen> {
     });
     if (rse == 'sucess') {
       Navigator.push(
-          context, MaterialPageRoute(builder: (builder) => CheckStatus()));
+          context, MaterialPageRoute(builder: (builder) => WebCheckStatus()));
       loginEmailController.clear();
       passwordController.clear();
     } else {

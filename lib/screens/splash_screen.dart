@@ -29,8 +29,9 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: colorBlack,
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [Image.asset("assets/splash.gif")],
+        children: [Center(child: Image.asset("assets/splash.gif"))],
       ),
     );
   }

@@ -6,9 +6,9 @@ import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/screens/booking/booking.dart';
 import 'package:partymania_owners/screens/handlers/manage_handlers.dart';
 import 'package:partymania_owners/screens/user_profie/edit_user_club_profile.dart';
-import 'package:partymania_owners/screens/user_profie/edit_user_profile.dart';
-import 'package:partymania_owners/screens/user_profie/help.dart';
 import 'package:partymania_owners/screens/user_profie/settings.dart';
+import 'package:partymania_owners/webmodule/webpages/web_edit_profile.dart';
+import 'package:partymania_owners/webmodule/webpages/web_edit_user_profile.dart';
 import 'package:partymania_owners/webmodule/webprofilepages/web_help.dart';
 
 class WebProfilePage extends StatefulWidget {
@@ -121,7 +121,7 @@ class _WebProfilePageState extends State<WebProfilePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (builder) => EditUserProfile()));
+                              builder: (builder) => WebEditUserProfile()));
                     },
                     leading: Image.asset(
                       "assets/frame.png",
@@ -147,7 +147,7 @@ class _WebProfilePageState extends State<WebProfilePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (builder) => EditUserClubProfile(
+                              builder: (builder) => EditWebUserClubProfile(
                                     clubAmentities: document['clubAmentities'],
                                     clubCity: document['clubCity'],
                                     clubCountry: document['clubCountry'],

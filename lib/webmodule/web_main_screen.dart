@@ -21,7 +21,6 @@ class _WebMainScreenState extends State<WebMainScreen> {
   final List<Widget> _screens = [
     WebHomePage(), // Replace with your screen widgets
     WebEventsPage(),
-    ScanPage(),
     WebProfilePage()
   ];
 
@@ -53,18 +52,9 @@ class _WebMainScreenState extends State<WebMainScreen> {
             label: 'Events',
           ),
           BottomNavigationBarItem(
-            label: "Scan",
-            icon: Image.asset(
-              _currentIndex == 2
-                  ? 'assets/scan-barcode_1.png'
-                  : 'assets/scan-barcode.png',
-              height: 25,
-            ),
-          ),
-          BottomNavigationBarItem(
             label: "Profile",
             icon: Image.asset(
-              _currentIndex == 3 ? 'assets/profile_color.png' : 'assets/p.png',
+              _currentIndex == 2 ? 'assets/profile_color.png' : 'assets/p.png',
               height: 25,
             ),
           ),

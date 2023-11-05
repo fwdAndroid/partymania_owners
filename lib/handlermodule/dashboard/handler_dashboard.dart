@@ -27,7 +27,7 @@ class _HandlerDashboardState extends State<HandlerDashboard> {
           height: 75,
           child: Row(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               IconButton(
                 tooltip: 'Home',
@@ -41,28 +41,19 @@ class _HandlerDashboardState extends State<HandlerDashboard> {
                   _myPage.jumpToPage(0);
                 },
               ),
-              IconButton(
-                tooltip: 'Favorite',
-                icon: Image.asset(
-                  height: 25,
-                  _currentIndex == 1
-                      ? 'assets/scan-barcode_1.png'
-                      : 'assets/scan-barcode.png',
-                ),
-                onPressed: () {
-                  _myPage.jumpToPage(1);
-                },
+              const SizedBox(
+                width: 10,
               ),
               IconButton(
                 tooltip: 'Favorite',
                 icon: Image.asset(
                   height: 25,
-                  _currentIndex == 2
+                  _currentIndex == 1
                       ? 'assets/profile_color.png'
                       : 'assets/p.png',
                 ),
                 onPressed: () {
-                  _myPage.jumpToPage(2);
+                  _myPage.jumpToPage(1);
                 },
               ),
             ],
@@ -78,7 +69,6 @@ class _HandlerDashboardState extends State<HandlerDashboard> {
           HomePageHandler(
             ownerId: widget.ownerId,
           ),
-          HandlerScanPage(ownerId: widget.ownerId),
           HandlerProfilePage()
         ],
         physics:
