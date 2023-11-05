@@ -108,17 +108,17 @@ class _WebLoginScreenState extends State<WebLoginScreen> {
                     height: 5,
                   ),
                   TextFormInputField(
-                      suIcon: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (builder) => GetOtp()));
-                          },
-                          child: Text(
-                            "Get OTP",
-                            style: TextStyle(color: otpColor),
-                          )),
+                      // suIcon: TextButton(
+                      //     onPressed: () {
+                      //       Navigator.push(
+                      //           context,
+                      //           MaterialPageRoute(
+                      //               builder: (builder) => GetOtp()));
+                      //     },
+                      //     child: Text(
+                      //       "Get OTP",
+                      //       style: TextStyle(color: otpColor),
+                      //     )),
                       preIcon: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Image.asset(

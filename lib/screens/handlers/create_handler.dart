@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/auth/login_screen.dart';
 import 'package:partymania_owners/screens/handlers/manage_handlers.dart';
+import 'package:partymania_owners/screens/splash_screen.dart';
 import 'package:partymania_owners/services/auth_methods.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
@@ -266,7 +267,7 @@ class _CreateHandlerState extends State<CreateHandler> {
       handlerCP.clear();
       FirebaseAuth.instance.signOut();
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (builder) => LoginScreen()));
+          context, MaterialPageRoute(builder: (builder) => SplashScreen()));
     }
   }
 }

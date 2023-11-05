@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/details/event_details.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:image_network/image_network.dart';
+import 'package:partymania_owners/webmodule/web_events/web_event_details.dart';
 
 class WebHomeGridWidget extends StatefulWidget {
   const WebHomeGridWidget({super.key});
@@ -72,7 +73,7 @@ class _WebHomeGridWidgetState extends State<WebHomeGridWidget> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (builder) =>
-                                                  EventDetails(
+                                                  WebEventDetails(
                                                     ticketdetail:
                                                         data['ticketdetail'],
                                                     myTableList:

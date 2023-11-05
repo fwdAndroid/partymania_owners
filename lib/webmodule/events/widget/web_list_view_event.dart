@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/details/event_details.dart';
 import 'package:partymania_owners/utils/colors.dart';
+import 'package:partymania_owners/webmodule/web_events/web_event_details.dart';
 
 class WebHomeListViewWidget extends StatefulWidget {
   const WebHomeListViewWidget({super.key});
@@ -73,7 +74,7 @@ class _WebHomeListViewWidgetState extends State<WebHomeListViewWidget> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (builder) =>
-                                                    EventDetails(
+                                                    WebEventDetails(
                                                       ticketdetail:
                                                           data['ticketdetail'],
                                                       myTableList:
