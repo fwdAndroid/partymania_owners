@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/screens/booking/booking.dart';
-import 'package:partymania_owners/screens/handlers/manage_handlers.dart';
-import 'package:partymania_owners/screens/user_profie/edit_user_club_profile.dart';
-import 'package:partymania_owners/screens/user_profie/settings.dart';
+import 'package:partymania_owners/webmodule/webhandlers/web_manager_handlers.dart';
 import 'package:partymania_owners/webmodule/webpages/web_edit_profile.dart';
 import 'package:partymania_owners/webmodule/webpages/web_edit_user_profile.dart';
 import 'package:partymania_owners/webmodule/webprofilepages/web_help.dart';
+import 'package:partymania_owners/webmodule/webprofilepages/web_my_settings.dart';
 
 class WebProfilePage extends StatefulWidget {
   const WebProfilePage({super.key});
@@ -110,6 +109,66 @@ class _WebProfilePageState extends State<WebProfilePage> {
                       ],
                     ),
                   ),
+                  Container(
+                    height: 100,
+                    width: 230,
+                    decoration: BoxDecoration(
+                        color: Color(0xff4E4E4E),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(width: .5, color: textColor)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          document['clubName'],
+                          style: TextStyle(
+                              color: textColor,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 18),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              document['rating'].toString(),
+                              style: TextStyle(
+                                  color: Colors.yellow,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 18),
+                            ),
+                            const SizedBox(
+                              width: 3,
+                            ),
+                            Icon(
+                              Icons.star,
+                              color: Colors.yellow,
+                            )
+                          ],
+                        ),
+                        // RatingBar(
+                        //     initialRating: 0,
+                        //     direction: Axis.horizontal,
+                        //     allowHalfRating: true,
+                        //     itemCount: 5,
+                        //     ratingWidget: RatingWidget(
+                        //         full: const Icon(Icons.star,
+                        //             color: Colors.yellow),
+                        //         half: const Icon(
+                        //           Icons.star_half,
+                        //           color: Colors.yellow,
+                        //         ),
+                        //         empty: const Icon(
+                        //           Icons.star_outline,
+                        //           color: Colors.yellow,
+                        //         )),
+                        //     onRatingUpdate: (value) {
+                        //       setState(() {
+                        //         document['rating'] = value;
+                        //       });
+                        //     }),
+                      ],
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Divider(
@@ -188,7 +247,7 @@ class _WebProfilePageState extends State<WebProfilePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (builder) => ManageHandlers(
+                              builder: (builder) => WebManageHandlers(
                                     clubid:
                                         FirebaseAuth.instance.currentUser!.uid,
                                   )));
@@ -214,8 +273,10 @@ class _WebProfilePageState extends State<WebProfilePage> {
                   ),
                   ListTile(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (builder) => MySetting()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (builder) => WebMySetting()));
                     },
                     leading: Icon(
                       Icons.settings,
