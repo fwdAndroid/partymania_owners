@@ -7,7 +7,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:partymania_owners/screens/details/widget/eventsimageupdate/update_event_cover.dart';
 import 'package:partymania_owners/screens/details/widget/eventsimageupdate/update_event_photo.dart';
-import 'package:partymania_owners/screens/main_dashboard.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/utils/controllers.dart';
@@ -142,78 +141,84 @@ class _UpdateWebEventWidgetState extends State<UpdateWebEventWidget> {
               const SizedBox(
                 height: 10,
               ),
-              Text(
-                "Event Details",
-                style: TextStyle(
-                    color: textColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18),
+              Container(
+                margin: EdgeInsets.only(left: 500, right: 500),
+                child: Text(
+                  "Event Details",
+                  style: TextStyle(
+                      color: textColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18),
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Radio(
-                            value: Fruit.day,
-                            groupValue: _fruit,
-                            onChanged: (Fruit? value) {
-                              setState(() {
-                                _fruit = value;
-                              });
-                            }),
-                        Expanded(
-                          child: Text(
-                            'Day',
+              Container(
+                margin: EdgeInsets.only(left: 500, right: 500),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Radio(
+                              value: Fruit.day,
+                              groupValue: _fruit,
+                              onChanged: (Fruit? value) {
+                                setState(() {
+                                  _fruit = value;
+                                });
+                              }),
+                          Expanded(
+                            child: Text(
+                              'Day',
+                              style: TextStyle(color: textColor),
+                            ),
+                          )
+                        ],
+                      ),
+                      flex: 1,
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Radio(
+                              value: Fruit.night,
+                              groupValue: _fruit,
+                              onChanged: (Fruit? value) {
+                                setState(() {
+                                  _fruit = value;
+                                });
+                              }),
+                          Expanded(
+                              child: Text(
+                            'Night',
                             style: TextStyle(color: textColor),
-                          ),
-                        )
-                      ],
+                          ))
+                        ],
+                      ),
+                      flex: 1,
                     ),
-                    flex: 1,
-                  ),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Radio(
-                            value: Fruit.night,
-                            groupValue: _fruit,
-                            onChanged: (Fruit? value) {
-                              setState(() {
-                                _fruit = value;
-                              });
-                            }),
-                        Expanded(
-                            child: Text(
-                          'Night',
-                          style: TextStyle(color: textColor),
-                        ))
-                      ],
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Radio(
+                              value: Fruit.both,
+                              groupValue: _fruit,
+                              onChanged: (Fruit? value) {
+                                setState(() {
+                                  _fruit = value;
+                                });
+                              }),
+                          Expanded(
+                              child: Text(
+                            'Both',
+                            style: TextStyle(color: textColor),
+                          ))
+                        ],
+                      ),
+                      flex: 1,
                     ),
-                    flex: 1,
-                  ),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Radio(
-                            value: Fruit.both,
-                            groupValue: _fruit,
-                            onChanged: (Fruit? value) {
-                              setState(() {
-                                _fruit = value;
-                              });
-                            }),
-                        Expanded(
-                            child: Text(
-                          'Both',
-                          style: TextStyle(color: textColor),
-                        ))
-                      ],
-                    ),
-                    flex: 1,
-                  ),
-                ],
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 10,

@@ -49,10 +49,13 @@ class _WebChangePasswordState extends State<WebChangePassword> {
                         SizedBox(
                           height: 10,
                         ),
-                        TextFormInputField(
-                          textInputType: TextInputType.text,
-                          hintText: "Enter Email Address",
-                          controller: newConfrimPassword,
+                        SizedBox(
+                          width: 500,
+                          child: TextFormInputField(
+                            textInputType: TextInputType.text,
+                            hintText: "Enter Email Address",
+                            controller: newConfrimPassword,
+                          ),
                         )
                       ],
                     ),

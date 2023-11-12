@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/screens/booking/booking.dart';
 import 'package:partymania_owners/webmodule/webhandlers/web_manager_handlers.dart';
@@ -20,8 +19,6 @@ class WebProfilePage extends StatefulWidget {
 class _WebProfilePageState extends State<WebProfilePage> {
   @override
   Widget build(BuildContext context) {
-    double? _ratingValue;
-
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -68,47 +65,7 @@ class _WebProfilePageState extends State<WebProfilePage> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    height: 100,
-                    width: 230,
-                    decoration: BoxDecoration(
-                        color: Color(0xff4E4E4E),
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(width: .5, color: textColor)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          document['clubName'],
-                          style: TextStyle(
-                              color: textColor,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12),
-                        ),
-                        RatingBar(
-                            initialRating: 0,
-                            direction: Axis.horizontal,
-                            allowHalfRating: true,
-                            itemCount: 5,
-                            ratingWidget: RatingWidget(
-                                full: const Icon(Icons.star,
-                                    color: Colors.yellow),
-                                half: const Icon(
-                                  Icons.star_half,
-                                  color: Colors.yellow,
-                                ),
-                                empty: const Icon(
-                                  Icons.star_outline,
-                                  color: Colors.yellow,
-                                )),
-                            onRatingUpdate: (value) {
-                              setState(() {
-                                _ratingValue = value;
-                              });
-                            }),
-                      ],
-                    ),
-                  ),
+
                   Container(
                     height: 100,
                     width: 230,
