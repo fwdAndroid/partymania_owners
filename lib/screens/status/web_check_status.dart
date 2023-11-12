@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:partymania_owners/screens/main_dashboard.dart';
-import 'package:partymania_owners/screens/profile/create_profile.dart';
-import 'package:partymania_owners/webmodule/web_main_screen.dart';
 import 'package:partymania_owners/webmodule/webclub/web_club_profile.dart';
+import 'package:partymania_owners/webmodule/webstatus/web_club_request_status.dart';
 
 class WebCheckStatus extends StatefulWidget {
   const WebCheckStatus({super.key});
@@ -38,12 +36,8 @@ class _WebCheckStatusState extends State<WebCheckStatus> {
     final bool doesDocExist = doc.exists;
 
     if (doesDocExist) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (builder) => WebMainScreen(
-                    user: FirebaseAuth.instance.currentUser,
-                  )));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (builder) => WebClubRequestStatus()));
     } else {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (builder) => WebClubProfile()));
