@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:partymania_owners/screens/dashboard/widgets/home_grid_widget.dart';
-import 'package:partymania_owners/screens/dashboard/widgets/home_list_view_widget.dart';
 import 'package:partymania_owners/screens/event_near_by_frame.dart';
 import 'package:partymania_owners/utils/colors.dart';
 import 'package:partymania_owners/webmodule/events/web_create_event.dart';

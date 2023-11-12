@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:partymania_owners/screens/details/event_details.dart';
 import 'package:partymania_owners/utils/colors.dart';
+import 'package:partymania_owners/webmodule/web_events/web_event_details.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
 
@@ -184,7 +184,7 @@ class _WebEventsPageState extends State<WebEventsPage> {
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (builder) =>
-                                                            EventDetails(
+                                                            WebEventDetails(
                                                               ticketdetail: data[
                                                                   'ticketdetail'],
                                                               myTableList: data[

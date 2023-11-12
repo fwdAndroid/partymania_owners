@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/details/event_details.dart';
 import 'package:partymania_owners/utils/colors.dart';
-import 'package:image_network/image_network.dart';
 import 'package:partymania_owners/webmodule/web_events/web_event_details.dart';
 
 class WebHomeGridWidget extends StatefulWidget {
@@ -195,28 +194,6 @@ class _WebHomeGridWidgetState extends State<WebHomeGridWidget> {
                                                                     .white),
                                                           ),
                                                         ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(16),
-                                                        border: Border.all(
-                                                            width: 1,
-                                                            color: textColor
-                                                                .withOpacity(
-                                                                    .80))),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Text(
-                                                        "4.9",
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white),
                                                       ),
                                                     ),
                                                   ),

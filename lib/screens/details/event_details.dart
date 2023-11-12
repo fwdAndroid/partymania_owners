@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:partymania_owners/screens/details/edit_event.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
+import 'package:share_plus/share_plus.dart';
 
 class EventDetails extends StatefulWidget {
   final uuid;
@@ -419,58 +420,64 @@ class _EventDetailsState extends State<EventDetails> {
                                             fontWeight: FontWeight.w600),
                                       )),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Image.asset(
-                                            "assets/Group 14436.png",
-                                            width: 40,
-                                            height: 50,
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Image.asset(
-                                            "assets/Twitter.png",
-                                            width: 40,
-                                            height: 50,
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Image.asset(
-                                            "assets/Instagram.png",
-                                            width: 40,
-                                            height: 50,
-                                          ),
-                                          SizedBox(
-                                            width: 20,
-                                          ),
-                                          Image.asset(
-                                            "assets/LinkedIn.png",
-                                            width: 40,
-                                            height: 50,
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Image.asset(
-                                            "assets/WhatsApp.png",
-                                            width: 40,
-                                            height: 50,
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Image.asset(
-                                            "assets/Facebook.png",
-                                            width: 40,
-                                            height: 50,
-                                          ),
-                                        ],
+                                    InkWell(
+                                      onTap: () {
+                                        Share.share(
+                                            'Hey! Check out this Event!\n\nName : ${widget.eventName}');
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Image.asset(
+                                              "assets/Group 14436.png",
+                                              width: 40,
+                                              height: 50,
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Image.asset(
+                                              "assets/Twitter.png",
+                                              width: 40,
+                                              height: 50,
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Image.asset(
+                                              "assets/Instagram.png",
+                                              width: 40,
+                                              height: 50,
+                                            ),
+                                            SizedBox(
+                                              width: 20,
+                                            ),
+                                            Image.asset(
+                                              "assets/LinkedIn.png",
+                                              width: 40,
+                                              height: 50,
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Image.asset(
+                                              "assets/WhatsApp.png",
+                                              width: 40,
+                                              height: 50,
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Image.asset(
+                                              "assets/Facebook.png",
+                                              width: 40,
+                                              height: 50,
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ],
