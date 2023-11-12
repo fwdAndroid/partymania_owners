@@ -129,6 +129,7 @@ class _CreateOTPProfileWidgetState extends State<CreateOTPProfileWidget> {
                               .toString(),
                           "uid": FirebaseAuth.instance.currentUser!.uid,
                           "fullName": signUpFullNameController.text,
+                          "clubRequest": false
                         });
                         setState(() {
                           _isLoading = false;

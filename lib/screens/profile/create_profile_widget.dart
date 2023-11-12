@@ -4,7 +4,7 @@ import 'package:country_picker_plus/country_picker_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:partymania_owners/screens/main_dashboard.dart';
+import 'package:partymania_owners/screens/profile/club_request_page.dart';
 import 'package:partymania_owners/services/database_methods.dart';
 import 'package:partymania_owners/utils/button.dart';
 import 'package:partymania_owners/utils/colors.dart';
@@ -457,11 +457,7 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
       descriptionController.clear();
       clubLocationController.clear();
       Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (builder) => MainScreen(
-                    user: FirebaseAuth.instance.currentUser,
-                  )));
+          context, MaterialPageRoute(builder: (builder) => ClubRequest()));
     } else {
       clubZipCodeController.clear();
       clubNameController.clear();
@@ -469,11 +465,7 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
       descriptionController.clear();
       clubLocationController.clear();
       Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (builder) => MainScreen(
-                    user: FirebaseAuth.instance.currentUser,
-                  )));
+          context, MaterialPageRoute(builder: (builder) => ClubRequest()));
     }
   }
 }

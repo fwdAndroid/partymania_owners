@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:partymania_owners/screens/main_dashboard.dart';
 import 'package:partymania_owners/screens/profile/create_profile.dart';
+import 'package:partymania_owners/screens/status/club_request_status.dart';
 
 class CheckStatus extends StatefulWidget {
   const CheckStatus({super.key});
@@ -36,12 +36,8 @@ class _CheckStatusState extends State<CheckStatus> {
     final bool doesDocExist = doc.exists;
 
     if (doesDocExist) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (builder) => MainScreen(
-                    user: FirebaseAuth.instance.currentUser,
-                  )));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (builder) => ClubRequestStatus()));
     } else {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (builder) => CreateProfile()));
